@@ -13,9 +13,10 @@ import {
   testCampaignList,
   testCampaignNumber,
 } from "../api/UseCaver";
-import { createRef, useEffect } from "react";
+import { createRef, useEffect, useState } from "react";
 import { media } from "../../styles/theme";
 import ConnectWalletModal from "../components/modals/ConnectWalletModal";
+import axios from "axios";
 
 const Container = styled.div`
   width: 935px;
@@ -37,47 +38,51 @@ function CreateCampaign() {
   const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
   const inputRef = createRef();
+  const [get, setGet] = useState([]);
 
-  // const createCam = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const name = e.target.name.value;
-  //   const desc = e.target.desc.value;
-  //   const amount = e.target.amount.value;
-  //   onClickTest(name, desc, amount);
-  // };
+  const testGet = () => {
+    axios("http://localhost:3000/account/user_all").then((res) => {
+      setGet(res.data);
+    });
+  };
 
-  // const onClickTest = (_name: string, _desc: string, _amount: number) => {
-  //   setModalProps({
-  //     title: "캠페인 생성을 위한 Klip 지갑 요청",
-  //     onConfirm: () => {
-  //       KlipAPI.createCampaign(
-  //         _name,
-  //         _desc,
-  //         _amount,
-  //         setQrvalue,
-  //         (result: any) => {
-  //           alert(JSON.stringify(result));
-  //         }
-  //       );
-  //     },
-  //   });
-  //   setShowModal(true);
-  // };
+  useEffect(() => {
+    console.log(get);
+  }, [get]);
 
-  // // const testCreateCampaign = (name: string, desc: string, amount: number) => {
-  // //   KlipAPI.createCampaign(name, desc, amount, setQrvalue, (result: any) => {
-  // //     alert(JSON.stringify(result));
-  // //   });
-  // // };
-
-  // useEffect(() => {
-  //   setShowModal(false);
-  // }, []);
+  const testPost = (
+    _email: string,
+    _thirdParty: string,
+    _walletAddress?: string,
+    _walletKind?: string
+  ) => {
+    let data = {
+      email: _email,
+      thirdParty: _thirdParty,
+      walletAddress: "",
+      walletKind: "",
+    };
+    axios
+      .post("http://localhost:3000/account/create_user", data)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <>
       <Container>
         <FormTitle>CREATE CAMPAIGN</FormTitle>
+        <Button onClick={() => testGet()}>test GET</Button>
+        {get && (
+          <div>
+            {get?.map((o: any, i: number) => (
+              <h3 key={o.id}>{o.email}</h3>
+            ))}
+          </div>
+        )}
+        <Button onClick={() => testPost("abc@abc.com", "google")}>
+          test POST
+        </Button>
       </Container>
     </>
   );

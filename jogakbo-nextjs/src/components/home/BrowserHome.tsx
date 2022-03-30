@@ -6,6 +6,7 @@ import { showSignInModalState } from "../../../atom";
 import { media } from "../../../styles/theme";
 import SignInModal from "../modals/SignInModal";
 import AOS from "aos";
+import axios from "axios";
 
 // 소개 배너 컴포넌트 Intro
 
@@ -211,9 +212,14 @@ const BrowserHome = () => {
     { question: "질문6", answer: "답변6" },
   ];
 
-  useEffect(() => {
-    AOS.init();
-  });
+  // useEffect(() => {
+  //   AOS.init();
+  //   axios
+  //     .get("http://localhost:3000/campaigns/campaign_all")
+  //     .then((res) => console.log(res));
+
+  //   axios.post("URL", { name: "jun", age: "29" });
+  // });
 
   return (
     <>
