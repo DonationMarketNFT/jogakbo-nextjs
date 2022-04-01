@@ -1,54 +1,74 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Link from "next/link";
+import styled from "styled-components";
 
-export default function Campaigns() {
-  const [get, setGet] = useState([]);
+const Container = styled.div`
+  width: 935px;
+  margin: 100px auto;
+  padding: 30px;
+`;
 
-  const testGet = () => {
-    axios("http://localhost:3000/campaigns/campaign_all").then((res) =>
-      setGet(res.data)
-    );
-  };
+const CampaignsTitle = styled.h3`
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgray;
+`;
 
-  useEffect(() => {
-    console.log(get);
-  }, [get]);
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
 
-  const testPost = (
-    _name: string,
-    _description: string,
-    _campaignId: number,
-    _targetAmount: number,
-    _fundingStatus?: boolean,
-    _refundStatus?: boolean
-  ) => {
-    let data = {
-      name: _name,
-      description: _description,
-      campaignId: _campaignId,
-      targetAmount: _targetAmount,
-      fundingStatus: true,
-      refundStatus: false,
-    };
-    axios
-      .post("http://localhost:3000/campaigns/create_campaign", data)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-  };
+const Tab = styled.span`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 15px 0px;
+  border-radius: 10px;
+  color: yellow;
+  a {
+    display: block;
+  }
+`;
 
+export default function Campaigns({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <div style={{ marginTop: "100px" }}>
-      <button onClick={() => testGet()}>test GET</button>
-      {get && (
-        <div>
-          {get.map((o: any, i: number) => (
-            <h3 key={i}>{o.name}</h3>
-          ))}
-        </div>
-      )}
-      <button onClick={() => testPost("sia", "post test", 1, 100)}>
-        test POST
-      </button>
-    </div>
+    <Container>
+      {data?.map((data: any, i: number) => (
+        <div key={i}>{data?.name}</div>
+      ))}
+      <CampaignsTitle>All Campaigns</CampaignsTitle>
+      <Tabs>
+        <Tab>
+          <Link href="campaigns/present">
+            <a>진행 중 캠페인</a>
+          </Link>
+        </Tab>
+        <Tab>
+          <Link href="campaigns/past">
+            <a>완료된 캠페인</a>
+          </Link>
+        </Tab>
+      </Tabs>
+    </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await (
+    await fetch(`http://localhost:3000/campaigns/campaign_all`)
+  ).json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};

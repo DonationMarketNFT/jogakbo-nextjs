@@ -68,6 +68,28 @@ function CreateCampaign() {
       .catch((e) => console.log(e));
   };
 
+  const testPost2 = (
+    _name: string,
+    _description: string,
+    _campaignId: number,
+    _targetAmount: number,
+    _fundingStatus?: boolean,
+    _refundStatus?: boolean
+  ) => {
+    let data = {
+      name: _name,
+      description: _description,
+      campaignId: _campaignId,
+      targetAmount: _targetAmount,
+      fundingStatus: true,
+      refundStatus: false,
+    };
+    axios
+      .post("http://localhost:3000/campaigns/create_campaign", data)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
+
   return (
     <>
       <Container>
@@ -83,6 +105,9 @@ function CreateCampaign() {
         <Button onClick={() => testPost("abc@abc.com", "google")}>
           test POST
         </Button>
+        <button onClick={() => testPost2("sia", "post test", 1, 100)}>
+          test POST2
+        </button>
       </Container>
     </>
   );
