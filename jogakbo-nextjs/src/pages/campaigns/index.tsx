@@ -1,38 +1,22 @@
-import axios from "axios";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import styled from "styled-components";
+import { media } from "../../../styles/theme";
+import SlideBanner from "../../components/campaigns/SlideBanner";
+import Slider from "../../components/campaigns/Slider";
+
+const Wrapper = styled.section`
+  box-sizing: border-box;
+  padding: 50px;
+`;
 
 const Container = styled.div`
-  width: 935px;
-  margin: 100px auto;
-  padding: 30px;
-`;
-
-const CampaignsTitle = styled.h3`
-  text-align: center;
-  margin-bottom: 50px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid lightgray;
-`;
-
-const Tabs = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
-  gap: 10px;
-`;
-
-const Tab = styled.span`
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 14px;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 15px 0px;
-  border-radius: 10px;
-  color: yellow;
-  a {
-    display: block;
+  display: flex;
+  margin: 0 auto;
+  width: 1050px;
+  ${media.tablet} {
+    width: auto;
+    flex-direction: column;
   }
 `;
 
@@ -40,24 +24,20 @@ export default function Campaigns({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Container>
-      {data?.map((data: any, i: number) => (
-        <div key={i}>{data?.name}</div>
-      ))}
-      <CampaignsTitle>All Campaigns</CampaignsTitle>
-      <Tabs>
-        <Tab>
-          <Link href="campaigns/present">
-            <a>진행 중 캠페인</a>
-          </Link>
-        </Tab>
-        <Tab>
-          <Link href="campaigns/past">
-            <a>완료된 캠페인</a>
-          </Link>
-        </Tab>
-      </Tabs>
-    </Container>
+    <>
+      <SlideBanner />
+      <Wrapper>
+        <Container>
+          <Slider type="New" data={data} />
+          <Slider type="Popular" data={data} />
+        </Container>
+      </Wrapper>
+      <Wrapper>
+        <Container>
+          <Slider type="All" data={data} />
+        </Container>
+      </Wrapper>
+    </>
   );
 }
 

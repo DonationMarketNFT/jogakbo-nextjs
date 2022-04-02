@@ -54,7 +54,6 @@ const Col = styled.div`
 `;
 
 const Logo = styled.h1`
-  padding: 10px 20px;
   font-size: 28px;
   font-weight: 700;
 `;
@@ -131,14 +130,14 @@ const BrowserHeader = () => {
           </Col>
           <Col>
             <SubMenu>
-              <Link href="/campaign">
-                <a>
-                  <li>Create Campaign</li>
-                </a>
-              </Link>
               <Link href="/campaigns">
                 <a>
                   <li>Campaigns</li>
+                </a>
+              </Link>
+              <Link href="/campaign">
+                <a>
+                  <li>Create Campaign</li>
                 </a>
               </Link>
             </SubMenu>

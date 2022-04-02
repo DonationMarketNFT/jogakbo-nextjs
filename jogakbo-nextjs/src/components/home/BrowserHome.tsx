@@ -285,8 +285,7 @@ const BrowserHome = () => {
               borderRadius: 15,
             }}
           >
-            {" "}
-            준비중입니다{" "}
+            준비중입니다
           </p>
         </Section>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
