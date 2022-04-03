@@ -1,3 +1,3 @@
 export default function MobileHeader() {
-  return <h3>MobileHeader</h3>;
+  return <h3></h3>;
 }
