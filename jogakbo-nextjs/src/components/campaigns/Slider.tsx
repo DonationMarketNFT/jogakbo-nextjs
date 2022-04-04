@@ -55,16 +55,14 @@ const Slider = (props: any) => {
     if (type === "New") {
       const newData = [...props.data];
       const results = newData.reverse().slice(0, 3);
-      console.log(results, 1);
       setData(results);
     } else if (type === "Popular") {
       const popularData = [...props.data];
-      const results = popularData
-        .sort((b: any, a: any) => b["targetAmount"] - a["targetAmount"])
-        .slice(0, 3);
+      const results = popularData.sort(
+        (b: any, a: any) => b["targetAmount"] - a["targetAmount"]
+      );
       results.reverse();
-      console.log(results, 2);
-      setData(results);
+      setData(results.slice(0, 3));
     } else if (type === "All") {
       setData(props.data);
     }
@@ -79,7 +77,7 @@ const Slider = (props: any) => {
       <Title>{type} Campaigns</Title>
       <GridBox type={type}>
         {data.map((data: any, i: number) => (
-          <Link href={`campaigns/${data.id}`} key={data.id}>
+          <Link href={`campaigns/${data.name}/${data.id}`} key={data.id}>
             <a>
               <Box>
                 <span>{data.id}</span>

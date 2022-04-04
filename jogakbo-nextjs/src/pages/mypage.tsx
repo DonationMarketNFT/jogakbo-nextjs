@@ -20,6 +20,7 @@ import { faClone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConnectWalletModal from "../components/modals/ConnectWalletModal";
 import * as KlipAPI from "../api/UseKlip";
+import Seo from "../components/Seo";
 
 const Container = styled.div`
   display: flex;
@@ -249,6 +250,7 @@ function Mypage() {
 
   return (
     <>
+      <Seo title="마이페이지" />
       <Container>
         <ProfileContainer>
           <ProfileImage bgphoto={profile} />

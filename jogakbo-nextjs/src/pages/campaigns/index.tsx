@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { media } from "../../../styles/theme";
 import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
+import Seo from "../../components/Seo";
 
 const Wrapper = styled.section`
   box-sizing: border-box;
@@ -25,6 +26,7 @@ export default function Campaigns({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
+      <Seo title="캠페인" />
       <SlideBanner />
       <Wrapper>
         <Container>

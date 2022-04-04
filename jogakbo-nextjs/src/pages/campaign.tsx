@@ -2,15 +2,13 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import {
   modalPropsState,
-  myAddressState,
   qrValueState,
   showConnectWalletModalState,
 } from "../../atom";
-
-import { createRef, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { media } from "../../styles/theme";
-import ConnectWalletModal from "../components/modals/ConnectWalletModal";
 import axios from "axios";
+import Seo from "../components/Seo";
 
 const Container = styled.div`
   width: 935px;
@@ -85,6 +83,9 @@ function CreateCampaign() {
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
   const inputRef = createRef();
   const [get, setGet] = useState([]);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [amount, setAmount] = useState<number>(0);
 
   const testPost2 = (
     _name: string,
@@ -98,7 +99,7 @@ function CreateCampaign() {
       name: _name,
       description: _description,
       campaignId: _campaignId,
-      targetAmount: _targetAmount,
+      targetAmount: Number(_targetAmount),
       fundingStatus: true,
       refundStatus: false,
     };
@@ -108,8 +109,16 @@ function CreateCampaign() {
       .catch((e) => console.log(e));
   };
 
+  useEffect(() => {
+    const num = "1.02오";
+
+    console.log(parseInt(num));
+    console.log(Number(num));
+  }, []);
+
   return (
     <>
+      <Seo title="캠페인 생성하기" />
       <Container>
         <페이지타이틀>CREATE CAMPAIGN</페이지타이틀>
         <공지사항>
@@ -127,8 +136,11 @@ function CreateCampaign() {
         <Form>
           <label htmlFor="name">캠페인 이름</label>
           <Input
+            value={name}
+            onChange={(e: any) => {
+              setName(e.target.value);
+            }}
             id="name"
-            name="name"
             type="text"
             placeholder="캠페인 이름을 입력해주세요"
             required
@@ -136,8 +148,11 @@ function CreateCampaign() {
           />
           <label htmlFor="desc">캠페인 설명</label>
           <Input
+            value={desc}
+            onChange={(e: any) => {
+              setDesc(e.target.value);
+            }}
             id="desc"
-            name="desc"
             as="textarea"
             rows={5}
             placeholder="캠페인에 대해 설명해주세요"
@@ -146,16 +161,17 @@ function CreateCampaign() {
           />
           <label htmlFor="amount">목표 모금 금액</label>
           <Input
+            value={amount}
+            onChange={(e: any) => {
+              console.log(e.target.value);
+              setAmount(e.target.value);
+            }}
             id="amount"
-            name="amount"
             type="number"
             placeholder="목표 모금 금액을 입력해주세요"
             required
           />
-          <Button
-            type="submit"
-            onClick={() => testPost2("sia", "post test", 1, 100)}
-          >
+          <Button onClick={() => testPost2(name, desc, 1, amount)}>
             제출하기
           </Button>
         </Form>
