@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { media } from "../../../styles/theme";
 import { isLoginedState, showSignInModalState } from "../../../atom";
+import Link from "next/link";
 
 const Container = styled.div`
   position: fixed;
@@ -169,7 +170,11 @@ const SignInModal = () => {
         <MoreAction>
           <div>비밀번호 찾기</div>
           <div> | </div>
-          <div>회원가입</div>
+          <Link href="/signup">
+            <a>
+              <div>회원가입</div>
+            </a>
+          </Link>
         </MoreAction>
         <SocialSignUp>
           <hr />
