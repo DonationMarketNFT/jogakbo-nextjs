@@ -14,7 +14,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 0 30px 100px 30px;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   @keyframes fadeIn {
     from {
       transform: translateX(100%);
@@ -28,17 +28,12 @@ const Container = styled.div`
   z-index: 999;
 `;
 
-interface IHead {
-  isBrowser: boolean;
-}
-
-const Head = styled.div<IHead>`
-  padding-top: ${(props) => (props.isBrowser ? "0" : "44pt")};
+const Head = styled.div`
   div {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: ${(props) => (props.isBrowser ? "80px" : "44pt")};
+    height: 80px;
   }
   svg {
     width: 36px;
@@ -70,7 +65,7 @@ const SubMenu = () => {
 
   return (
     <Container>
-      <Head isBrowser={isBrowser}>
+      <Head>
         <div>
           <FontAwesomeIcon onClick={() => setSubMenu(false)} icon={faTimes} />
         </div>

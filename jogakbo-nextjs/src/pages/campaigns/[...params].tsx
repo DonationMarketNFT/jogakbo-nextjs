@@ -19,6 +19,9 @@ const Container = styled.div`
   align-items: center;
   width: 1100px;
   margin: 50px auto;
+  ${media.tablet} {
+    width: auto;
+  }
 `;
 
 const 캠페인이름 = styled.h3`

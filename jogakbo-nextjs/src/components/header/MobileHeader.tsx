@@ -13,16 +13,10 @@ import {
 import SubMenu from "./SubMenu";
 import { useIsBrowser } from "../../hook/isBrowser";
 
-interface IHead {
-  isBrowser: boolean;
-}
-const Head = styled(motion.header)<IHead>`
-  /* padding-top: ${(props) =>
-    props.isBrowser ? "0" : "44pt"}; // safe area */
+const Head = styled(motion.header)`
   position: fixed;
   top: 0;
   width: 100%;
-  /* height: ${(props) => (props.isBrowser ? "80px" : "88pt")}; */
   height: 80px;
 `;
 
@@ -98,15 +92,6 @@ const Triger = styled.div`
   }
 `;
 
-// safe area
-const HomeIndicator = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 34pt;
-  background: white;
-`;
-
 const MobileHeader = () => {
   const headerAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
@@ -132,12 +117,7 @@ const MobileHeader = () => {
 
   return (
     <>
-      <Head
-        isBrowser={isBrowser}
-        variants={headerVariants}
-        animate={headerAnimation}
-        initial={"top"}
-      >
+      <Head variants={headerVariants} animate={headerAnimation} initial={"top"}>
         <HeaderFlexBox>
           <Col>
             <Link href="/">
@@ -158,7 +138,6 @@ const MobileHeader = () => {
           </Col>
         </HeaderFlexBox>
       </Head>
-      <HomeIndicator />
 
       {signIn && <SignInModal />}
       {subMenu && <SubMenu />}

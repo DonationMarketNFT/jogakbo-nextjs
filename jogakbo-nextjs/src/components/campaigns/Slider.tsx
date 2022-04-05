@@ -13,6 +13,9 @@ const Container = styled.div`
       margin-bottom: 100px;
     }
   }
+  ${media.mobile} {
+    padding: 0 20px;
+  }
 `;
 const Title = styled.h3`
   font-size: 22px;
@@ -30,6 +33,12 @@ const GridBox = styled.div<IGridBox>`
     ${(props) => (props.type === "All" ? 5 : 3)},
     1fr
   );
+  ${media.mobile} {
+    grid-template-columns: repeat(
+      ${(props) => (props.type === "All" ? 3 : 1)},
+      1fr
+    );
+  }
 `;
 
 const Box = styled.div`

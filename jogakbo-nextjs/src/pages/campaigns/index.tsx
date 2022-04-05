@@ -8,7 +8,7 @@ import Seo from "../../components/Seo";
 
 const Wrapper = styled.section`
   box-sizing: border-box;
-  padding: 50px;
+  padding: 50px 0;
 `;
 
 const Container = styled.div`

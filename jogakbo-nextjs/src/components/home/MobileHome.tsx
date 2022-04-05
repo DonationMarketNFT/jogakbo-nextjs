@@ -1,7 +1,8 @@
+import { mobileModel } from "react-device-detect";
 import styled from "styled-components";
 
 const Container = styled.div`
-  margin-top: 138px;
+  margin-top: 80px;
   padding: 30px;
   height: 100vh;
   background: lightgray;
