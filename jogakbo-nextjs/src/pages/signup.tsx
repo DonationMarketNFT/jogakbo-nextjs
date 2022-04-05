@@ -133,7 +133,8 @@ const signup = () => {
       e.preventDefault();
       alert("비밀번호가 일치하지 않습니다");
     } else {
-      // 이메일 인증
+      e.preventDefault();
+      alert("이메일 인증 구현이 필요합니다");
     }
   };
 

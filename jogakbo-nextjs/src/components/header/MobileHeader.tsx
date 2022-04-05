@@ -1,3 +1,169 @@
-export default function MobileHeader() {
-  return <h3>MobileHeader</h3>;
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { media } from "../../../styles/theme";
+import Link from "next/link";
+import { useRecoilState } from "recoil";
+import SignInModal from "../modals/SignInModal";
+import {
+  isLoginedState,
+  showSignInModalState,
+  subMenuState,
+} from "../../../atom";
+import SubMenu from "./SubMenu";
+import { useIsBrowser } from "../../hook/isBrowser";
+
+interface IHead {
+  isBrowser: boolean;
 }
+const Head = styled(motion.header)<IHead>`
+  /* padding-top: ${(props) =>
+    props.isBrowser ? "0" : "44pt"}; // safe area */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* height: ${(props) => (props.isBrowser ? "80px" : "88pt")}; */
+  height: 80px;
+`;
+
+const headerVariants = {
+  top: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    backdropFilter: "none",
+    border: "none",
+  },
+  scroll: {
+    backgroundColor: "rgba(255,255,255,0.25)",
+    backdropFilter: "blur(7.5px)",
+    border: "1px solid rgba(255, 255, 255, 0.18)",
+  },
+};
+
+const HeaderFlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 30px;
+  width: 1050px;
+  height: 100%;
+  ${media.tablet} {
+    margin: 0;
+    width: 100%;
+  }
+`;
+
+const Col = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Logo = styled.h1`
+  font-size: 28px;
+  font-weight: 700;
+`;
+
+const SignInBtn = styled.div`
+  padding: 10px 20px;
+  background: ${(props) => props.theme.bgColor};
+  border-radius: 10px;
+  color: ${(props) => props.theme.textColor};
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background: ${(props) => props.theme.gradient};
+    color: ${(props) => props.theme.bgColor};
+  }
+`;
+
+const Triger = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 15px;
+  width: 36px;
+  height: 26px;
+  cursor: pointer;
+  div {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: black;
+  }
+  div:nth-child(2) {
+    width: 80%;
+  }
+`;
+
+// safe area
+const HomeIndicator = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 34pt;
+  background: white;
+`;
+
+const MobileHeader = () => {
+  const headerAnimation = useAnimation();
+  const { scrollY } = useViewportScroll();
+  const [mode, setMode] = useState(false);
+  const [signIn, setSignIn] = useRecoilState(showSignInModalState);
+  const [login, setLogin] = useRecoilState(isLoginedState);
+  const [subMenu, setSubMenu] = useRecoilState(subMenuState);
+  const isBrowser = useIsBrowser();
+
+  const toggleMode = () => {
+    setMode((prev) => !prev);
+  };
+
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > 20) {
+        headerAnimation.start("scroll");
+      } else {
+        headerAnimation.start("top");
+      }
+    });
+  }, [scrollY, headerAnimation]);
+
+  return (
+    <>
+      <Head
+        isBrowser={isBrowser}
+        variants={headerVariants}
+        animate={headerAnimation}
+        initial={"top"}
+      >
+        <HeaderFlexBox>
+          <Col>
+            <Link href="/">
+              <a>
+                <Logo>JOGAKBO</Logo>
+              </a>
+            </Link>
+          </Col>
+          <Col>
+            {isBrowser && (
+              <SignInBtn onClick={() => setSignIn(true)}>SIGN IN</SignInBtn>
+            )}
+            <Triger onClick={() => setSubMenu(true)}>
+              <div></div>
+              <div></div>
+              <div></div>
+            </Triger>
+          </Col>
+        </HeaderFlexBox>
+      </Head>
+      <HomeIndicator />
+
+      {signIn && <SignInModal />}
+      {subMenu && <SubMenu />}
+    </>
+  );
+};
+
+export default MobileHeader;

@@ -24,7 +24,7 @@ const Banner = styled.div`
   width: 1060px;
   height: 100%;
   ${media.tablet} {
-    width: auto;
+    width: 100%;
   }
 `;
 

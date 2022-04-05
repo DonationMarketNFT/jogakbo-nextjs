@@ -11,8 +11,9 @@ import axios from "axios";
 import Seo from "../components/Seo";
 
 const Container = styled.div`
-  width: 935px;
+  width: 1050px;
   margin: 150px auto;
+  padding: 30px;
   ${media.tablet} {
     width: auto;
   }
@@ -75,6 +76,7 @@ const Button = styled.button`
   background: pink;
   border-radius: 10px;
   text-align: center;
+  cursor: pointer;
 `;
 
 function CreateCampaign() {
@@ -108,13 +110,6 @@ function CreateCampaign() {
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
   };
-
-  useEffect(() => {
-    const num = "1.02오";
-
-    console.log(parseInt(num));
-    console.log(Number(num));
-  }, []);
 
   return (
     <>

@@ -14,7 +14,7 @@ import { useRecoilState } from "recoil";
 import SignInModal from "../modals/SignInModal";
 import { isLoginedState, showSignInModalState } from "../../../atom";
 
-const Header = styled(motion.header)`
+const Head = styled(motion.header)`
   position: fixed;
   top: 0;
   width: 100%;
@@ -52,7 +52,6 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const Logo = styled.h1`
   font-size: 28px;
   font-weight: 700;
@@ -115,11 +114,7 @@ const BrowserHeader = () => {
 
   return (
     <>
-      <Header
-        variants={headerVariants}
-        animate={headerAnimation}
-        initial={"top"}
-      >
+      <Head variants={headerVariants} animate={headerAnimation} initial={"top"}>
         <HeaderFlexBox>
           <Col>
             <Link href="/">
@@ -152,16 +147,16 @@ const BrowserHeader = () => {
             ) : (
               <SignInBtn onClick={() => setSignIn(true)}>SIGN IN</SignInBtn>
             )}
-            <ModeBtn onClick={() => toggleMode()} className="mr-3">
+            {/* <ModeBtn onClick={() => toggleMode()} className="mr-3">
               {mode ? (
                 <FontAwesomeIcon icon={faToggleOff} />
               ) : (
                 <FontAwesomeIcon icon={faToggleOn} />
               )}
-            </ModeBtn>
+            </ModeBtn> */}
           </Col>
         </HeaderFlexBox>
-      </Header>
+      </Head>
       {signIn ? <SignInModal /> : null}
     </>
   );

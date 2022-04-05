@@ -1,33 +1,33 @@
 import { atom } from "recoil";
 
 const showSignInModalState = atom<boolean>({
-  key: "sign_in",
+  key: "signInKey",
   default: false,
 });
 
 const showConnectWalletModalState = atom<boolean>({
-  key: "connect_wallet",
+  key: "connectWalletKey",
   default: false,
 });
 
 const isLoginedState = atom<boolean>({
-  key: "log_in",
+  key: "loginKey",
   default: false,
 });
 
 const myAddressState = atom<string>({
-  key: "my_address",
+  key: "myAddressKey",
   // default: "0xD216a6beBdDECa9b862c1423b31CFA5188E5cB3C",
   default: "0x00",
 });
 
 const myBalanceState = atom<string>({
-  key: "my_balance",
+  key: "myBalanceKey",
   default: "0",
 });
 
 const qrValueState = atom<string>({
-  key: "qrcode",
+  key: "qrcodeKey",
   default: "DEFAULT",
 });
 
@@ -37,8 +37,13 @@ interface IModalPropsState {
 }
 
 const modalPropsState = atom<IModalPropsState>({
-  key: "modal_props",
+  key: "modalPropsKey",
   default: { title: "MODAL", onConfirm: () => {} },
+});
+
+const subMenuState = atom<boolean>({
+  key: "subMenuState",
+  default: false,
 });
 
 export {
@@ -49,4 +54,5 @@ export {
   myBalanceState,
   qrValueState,
   modalPropsState,
+  subMenuState,
 };

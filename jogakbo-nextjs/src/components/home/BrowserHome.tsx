@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import type { NextPage } from "next";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled, { useTheme } from "styled-components";
 import { showSignInModalState } from "../../../atom";
 import { media } from "../../../styles/theme";
 import SignInModal from "../modals/SignInModal";
-import AOS from "aos";
-import axios from "axios";
 
 // 소개 배너 컴포넌트 Intro
 
@@ -18,6 +17,7 @@ const Banner = styled.div`
   background-position: center center;
   background-size: cover;
 `;
+
 const BannerContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -183,7 +183,7 @@ const Answer = styled(motion.div)`
   font-size: 18px;
 `;
 
-const BrowserHome = () => {
+const BrowserHome: NextPage = () => {
   const [tab, setTab] = useState(true);
   const [question, setQuestion] = useState(true);
 
@@ -212,18 +212,18 @@ const BrowserHome = () => {
     { question: "질문6", answer: "답변6" },
   ];
 
-  // useEffect(() => {
-  //   AOS.init();
-  //   axios
-  //     .get("http://localhost:3000/campaigns/campaign_all")
-  //     .then((res) => console.log(res));
-
-  //   axios.post("URL", { name: "jun", age: "29" });
-  // });
+  // const listItems = QuestionData.map((o, i) => (
+  //   <Question
+  //     key={o.question}
+  //     value={`❔${o.question}`}
+  //     onClick={() => onClickQuestion(i)}
+  //   />
+  // ));
 
   return (
     <>
       <Intro />
+      {/* <BrowserHome /> */}
       <BrowserContainer>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
           <Title>✔️ 서비스 특징</Title>
@@ -293,7 +293,7 @@ const BrowserHome = () => {
           <ul>
             {QuestionData.map((a, i) => (
               <>
-                <Question onClick={() => onClickQuestion(i)}>
+                <Question key={i} onClick={() => onClickQuestion(i)}>
                   ❔ {a.question}
                 </Question>
                 <Answer id={`${i}`}>❗️ {a.answer}</Answer>
