@@ -20,7 +20,13 @@ const Container = styled.div`
   width: 1100px;
   margin: 50px auto;
   ${media.tablet} {
+    margin-right: 40px;
+    margin-left: 40px;
     width: auto;
+  }
+  ${media.mobile} {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 `;
 
@@ -33,7 +39,6 @@ const Bars = styled.div`
   position: relative;
   width: 100%;
   height: 30px;
-  padding: 0 20px;
   box-sizing: border-box;
   margin-bottom: 100px;
 `;
@@ -73,17 +78,17 @@ const CampaignBox = styled.div`
   width: 935px;
   margin: 0 auto;
   padding: 0 30px;
-  box-sizing: border-box;
   border: 1px solid lightgray;
   border-radius: 10px;
   ${media.tablet} {
-    width: auto;
     margin: 0 30px;
     padding: 0 30px;
     margin-bottom: 30px;
+    width: 100%;
   }
   ${media.mobile} {
     padding: 0 10px;
+    width: 100%;
   }
 `;
 
@@ -158,7 +163,7 @@ const DonationBox = styled.div`
   ${media.tablet} {
     all: unset;
     background: white;
-    width: 70%;
+    width: 85%;
     padding: 30px 15px 30px 15px;
     border-radius: 15px;
     border: 1px solid lightgray;
@@ -202,7 +207,7 @@ const DonationForm = styled.form`
   ${media.mobile} {
     label {
       top: 4px;
-      font-size: 30px;
+      font-size: 24px;
     }
   }
 `;
@@ -219,6 +224,9 @@ const DonationInput = styled.input.attrs({ required: true })`
     font-size: 30px;
     padding: 0 70px 5px 0;
   }
+  ${media.mobile} {
+    font-size: 21px;
+  }
 `;
 
 const DonationButton = styled.button`
@@ -226,6 +234,9 @@ const DonationButton = styled.button`
   padding: 10px 0;
   border: 0;
   border-radius: 15px;
+  text-align: center;
+  background: lightgray;
+  color: white;
   transition: all 0.3s ease-in-out;
   &:hover {
     background: gray;
@@ -233,6 +244,10 @@ const DonationButton = styled.button`
   ${media.tablet} {
     padding: 25px 0;
     font-size: 30px;
+  }
+  ${media.mobile} {
+    padding: 18px 0;
+    font-size: 24px;
   }
 `;
 
@@ -295,34 +310,20 @@ export default function Detail({
             <DonationBox>
               <CampaignName>{title}</CampaignName>
               <CampaignDesc>{data.description}</CampaignDesc>
-              {/* {campaignInfo[5] ? (
-                <>
-                  <DonationForm
-                    onSubmit={(e) => {
-                      onSubmit(e);
-                    }}
-                  >
-                    <DonationInput
-                      type="number"
-                      name="klay"
-                      id="klay"
-                      autoComplete="off"
-                      required
-                      step={0.0000001}
-                    />
-                    <label id="klay_label" htmlFor="klay">
-                      Klay
-                    </label>
-                    <DonationButton id="donate_btn">Donate</DonationButton>
-                  </DonationForm>
-                </>
-              ) : (
-                <DonationForm>
-                  <DonationButton disabled id="donate_btn">
-                    Refunding...
-                  </DonationButton>
-                </DonationForm>
-              )} */}
+              <DonationForm>
+                <DonationInput
+                  type="number"
+                  name="klay"
+                  id="klay"
+                  autoComplete="off"
+                  required
+                  step={0.0000001}
+                />
+                <label id="klay_label" htmlFor="klay">
+                  Klay
+                </label>
+                <DonationButton id="donate_btn">Donate</DonationButton>
+              </DonationForm>
             </DonationBox>
           </CampaignRow>
         </CampaignBox>

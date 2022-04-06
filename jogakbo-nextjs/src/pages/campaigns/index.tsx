@@ -24,6 +24,7 @@ const Container = styled.div`
 export default function Campaigns({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(data);
   return (
     <>
       <Seo title="캠페인" />

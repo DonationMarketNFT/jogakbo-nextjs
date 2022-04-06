@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { media } from "../../../styles/theme";
 import { isLoginedState, showSignInModalState } from "../../../atom";
 import Link from "next/link";
+import { useIsBrowser } from "../../hook/isBrowser";
 
 const Container = styled.div`
   position: fixed;
@@ -19,7 +20,11 @@ const Container = styled.div`
   z-index: 9999;
 `;
 
-const Modal = styled.div`
+interface IModal {
+  isBrowser: boolean;
+}
+
+const Modal = styled.div<IModal>`
   display: flex;
   flex-direction: column;
   padding: 24px;
@@ -34,6 +39,13 @@ const Modal = styled.div`
   ${media.tablet} {
     width: 50%;
   }
+  ${media.mobile} {
+    width: ${(props) => (props.isBrowser ? "360px" : "100%")};
+    height: ${(props) => (props.isBrowser ? "432px" : "100%")};
+    border-radius: ${(props) => (props.isBrowser ? "10px" : "0")};
+    justify-content: center;
+    padding-bottom: 100px;
+  }
 `;
 
 const Header = styled.header`
@@ -43,6 +55,9 @@ const Header = styled.header`
   div {
     cursor: pointer;
   }
+  ${media.mobile} {
+    display: none;
+  }
 `;
 
 const Logo = styled.h1`
@@ -51,6 +66,10 @@ const Logo = styled.h1`
   align-items: center;
   margin: 12px 0 24px;
   font-size: 24px;
+  ${media.mobile} {
+    margin-bottom: 100px;
+    font-size: 32px;
+  }
 `;
 
 const Form = styled.form`
@@ -143,10 +162,12 @@ const SocialSignUpButton = styled.img<ISocial>`
 const SignInModal = () => {
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
+  const isBrowser = useIsBrowser();
 
   return (
     <Container onClick={() => setSignIn(false)}>
       <Modal
+        isBrowser={isBrowser}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -157,7 +178,7 @@ const SignInModal = () => {
               setSignIn(false);
             }}
           >
-            <FontAwesomeIcon icon={faTimes} />
+            {isBrowser && <FontAwesomeIcon icon={faTimes} />}
           </div>
         </Header>
         <Logo>JOGAKBO</Logo>
@@ -170,7 +191,11 @@ const SignInModal = () => {
           <div>비밀번호 찾기</div>
           <div> | </div>
           <Link href="/signup">
-            <a>
+            <a
+              onClick={() => {
+                setSignIn(false);
+              }}
+            >
               <div>회원가입</div>
             </a>
           </Link>

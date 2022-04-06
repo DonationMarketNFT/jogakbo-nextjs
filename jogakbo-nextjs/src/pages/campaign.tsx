@@ -90,6 +90,7 @@ function CreateCampaign() {
   const [amount, setAmount] = useState<number>(0);
 
   const testPost2 = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     _name: string,
     _description: string,
     _campaignId: number,
@@ -97,6 +98,7 @@ function CreateCampaign() {
     _fundingStatus?: boolean,
     _refundStatus?: boolean
   ) => {
+    e.preventDefault();
     let data = {
       name: _name,
       description: _description,
@@ -158,7 +160,6 @@ function CreateCampaign() {
           <Input
             value={amount}
             onChange={(e: any) => {
-              console.log(e.target.value);
               setAmount(e.target.value);
             }}
             id="amount"
@@ -166,7 +167,7 @@ function CreateCampaign() {
             placeholder="목표 모금 금액을 입력해주세요"
             required
           />
-          <Button onClick={() => testPost2(name, desc, 1, amount)}>
+          <Button onClick={(e) => testPost2(e, name, desc, 1, amount)}>
             제출하기
           </Button>
         </Form>

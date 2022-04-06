@@ -1,88 +1,14 @@
 import { motion } from "framer-motion";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled, { useTheme } from "styled-components";
 import { showSignInModalState } from "../../../atom";
 import { media } from "../../../styles/theme";
 import SignInModal from "../modals/SignInModal";
-
-// 소개 배너 컴포넌트 Intro
-
-const Banner = styled.div`
-  width: 100%;
-  height: 500px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
-    url("/banner.jpg");
-  background-position: center center;
-  background-size: cover;
-`;
-
-const BannerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 200px 0 50px;
-  width: 1100px;
-  height: 100%;
-  img {
-    width: 50px;
-  }
-  h2,
-  p {
-    color: ${(props) => props.theme.bgColor};
-  }
-  h2 {
-    font-size: 42px;
-    text-shadow: ${(props) => props.theme.textColor} 3px 3px;
-  }
-  a {
-    /* display: block; */
-    width: 150px;
-  }
-  button {
-    width: 150px;
-    padding: 8px 10px;
-    background: ${(props) => props.theme.bgColor};
-    text-align: center;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-    &:hover {
-      color: ${(props) => props.theme.bgColor};
-      background: ${(props) => props.theme.textColor};
-    }
-  }
-  ${media.tablet} {
-    width: auto;
-    padding: 200px 30px 50px;
-  }
-`;
-
-function Intro() {
-  const [signIn, setSignIn] = useRecoilState(showSignInModalState);
-
-  return (
-    <>
-      <Banner>
-        <BannerContainer>
-          <img src="/logo.png" />
-          <h2>Welcome to Jogakbo</h2>
-          <div>
-            <p>조각보는 블록체인 기반 기부 플랫폼입니다.</p>
-            <p>
-              캠페인에 기부하여 NFT를 수집할 수 있고, 직접 캠페인을 만들 수도
-              있습니다.
-            </p>
-          </div>
-          <button onClick={() => setSignIn(true)}>회원가입하기</button>
-        </BannerContainer>
-      </Banner>
-      {signIn && <SignInModal />}
-    </>
-  );
-}
+import Intro from "./Intro";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const BrowserContainer = styled.div`
   width: 1100px;
@@ -110,6 +36,9 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 30px;
+  ${media.tablet} {
+    padding: 0;
+  }
 `;
 
 const Item = styled.div`
@@ -125,11 +54,21 @@ const Item = styled.div`
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 18%);
   img {
     width: 130px;
+    ${media.tablet} {
+      width: 100px;
+    }
   }
   p {
     text-align: center;
     padding: 20px 0;
     color: ${(props) => props.theme.textColor};
+    ${media.tablet} {
+      font-size: 14px;
+    }
+  }
+  ${media.tablet} {
+    width: 200px;
+    margin: 10px;
   }
 `;
 
@@ -194,6 +133,14 @@ const BrowserHome: NextPage = () => {
       ? (answer!.style.display = "block")
       : (answer!.style.display = "none");
   };
+
+  useEffect(() => {
+    AOS.init({
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 50,
+    });
+  }, []);
 
   const QuestionData = [
     {

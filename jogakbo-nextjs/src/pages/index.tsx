@@ -6,7 +6,6 @@ import { useIsBrowser } from "../hook/isBrowser";
 
 const Home: NextPage = () => {
   const isBroswer = useIsBrowser();
-  console.log(isBroswer);
   return (
     <>
       <Seo />

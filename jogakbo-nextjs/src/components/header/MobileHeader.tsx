@@ -12,12 +12,14 @@ import {
 } from "../../../atom";
 import SubMenu from "./SubMenu";
 import { useIsBrowser } from "../../hook/isBrowser";
+import { useRouter } from "next/dist/client/router";
 
 const Head = styled(motion.header)`
   position: fixed;
   top: 0;
   width: 100%;
   height: 80px;
+  z-index: 9999;
 `;
 
 const headerVariants = {
@@ -100,6 +102,7 @@ const MobileHeader = () => {
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
   const isBrowser = useIsBrowser();
+  const router = useRouter();
 
   const toggleMode = () => {
     setMode((prev) => !prev);
@@ -117,28 +120,33 @@ const MobileHeader = () => {
 
   return (
     <>
-      <Head variants={headerVariants} animate={headerAnimation} initial={"top"}>
-        <HeaderFlexBox>
-          <Col>
-            <Link href="/">
-              <a>
-                <Logo>JOGAKBO</Logo>
-              </a>
-            </Link>
-          </Col>
-          <Col>
-            {isBrowser && (
-              <SignInBtn onClick={() => setSignIn(true)}>SIGN IN</SignInBtn>
-            )}
-            <Triger onClick={() => setSubMenu(true)}>
-              <div></div>
-              <div></div>
-              <div></div>
-            </Triger>
-          </Col>
-        </HeaderFlexBox>
-      </Head>
-
+      {(router.pathname !== "/signup" || isBrowser) && (
+        <Head
+          variants={headerVariants}
+          animate={headerAnimation}
+          initial={"top"}
+        >
+          <HeaderFlexBox>
+            <Col>
+              <Link href="/">
+                <a>
+                  <Logo>JOGAKBO</Logo>
+                </a>
+              </Link>
+            </Col>
+            <Col>
+              {isBrowser && (
+                <SignInBtn onClick={() => setSignIn(true)}>SIGN IN</SignInBtn>
+              )}
+              <Triger onClick={() => setSubMenu(true)}>
+                <div></div>
+                <div></div>
+                <div></div>
+              </Triger>
+            </Col>
+          </HeaderFlexBox>
+        </Head>
+      )}
       {signIn && <SignInModal />}
       {subMenu && <SubMenu />}
     </>

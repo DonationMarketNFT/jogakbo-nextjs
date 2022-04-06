@@ -25,7 +25,7 @@ const Container = styled.div`
   }
   animation: fadeIn 0.7s;
   background: white;
-  z-index: 999;
+  z-index: 99999;
 `;
 
 const Head = styled.div`

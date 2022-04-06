@@ -3,11 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import { media } from "../../styles/theme";
 
 const Container = styled.div`
   width: 350px;
   margin: 150px auto;
-  /* background: lightgray; */
+  ${media.mobile} {
+    margin: 0;
+    padding: 150px 20px;
+    width: 100%;
+    height: 100vh;
+  }
 `;
 const Title = styled.h3`
   margin-bottom: 30px;
