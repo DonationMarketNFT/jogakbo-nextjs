@@ -104,12 +104,13 @@ function CreateCampaign() {
       description: _description,
       campaignId: _campaignId,
       targetAmount: Number(_targetAmount),
+      currentAmount: 0,
       fundingStatus: true,
       refundStatus: false,
     };
     axios
       .post("http://localhost:3000/campaigns/create_campaign", data)
-      .then((res) => console.log(res))
+      .then((res) => alert("정상적으로 제출되었습니다"))
       .catch((e) => console.log(e));
   };
 

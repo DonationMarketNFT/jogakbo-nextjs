@@ -6,6 +6,8 @@ import { media } from "../../../styles/theme";
 import { isLoginedState, showSignInModalState } from "../../../atom";
 import Link from "next/link";
 import { useIsBrowser } from "../../hook/isBrowser";
+import Google from "../OAuth/Google";
+import Kakao from "../OAuth/Kakao";
 
 const Container = styled.div`
   position: fixed;
@@ -144,13 +146,13 @@ const SocialSignUpButtons = styled.div`
 `;
 
 interface ISocial {
-  bgColor: string;
+  bgcolor: string;
 }
 
-const SocialSignUpButton = styled.img<ISocial>`
+const SocialSignUpButton = styled.div<ISocial>`
   width: 44px;
   height: 44px;
-  background: ${(props) => props.bgColor};
+  background: ${(props) => props.bgcolor};
   border-radius: 5px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
   cursor: pointer;
@@ -205,10 +207,18 @@ const SignInModal = () => {
           <span>간편 로그인</span>
         </SocialSignUp>
         <SocialSignUpButtons>
-          <SocialSignUpButton bgColor="#f8f8f8" src="/google.svg" />
-          <SocialSignUpButton bgColor="#fee500" src="/kakao.svg" />
-          <SocialSignUpButton bgColor="#1ec800" src="/naver.svg" />
-          <SocialSignUpButton bgColor="#ffffff" src="/apple.svg" />
+          <SocialSignUpButton bgcolor="#f8f8f8">
+            <Google />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#fee500">
+            <Kakao />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#1ec800">
+            <img src="/naver.svg" />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#ffffff">
+            <img src="/apple.svg" />
+          </SocialSignUpButton>
         </SocialSignUpButtons>
       </Modal>
     </Container>

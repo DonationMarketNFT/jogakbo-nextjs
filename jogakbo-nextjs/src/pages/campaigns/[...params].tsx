@@ -270,6 +270,8 @@ export default function Detail({
       .catch((e) => console.log(e));
   }, []);
 
+  console.log(data);
+
   return (
     <>
       <이미지>hello</이미지>
@@ -280,11 +282,15 @@ export default function Detail({
           <PercentBar />
           {/* <CurrentBar width={`${(data[4] / 10 ** 18 / data[3]) * 100}%`} /> */}
           <CurrentBar
-            width={`${(data[4] / 10 ** 18 / data.targetAmount) * 100}%`}
+            width={`${
+              (data.currentAmount / 10 ** 18 / data.targetAmount) * 100
+            }%`}
           />
-          <Percent>{(data[4] / 10 ** 18 / data.targetAmount) * 100}%</Percent>
+          <Percent>
+            {(data.currentAmount / 10 ** 18 / data.targetAmount) * 100}%
+          </Percent>
           <Klay>
-            (<span>현재 모금된 금액</span>Klay /{" "}
+            (<span>{data.currentAmount}</span>Klay /{" "}
             <span>{data.targetAmount}</span>
             Klay)
           </Klay>
@@ -304,6 +310,7 @@ export default function Detail({
             </ParticipantBox>
             <DescriptionBox>
               <DescriptionTitle>Description</DescriptionTitle>
+              <p>{data.description}</p>
             </DescriptionBox>
           </CampaignRow>
           <CampaignRow style={{ padding: "50px 0" }}>

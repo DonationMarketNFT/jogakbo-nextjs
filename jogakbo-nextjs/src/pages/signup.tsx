@@ -1,9 +1,18 @@
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowCircleLeft,
+  faArrowLeft,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
 import styled from "styled-components";
 import { media } from "../../styles/theme";
+import Google from "../components/OAuth/Google";
+import Kakao from "../components/OAuth/Kakao";
+import { useIsMobile } from "../hook/isMobile";
 
 const Container = styled.div`
   width: 350px;
@@ -88,13 +97,13 @@ const SocialSignUpButtons = styled.div`
 `;
 
 interface ISocial {
-  bgColor: string;
+  bgcolor: string;
 }
 
-const SocialSignUpButton = styled.img<ISocial>`
+const SocialSignUpButton = styled.div<ISocial>`
   width: 44px;
   height: 44px;
-  background: ${(props) => props.bgColor};
+  background: ${(props) => props.bgcolor};
   border-radius: 5px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
   cursor: pointer;
@@ -115,6 +124,8 @@ const signup = () => {
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const isMobile = useIsMobile();
+  const router = useRouter();
 
   const handlePasswordType1 = (e: any) => {
     setPasswordType1(() => {
@@ -147,6 +158,13 @@ const signup = () => {
   return (
     <>
       <Container>
+        {isMobile && (
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            style={{ margin: "20px 0", fontSize: "28px" }}
+            onClick={() => router.back()}
+          />
+        )}
         <Title>회원가입</Title>
         <Form>
           <label htmlFor="email">이메일</label>
@@ -202,10 +220,18 @@ const signup = () => {
           <span>간편 로그인</span>
         </SocialSignUp>
         <SocialSignUpButtons>
-          <SocialSignUpButton bgColor="#f8f8f8" src="/google.svg" />
-          <SocialSignUpButton bgColor="#fee500" src="/kakao.svg" />
-          <SocialSignUpButton bgColor="#1ec800" src="/naver.svg" />
-          <SocialSignUpButton bgColor="#ffffff" src="/apple.svg" />
+          <SocialSignUpButton bgcolor="#f8f8f8">
+            <Google />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#fee500">
+            <Kakao />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#1ec800">
+            <img src="/naver.svg" />
+          </SocialSignUpButton>
+          <SocialSignUpButton bgcolor="#ffffff">
+            <img src="/apple.svg" />
+          </SocialSignUpButton>
         </SocialSignUpButtons>
       </Container>
     </>

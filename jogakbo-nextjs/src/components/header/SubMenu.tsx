@@ -89,9 +89,21 @@ const SubMenu = () => {
       </MenuUl>
       {!isBrowser && (
         <IntroUl>
-          <li>개발자들</li>
-          <li>로드맵</li>
-          <li>Q & A</li>
+          <Link href="/mobile/developer">
+            <a onClick={() => setSubMenu(false)}>
+              <li>개발자들</li>
+            </a>
+          </Link>
+          <Link href="/mobile/roadmap">
+            <a onClick={() => setSubMenu(false)}>
+              <li>로드맵</li>
+            </a>
+          </Link>
+          <Link href="/mobile/qna">
+            <a onClick={() => setSubMenu(false)}>
+              <li>Q & A</li>
+            </a>
+          </Link>
         </IntroUl>
       )}
     </Container>

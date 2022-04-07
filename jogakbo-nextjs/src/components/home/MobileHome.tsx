@@ -8,6 +8,7 @@ import Intro from "./Intro";
 import MobileBanner from "./MobileBanner";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Splash from "./Splash";
 
 const Container = styled.div`
   padding: 30px;
@@ -82,11 +83,11 @@ const MobileHome = () => {
   const [tab, setTab] = useState(true);
   const [login, setLogin] = useRecoilState(isLoginedState);
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       setSplash(false);
-  //     }, 3000);
-  //   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setSplash(false);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -98,7 +99,7 @@ const MobileHome = () => {
 
   return (
     <>
-      {/* {splash && <Splash />} */}
+      {splash && <Splash />}
       {!login && <SignInModal />}
       {/* <SignInModal /> */}
       <Intro />

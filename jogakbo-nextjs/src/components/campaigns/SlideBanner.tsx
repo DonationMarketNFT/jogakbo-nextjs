@@ -35,19 +35,19 @@ const Banner_태그모음 = styled.div`
 `;
 
 interface ITag {
-  bgColor?: string;
+  bgcolor?: string;
 }
 const Banner_태그 = styled.div<ITag>`
   margin-left: 10px;
   padding: 5px 10px;
   background: ${(props) =>
-    props.bgColor === "new"
+    props.bgcolor === "new"
       ? "#3558e6"
-      : props.bgColor === "popular"
+      : props.bgcolor === "popular"
       ? "#f2114d"
-      : props.bgColor === "환경"
+      : props.bgcolor === "환경"
       ? "#abc949"
-      : props.bgColor === "공익"
+      : props.bgcolor === "공익"
       ? "#a665eb"
       : "#e0e0e0"};
   border-radius: 5px;
@@ -69,10 +69,10 @@ const SlideBanner = () => {
     <Container>
       <Banner>
         <Banner_태그모음>
-          {/* <Banner_태그 bgColor="new">new</Banner_태그> */}
-          <Banner_태그 bgColor="환경">환경</Banner_태그>
-          {/* <Banner_태그 bgColor="popular">popular</Banner_태그> */}
-          {/* <Banner_태그 bgColor="공익">공익</Banner_태그> */}
+          {/* <Banner_태그 bgcolor="new">new</Banner_태그> */}
+          <Banner_태그 bgcolor="환경">환경</Banner_태그>
+          {/* <Banner_태그 bgcolor="popular">popular</Banner_태그> */}
+          {/* <Banner_태그 bgcolor="공익">공익</Banner_태그> */}
         </Banner_태그모음>
         <Banner_이름>멸종위기 동물들의 이야기</Banner_이름>
         <Banner_설명>멸종위기 동물들의 이야기에 귀 기울여주세요.</Banner_설명>
