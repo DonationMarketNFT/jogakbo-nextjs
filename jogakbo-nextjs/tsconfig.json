@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/OAuth/Google.js"
+    "src/components/OAuth/Google.js",
+    "src/components/Admin/Posts.js"
   ],
   "exclude": ["node_modules"]
 }
