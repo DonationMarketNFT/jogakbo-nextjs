@@ -4,10 +4,11 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { media } from "../../../styles/theme";
 import { isLoginedState, showSignInModalState } from "../../../atom";
-import Link from "next/link";
 import { useIsBrowser } from "../../hook/isBrowser";
 import Google from "../OAuth/Google";
 import Kakao from "../OAuth/Kakao";
+import Naver from "../OAuth/Naver";
+import Apple from "../OAuth/Apple";
 
 const Container = styled.div`
   position: fixed;
@@ -74,46 +75,6 @@ const Logo = styled.h1`
   }
 `;
 
-const Form = styled.form`
-  width: 100%;
-  margin-bottom: 12px;
-`;
-
-const Input = styled.input`
-  all: unset;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.gray};
-  padding: 13px 12px;
-  margin-bottom: 12px;
-`;
-
-const Button = styled.button`
-  margin: 12px 0;
-  border-radius: 5px;
-  padding: 13px 0;
-  text-align: center;
-  background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor};
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    background: ${(props) => props.theme.gradient};
-  }
-`;
-
-const MoreAction = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
-  font-size: 13px;
-  div {
-    padding: 0 5px;
-    cursor: pointer;
-  }
-`;
-
 const SocialSignUp = styled.div`
   display: flex;
   flex-direction: column;
@@ -142,23 +103,9 @@ const SocialSignUp = styled.div`
 
 const SocialSignUpButtons = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
-`;
-
-interface ISocial {
-  bgcolor: string;
-}
-
-const SocialSignUpButton = styled.div<ISocial>`
-  width: 44px;
-  height: 44px;
-  background: ${(props) => props.bgcolor};
-  border-radius: 5px;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
-  cursor: pointer;
-  &:last-child {
-    padding: 12px;
-  }
+  align-items: center;
 `;
 
 const SignInModal = () => {
@@ -184,41 +131,15 @@ const SignInModal = () => {
           </div>
         </Header>
         <Logo>JOGAKBO</Logo>
-        <Form>
-          <Input type="email" required placeholder="이메일" />
-          <Input type="password" required placeholder="비밀번호" />
-        </Form>
-        <Button onClick={() => setLogin(true)}>로그인</Button>
-        <MoreAction>
-          <div>비밀번호 찾기</div>
-          <div> | </div>
-          <Link href="/signup">
-            <a
-              onClick={() => {
-                setSignIn(false);
-              }}
-            >
-              <div>회원가입</div>
-            </a>
-          </Link>
-        </MoreAction>
         <SocialSignUp>
           <hr />
           <span>간편 로그인</span>
         </SocialSignUp>
         <SocialSignUpButtons>
-          <SocialSignUpButton bgcolor="#f8f8f8">
-            <Google />
-          </SocialSignUpButton>
-          <SocialSignUpButton bgcolor="#fee500">
-            <Kakao />
-          </SocialSignUpButton>
-          <SocialSignUpButton bgcolor="#1ec800">
-            <img src="/naver.svg" />
-          </SocialSignUpButton>
-          <SocialSignUpButton bgcolor="#ffffff">
-            <img src="/apple.svg" />
-          </SocialSignUpButton>
+          <Google />
+          <Kakao />
+          <Naver />
+          <Apple />
         </SocialSignUpButtons>
       </Modal>
     </Container>

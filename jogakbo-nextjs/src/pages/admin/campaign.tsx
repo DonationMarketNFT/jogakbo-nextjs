@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Posts from "../../components/Admin/Posts";
-import Pagination from "../../components/Admin/Pagination";
-import List from "../../components/Admin/Posts";
+import Posts from "../../components/admin/Posts";
+import Pagination from "../../components/admin/Pagination";
+import List from "../../components/admin/Posts";
 import AdminHeader from "../../components/header/AdminHeader";
 
 const Container = styled.div`
