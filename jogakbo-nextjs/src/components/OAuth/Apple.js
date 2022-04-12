@@ -32,7 +32,7 @@ function Apple() {
 
   return (
     <Container onClick={() => setLogin(true)}>
-      <Logo src="/apple.svg" />
+      <Logo src="oauth/apple.svg" />
       <Text>애플 로그인</Text>
     </Container>
   );

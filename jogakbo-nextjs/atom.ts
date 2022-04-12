@@ -46,6 +46,11 @@ const subMenuState = atom<boolean>({
   default: false,
 });
 
+const VerifyModalState = atom<boolean>({
+  key: "verifyModalState",
+  default: false,
+});
+
 export {
   showSignInModalState,
   showConnectWalletModalState,
@@ -55,4 +60,5 @@ export {
   qrValueState,
   modalPropsState,
   subMenuState,
+  VerifyModalState,
 };

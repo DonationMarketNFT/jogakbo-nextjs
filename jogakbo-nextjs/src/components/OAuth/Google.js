@@ -68,7 +68,7 @@ scope=https://www.googleapis.com/auth/userinfo.email`;
 
   return (
     <Container id="oAuthBtn" onClick={oAuthHandler}>
-      <Logo src="/google.svg" />
+      <Logo src="oauth/google.svg" />
       <Text>구글 로그인</Text>
     </Container>
   );

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Posts from "../../components/admin/Posts";
 import Pagination from "../../components/admin/Pagination";
-import List from "../../components/admin/Posts";
+import Posts from "../../components/admin/Posts";
 import AdminHeader from "../../components/header/AdminHeader";
 
 const Container = styled.div`
@@ -13,24 +12,26 @@ const Container = styled.div`
   padding-left: 300px;
 `;
 
-const 페이지타이틀 = styled.h3`
-  margin-bottom: 30px;
+const PageTitle = styled.h4`
+  font-size: 32px;
+  margin-bottom: 15px;
 `;
 
-const 컨텐츠 = styled.div``;
-const 타이틀 = styled.h4`
-  margin-bottom: 20px;
+const PageSubTitle = styled.div`
+  margin-bottom: 15px;
 `;
 
-const Flex = styled.div`
+const Board = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
-const CampaignPage = () => {
+const Verifing = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(10);
 
   useEffect(() => {
     async function fetchData() {
@@ -52,24 +53,25 @@ const CampaignPage = () => {
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
-
   return (
     <>
       <AdminHeader />
       <Container>
-        <페이지타이틀>Campaign</페이지타이틀>
-        <컨텐츠>
-          <타이틀>캠페인 요청 리스트</타이틀>
+        <PageTitle>캠페인 신청 리스트</PageTitle>
+        <PageSubTitle>
+          홈페이지를 통해 신청된 캠페인을 오래된 순으로 보여줍니다
+        </PageSubTitle>
+        <Board>
           <Posts posts={currentPosts(posts)} loading={loading}></Posts>
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={posts.length}
             paginate={setCurrentPage}
           ></Pagination>
-        </컨텐츠>
+        </Board>
       </Container>
     </>
   );
 };
 
-export default CampaignPage;
+export default Verifing;

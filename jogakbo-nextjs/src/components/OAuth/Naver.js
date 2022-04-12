@@ -30,7 +30,7 @@ function Naver() {
 
   return (
     <Container onClick={() => setLogin(true)}>
-      <Logo src="/naver.svg" />
+      <Logo src="oauth/naver.svg" />
       <Text>네이버 로그인</Text>
     </Container>
   );

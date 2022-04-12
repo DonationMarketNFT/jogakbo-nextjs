@@ -86,6 +86,11 @@ const SubMenu = () => {
             <li>Create Campaign</li>
           </a>
         </Link>
+        <Link href="/mypage">
+          <a onClick={() => setSubMenu(false)}>
+            <li>My page</li>
+          </a>
+        </Link>
       </MenuUl>
       {!isBrowser && (
         <IntroUl>

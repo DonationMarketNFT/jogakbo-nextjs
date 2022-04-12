@@ -99,7 +99,7 @@ const MobileHome = () => {
 
   return (
     <>
-      {splash && <Splash />}
+      {/* {splash && <Splash />} */}
       {!login && <SignInModal />}
       {/* <SignInModal /> */}
       <Intro />

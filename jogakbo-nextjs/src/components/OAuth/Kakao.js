@@ -40,7 +40,7 @@ const Kakao = () => {
         setLogin(true);
       }}
     >
-      <Logo src="/kakao.svg" />
+      <Logo src="oauth/kakao.svg" />
       <Text>카카오 로그인</Text>
     </Container>
   );

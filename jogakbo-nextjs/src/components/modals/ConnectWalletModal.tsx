@@ -10,6 +10,7 @@ import {
   qrValueState,
   showConnectWalletModalState,
 } from "../../../atom";
+import { useIsMobile } from "../../hook/isMobile";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -29,7 +30,7 @@ const ModalContent = styled.div`
   background: gray;
   border-radius: 10px;
   transition: all 0.2 ease-in-out;
-  width: 600px;
+  width: 500px;
   padding: 44px 51px;
   ${media.tablet} {
     width: 520px;
@@ -86,7 +87,7 @@ const ConnectWalletCard = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 140px;
+  width: 400px;
   height: 160px;
   padding: 0 20px;
   box-sizing: border-box;
@@ -105,6 +106,9 @@ const ConnectWalletCard = styled.div`
   ${media[768]} {
     margin-bottom: 20px;
   }
+  ${media.mobile} {
+    width: 230px;
+  }
 `;
 
 const QRContainer = styled.div`
@@ -119,6 +123,7 @@ function ConnectWalletModal() {
   const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
   const [modalProps, setModalProps] = useRecoilState(modalPropsState);
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
+  const isMobile = useIsMobile();
 
   return (
     <ModalWrapper onClick={() => setShowModal(false)}>
@@ -129,7 +134,7 @@ function ConnectWalletModal() {
       >
         <ConnectWalletContainer>
           <ConnectWalletModalHeader>
-            <h5>title</h5>
+            <h5>Connect Wallet</h5>
             <button>
               <FontAwesomeIcon
                 onClick={() => {
@@ -143,20 +148,23 @@ function ConnectWalletModal() {
           <ConnectWalletModalContent>
             {qrvalue == "DEFAULT" ? (
               <>
+                {/* {!isMobile && (
+                  <ConnectWalletCard>
+                    <img src="wallet/kaikas-logo.svg" />
+                    <h5>Kaikas </h5>
+                  </ConnectWalletCard>
+                )}
                 <ConnectWalletCard>
-                  <img src="/metamask-logo.svg" />
+                  <img src="wallet/metamask-logo.svg" />
                   <h5>Metamask </h5>
-                </ConnectWalletCard>
-                <ConnectWalletCard>
-                  <img src="/kaikas-logo.svg" />
-                  <h5>Kaikas </h5>
-                </ConnectWalletCard>
+                </ConnectWalletCard> */}
+
                 <ConnectWalletCard
                   onClick={() => {
                     modalProps.onConfirm();
                   }}
                 >
-                  <img src="/klip-logo.svg" />
+                  <img src="wallet/klip-logo.svg" />
                   <h5>Klip </h5>
                 </ConnectWalletCard>
               </>

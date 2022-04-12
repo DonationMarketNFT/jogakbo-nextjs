@@ -62,8 +62,8 @@ const ProfileImage = styled.div<IProfile>`
     height: 220px;
   }
   ${media.mobile} {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
   }
 `;
 
@@ -72,7 +72,7 @@ const ProfileInfoBox = styled.div`
   margin: 10px;
   ${media.mobile} {
     width: 100%;
-    padding: 0 10px;
+    padding: 0 30px;
   }
 `;
 

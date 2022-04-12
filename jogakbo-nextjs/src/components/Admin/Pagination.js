@@ -1,18 +1,22 @@
 import styled from "styled-components";
 
 const PageUl = styled.ul`
+  position: fixed;
+  bottom: 30px;
+  left: 300px;
+  right: 30px;
   display: flex;
-  padding: 1px;
-  width: 150px;
+  justify-content: center;
+  padding: 3px;
   text-align: center;
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const PageLi = styled.li`
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
-  width: 25px;
+  width: 50px;
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);
