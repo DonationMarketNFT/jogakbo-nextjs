@@ -134,7 +134,7 @@ function ConnectWalletModal() {
       >
         <ConnectWalletContainer>
           <ConnectWalletModalHeader>
-            <h5>Connect Wallet</h5>
+            <h5>{modalProps.title}</h5>
             <button>
               <FontAwesomeIcon
                 onClick={() => {
