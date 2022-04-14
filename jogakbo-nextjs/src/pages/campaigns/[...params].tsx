@@ -296,18 +296,17 @@ export default function Detail({
   const [title, id] = params || [];
 
   const changeState = () => {
-    let patchData = {
-      fundingStatus: false,
-      refundStatus: true,
-    };
     axios
-      .patch(`http://localhost:3000/campaigns/campaign/${id}`, patchData)
+      .patch(`http://localhost:3000/campaigns/campaign/${id}`, {
+        fundingStatus: !data.fundingSatus,
+        refundStatus: !data.refundStatus,
+      })
       .then((res) => alert(res.data))
       .catch((e) => console.log(e));
   };
 
   useEffect(() => {
-    axios(`http://localhost:3000/campaigns/campaign_all`)
+    axios("http://localhost:3000/campaigns/campaign_all")
       .then((res) => {
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].id === Number(id)) {
@@ -328,7 +327,6 @@ export default function Detail({
         <타이틀>
           <카테고리 bgcolor={data.category}>{data.category}</카테고리>
           <캠페인이름>{title}</캠페인이름>
-          {data.refundStatus ? "refund" : "funding"}
         </타이틀>
         <Bars>
           <PercentBar />
@@ -347,7 +345,8 @@ export default function Detail({
             Klay)
           </Klay>
         </Bars>
-        <RefundButton onClick={changeState}>환불 상태로 변경하기</RefundButton>
+        <div>현재상태:{data.refundStatus ? "refund" : "funding"}</div>
+        <RefundButton onClick={changeState}>change status</RefundButton>
         <CampaignBox>
           <CampaignRow>
             <ParticipantBox>
