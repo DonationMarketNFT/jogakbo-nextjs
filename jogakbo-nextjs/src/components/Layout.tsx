@@ -9,11 +9,7 @@ export default function Layout({ children }: any) {
 
   return (
     <>
-      {router.pathname.slice(0, 6) === "/admin" ? null : isMobile ? (
-        <MobileHeader />
-      ) : (
-        <BrowserHeader />
-      )}
+      {router.pathname.slice(0, 6) !== "/admin" && <BrowserHeader />}
       <div>{children}</div>
     </>
   );

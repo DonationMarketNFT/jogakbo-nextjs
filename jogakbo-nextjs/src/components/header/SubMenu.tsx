@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { subMenuState } from "../../../atom";
 import { useIsBrowser } from "../../hook/isBrowser";
+import { useIsMobile } from "../../hook/isMobile";
 
 const Container = styled.div`
   position: fixed;
@@ -62,6 +63,7 @@ const IntroUl = styled.ul`
 const SubMenu = () => {
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
   const isBrowser = useIsBrowser();
+  const isMobile = useIsMobile();
 
   return (
     <Container>

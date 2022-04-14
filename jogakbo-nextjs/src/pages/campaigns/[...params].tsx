@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DeprecatedAccount } from "caver-js";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/dist/client/router";
 import { useEffect } from "react";
@@ -30,7 +31,35 @@ const Container = styled.div`
   }
 `;
 
-const 캠페인이름 = styled.h3`
+const 타이틀 = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+interface ICategory {
+  bgcolor?: string;
+}
+
+const 카테고리 = styled.div<ICategory>`
+  margin-right: 5px;
+  padding: 5px 10px;
+  background: ${(props) =>
+    props.bgcolor === "new"
+      ? "#3558e6"
+      : props.bgcolor === "popular"
+      ? "#f2114d"
+      : props.bgcolor === "환경"
+      ? "#abc949"
+      : props.bgcolor === "공익"
+      ? "#a665eb"
+      : props.bgcolor === "사회"
+      ? "#e8e854"
+      : "#e0e0e0"};
+  border-radius: 5px;
+  color: white;
+`;
+
+const 캠페인이름 = styled.div`
   margin: 20px 0;
   font-size: 38px;
 `;
@@ -71,6 +100,14 @@ const Percent = styled.div`
 const Klay = styled.div`
   margin-top: 10px;
   text-align: right;
+`;
+
+const RefundButton = styled.div`
+  background: red;
+  color: white;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
 `;
 
 const CampaignBox = styled.div`
@@ -258,6 +295,17 @@ export default function Detail({
   const router = useRouter();
   const [title, id] = params || [];
 
+  const changeState = () => {
+    let patchData = {
+      fundingStatus: false,
+      refundStatus: true,
+    };
+    axios
+      .patch(`http://localhost:3000/campaigns/campaign/${id}`, patchData)
+      .then((res) => alert(res.data))
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     axios(`http://localhost:3000/campaigns/campaign_all`)
       .then((res) => {
@@ -277,7 +325,11 @@ export default function Detail({
       <이미지>hello</이미지>
       <Container>
         <Seo title={title} />
-        <캠페인이름>{title}</캠페인이름>
+        <타이틀>
+          <카테고리 bgcolor={data.category}>{data.category}</카테고리>
+          <캠페인이름>{title}</캠페인이름>
+          {data.refundStatus ? "refund" : "funding"}
+        </타이틀>
         <Bars>
           <PercentBar />
           {/* <CurrentBar width={`${(data[4] / 10 ** 18 / data[3]) * 100}%`} /> */}
@@ -295,6 +347,7 @@ export default function Detail({
             Klay)
           </Klay>
         </Bars>
+        <RefundButton onClick={changeState}>환불 상태로 변경하기</RefundButton>
         <CampaignBox>
           <CampaignRow>
             <ParticipantBox>

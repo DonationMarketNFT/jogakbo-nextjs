@@ -46,8 +46,8 @@ const Modal = styled.div<IModal>`
     width: ${(props) => (props.isBrowser ? "360px" : "100%")};
     height: ${(props) => (props.isBrowser ? "432px" : "100%")};
     border-radius: ${(props) => (props.isBrowser ? "10px" : "0")};
-    justify-content: center;
-    padding-bottom: 100px;
+    justify-content: space-between;
+    padding-bottom: 300px;
   }
 `;
 
@@ -55,11 +55,14 @@ const Header = styled.header`
   display: flex;
   justify-content: flex-end;
   height: 5%;
-  div {
+  svg {
     cursor: pointer;
+    ${media.mobile} {
+      font-size: 28px;
+    }
   }
   ${media.mobile} {
-    display: none;
+    margin-bottom: 100px;
   }
 `;
 
@@ -114,35 +117,38 @@ const SignInModal = () => {
   const isBrowser = useIsBrowser();
 
   return (
-    <Container onClick={() => setSignIn(false)}>
-      <Modal
-        isBrowser={isBrowser}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <Header>
-          <div
-            onClick={() => {
-              setSignIn(false);
+    <>
+      {!login && (
+        <Container onClick={() => setSignIn(false)}>
+          <Modal
+            isBrowser={isBrowser}
+            onClick={(e) => {
+              e.stopPropagation();
             }}
           >
-            {isBrowser && <FontAwesomeIcon icon={faTimes} />}
-          </div>
-        </Header>
-        <Logo>JOGAKBO</Logo>
-        <SocialSignUp>
-          <hr />
-          <span>간편 로그인</span>
-        </SocialSignUp>
-        <SocialSignUpButtons>
-          <Google />
-          <Kakao />
-          <Naver />
-          <Apple />
-        </SocialSignUpButtons>
-      </Modal>
-    </Container>
+            <Header>
+              <FontAwesomeIcon
+                onClick={() => {
+                  setSignIn(false);
+                }}
+                icon={faTimes}
+              />
+            </Header>
+            <Logo>JOGAKBO</Logo>
+            <SocialSignUp>
+              <hr />
+              <span>간편 로그인</span>
+            </SocialSignUp>
+            <SocialSignUpButtons>
+              <Google />
+              <Kakao />
+              <Naver />
+              <Apple />
+            </SocialSignUpButtons>
+          </Modal>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -1,14 +1,11 @@
 import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import styled, { useTheme } from "styled-components";
-import { showSignInModalState } from "../../../atom";
 import { media } from "../../../styles/theme";
-import SignInModal from "../modals/SignInModal";
-import Intro from "./Intro";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import HomeBanner from "./HomeBanner";
 
 const BrowserContainer = styled.div`
   width: 1100px;
@@ -169,7 +166,7 @@ const BrowserHome: NextPage = () => {
 
   return (
     <>
-      <Intro />
+      <HomeBanner />
       {/* <BrowserHome /> */}
       <BrowserContainer>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">

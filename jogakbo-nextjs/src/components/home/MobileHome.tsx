@@ -4,11 +4,11 @@ import styled, { useTheme } from "styled-components";
 import { isLoginedState } from "../../../atom";
 import { media } from "../../../styles/theme";
 import SignInModal from "../modals/SignInModal";
-import Intro from "./Intro";
-import MobileBanner from "./MobileBanner";
+import Intro from "./HomeBanner";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Splash from "./Splash";
+import HomeBanner from "./HomeBanner";
+import MobileBanner from "./MobileBanner";
 
 const Container = styled.div`
   padding: 30px;
@@ -99,10 +99,8 @@ const MobileHome = () => {
 
   return (
     <>
-      {/* {splash && <Splash />} */}
-      {!login && <SignInModal />}
-      {/* <SignInModal /> */}
-      <Intro />
+      {/* {!login && <SignInModal />} */}
+      <HomeBanner />
       <Container>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
           <Title>✔️ 서비스 특징</Title>

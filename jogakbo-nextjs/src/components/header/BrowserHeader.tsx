@@ -1,10 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import {
-  faToggleOn,
-  faToggleOff,
-  faHamburger,
-} from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -12,13 +5,19 @@ import { media } from "../../../styles/theme";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import SignInModal from "../modals/SignInModal";
-import { isLoginedState, showSignInModalState } from "../../../atom";
+import {
+  isLoginedState,
+  showSignInModalState,
+  subMenuState,
+} from "../../../atom";
+import SubMenu from "./SubMenu";
 
 const Head = styled(motion.header)`
   position: fixed;
   top: 0;
   width: 100%;
   height: 80px;
+  z-index: 999;
 `;
 
 const headerVariants = {
@@ -57,7 +56,7 @@ const Logo = styled.h1`
   font-weight: 700;
 `;
 
-const SubMenu = styled.ul`
+const Menu = styled.ul`
   display: flex;
   align-items: center;
   li {
@@ -67,6 +66,9 @@ const SubMenu = styled.ul`
     &:hover {
       color: ${(prop) => prop.theme.gray};
     }
+  }
+  ${media[768]} {
+    display: none;
   }
 `;
 
@@ -84,23 +86,35 @@ const SignInBtn = styled.div`
     color: ${(props) => props.theme.bgColor};
   }
 `;
-
-const ModeBtn = styled.div`
+const Triger = styled.div`
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   margin-left: 15px;
-  font-size: 20px;
+  width: 36px;
+  height: 26px;
   cursor: pointer;
+  div {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: black;
+  }
+  div:nth-child(2) {
+    width: 80%;
+  }
+  ${media[768]} {
+    display: flex;
+  }
 `;
 
 const BrowserHeader = () => {
   const headerAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
-  const [mode, setMode] = useState(false);
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
-
-  const toggleMode = () => {
-    setMode((prev) => !prev);
-  };
+  const [subMenu, setSubMenu] = useRecoilState(subMenuState);
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -124,7 +138,7 @@ const BrowserHeader = () => {
             </Link>
           </Col>
           <Col>
-            <SubMenu>
+            <Menu>
               <Link href="/campaigns">
                 <a>
                   <li>Campaigns</li>
@@ -135,7 +149,7 @@ const BrowserHeader = () => {
                   <li>Create Campaign</li>
                 </a>
               </Link>
-            </SubMenu>
+            </Menu>
           </Col>
           <Col>
             {login ? (
@@ -145,19 +159,18 @@ const BrowserHeader = () => {
                 </a>
               </Link>
             ) : (
-              <SignInBtn onClick={() => setSignIn(true)}>SIGN IN</SignInBtn>
+              <SignInBtn onClick={() => setSignIn(true)}>로그인</SignInBtn>
             )}
-            {/* <ModeBtn onClick={() => toggleMode()} className="mr-3">
-              {mode ? (
-                <FontAwesomeIcon icon={faToggleOff} />
-              ) : (
-                <FontAwesomeIcon icon={faToggleOn} />
-              )}
-            </ModeBtn> */}
+            <Triger onClick={() => setSubMenu(true)}>
+              <div></div>
+              <div></div>
+              <div></div>
+            </Triger>
           </Col>
         </HeaderFlexBox>
       </Head>
-      {signIn ? <SignInModal /> : null}
+      {signIn && <SignInModal />}
+      {subMenu && <SubMenu />}
     </>
   );
 };

@@ -61,6 +61,13 @@ const Form = styled.form`
     margin-bottom: 10px;
   }
 `;
+
+const Select = styled.select`
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  width: 150px;
+`;
+const Option = styled.option``;
 const Input = styled.input`
   margin-bottom: 10px;
   padding: 10px 20px;
@@ -86,6 +93,7 @@ function CreateCampaign() {
   const inputRef = createRef();
   const [get, setGet] = useState([]);
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState<number>(0);
 
@@ -93,8 +101,8 @@ function CreateCampaign() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     _name: string,
     _description: string,
-    _campaignId: number,
     _targetAmount: number,
+    _category: string,
     _fundingStatus?: boolean,
     _refundStatus?: boolean
   ) => {
@@ -102,11 +110,11 @@ function CreateCampaign() {
     let data = {
       name: _name,
       description: _description,
-      campaignId: _campaignId,
       targetAmount: Number(_targetAmount),
       currentAmount: 0,
       fundingStatus: true,
       refundStatus: false,
+      category: _category,
     };
     axios
       .post("http://localhost:3000/campaigns/create_campaign", data)
@@ -132,6 +140,20 @@ function CreateCampaign() {
           <p> 기타 문의사항은 이메일로 문의해주세요</p>
         </공지사항>
         <Form>
+          <label htmlFor="category">카테고리</label>
+          <Select
+            value={category}
+            onChange={(e: any) => {
+              setCategory(e.target.value);
+            }}
+            id="category"
+            required
+          >
+            <Option value="환경">환경</Option>
+            <Option value="공익">공익</Option>
+            <Option value="사회">사회</Option>
+            <option></option>
+          </Select>
           <label htmlFor="name">캠페인 이름</label>
           <Input
             value={name}
@@ -168,7 +190,7 @@ function CreateCampaign() {
             placeholder="목표 모금 금액을 입력해주세요"
             required
           />
-          <Button onClick={(e) => testPost2(e, name, desc, 1, amount)}>
+          <Button onClick={(e) => testPost2(e, name, desc, amount, category)}>
             제출하기
           </Button>
         </Form>
