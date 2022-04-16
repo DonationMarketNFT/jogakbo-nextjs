@@ -46,6 +46,9 @@ const Title = styled.h5`
   color: white;
   font-size: 42px;
   text-shadow: rgba(0, 0, 0, 0.3) 3px 3px;
+  span {
+    font-family: "Megrim", cursive;
+  }
   ${media.mobile} {
     font-size: 28px;
   }
@@ -60,8 +63,10 @@ export default function HomeBanner() {
   return (
     <Banner>
       <Contents>
-        <Logo src="/logo.png" />
-        <Title>Welcome to JOGAKBO</Title>
+        {/* <Logo src="/logo.png" /> */}
+        <Title>
+          Welcome to <span>JOGAKBO</span>
+        </Title>
         <SubTitle>
           <p>조각보를 설명할 좋은 문구를 고민중입니다...🤔</p>
           <p>조각보를 설명할 좋은 문구를 고민중입니다...🤔</p>

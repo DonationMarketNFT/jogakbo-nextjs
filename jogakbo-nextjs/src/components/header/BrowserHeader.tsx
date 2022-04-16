@@ -51,9 +51,14 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled.h1`
-  font-size: 28px;
-  font-weight: 700;
+const Logo = styled.div`
+  width: 130px;
+  height: 30px;
+  background: url("/headerlogo.png") center center;
+  background-size: cover;
+  /* font-family: "Megrim", cursive; */
+  /* font-size: 28px;
+  font-weight: 700; */
 `;
 
 const Menu = styled.ul`
@@ -82,8 +87,8 @@ const SignInBtn = styled.div`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.gradient};
-    color: ${(props) => props.theme.bgColor};
+    /* background: ${(props) => props.theme.gradient}; */
+    /* color: ${(props) => props.theme.bgColor}; */
   }
 `;
 const Triger = styled.div`
@@ -133,7 +138,7 @@ const BrowserHeader = () => {
           <Col>
             <Link href="/">
               <a>
-                <Logo>JOGAKBO</Logo>
+                <Logo></Logo>
               </a>
             </Link>
           </Col>
@@ -141,12 +146,12 @@ const BrowserHeader = () => {
             <Menu>
               <Link href="/campaigns">
                 <a>
-                  <li>Campaigns</li>
+                  <li>캠페인 둘러보기</li>
                 </a>
               </Link>
               <Link href="/campaign">
                 <a>
-                  <li>Create Campaign</li>
+                  <li>캠페인 생성하기</li>
                 </a>
               </Link>
             </Menu>
