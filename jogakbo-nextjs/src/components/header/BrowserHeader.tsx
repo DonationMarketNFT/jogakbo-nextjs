@@ -51,14 +51,10 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled.div`
-  width: 130px;
-  height: 30px;
-  background: url("/headerlogo.png") center center;
-  background-size: cover;
-  /* font-family: "Megrim", cursive; */
-  /* font-size: 28px;
-  font-weight: 700; */
+const Logo = styled.h1`
+  color: white;
+  font-family: "Gugi", cursive;
+  font-size: 28px;
 `;
 
 const Menu = styled.ul`
@@ -138,7 +134,7 @@ const BrowserHeader = () => {
           <Col>
             <Link href="/">
               <a>
-                <Logo></Logo>
+                <Logo>조각보</Logo>
               </a>
             </Link>
           </Col>

@@ -11,9 +11,16 @@ const SplashScreen = styled.div`
   align-items: center;
   background: white;
   z-index: 99999;
+  img {
+    width: 120px;
+  }
 `;
 const Splash = () => {
-  return <SplashScreen>Splash</SplashScreen>;
+  return (
+    <SplashScreen>
+      <img src="/splash.png" />
+    </SplashScreen>
+  );
 };
 
 export default Splash;

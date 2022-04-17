@@ -34,7 +34,7 @@ const Contents = styled.div`
 `;
 
 const Logo = styled.img`
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   width: 50px;
   ${media.mobile} {
     width: 100px;
@@ -42,12 +42,12 @@ const Logo = styled.img`
 `;
 
 const Title = styled.h5`
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   color: white;
   font-size: 42px;
-  text-shadow: rgba(0, 0, 0, 0.3) 3px 3px;
+  /* text-shadow: rgba(0, 0, 0, 0.3) 3px 3px; */
   span {
-    font-family: "Megrim", cursive;
+    font-family: "Gugi", cursive;
   }
   ${media.mobile} {
     font-size: 28px;
@@ -63,9 +63,9 @@ export default function HomeBanner() {
   return (
     <Banner>
       <Contents>
-        {/* <Logo src="/logo.png" /> */}
+        <Logo src="/jogakbo2.png" />
         <Title>
-          Welcome to <span>JOGAKBO</span>
+          <span>조각보</span>
         </Title>
         <SubTitle>
           <p>조각보를 설명할 좋은 문구를 고민중입니다...🤔</p>
