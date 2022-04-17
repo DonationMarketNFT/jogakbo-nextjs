@@ -6,7 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { media } from "../../../styles/theme";
+import Loading from "../../components/Loading";
 import Seo from "../../components/Seo";
+import Splash from "../../components/home/Splash";
 
 const 이미지 = styled.div`
   background-image: url(/멸종위기.jpg);
@@ -112,7 +114,7 @@ const RefundButton = styled.div`
 
 const CampaignBox = styled.div`
   display: flex;
-  width: 935px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 30px;
   border: 1px solid lightgray;
@@ -121,11 +123,9 @@ const CampaignBox = styled.div`
     margin: 0 30px;
     padding: 0 30px;
     margin-bottom: 30px;
-    width: 100%;
   }
   ${media.mobile} {
     padding: 0 10px;
-    width: 100%;
   }
 `;
 
@@ -288,32 +288,39 @@ const DonationButton = styled.button`
   }
 `;
 
+const DEFAULT_DATA = new Array();
+
 export default function Detail({
   params,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>(DEFAULT_DATA);
   const router = useRouter();
   const [title, id] = params || [];
 
   const changeState = () => {
     axios
-      .patch(`http://localhost:3000/campaigns/campaign/${id}`, {
+      .patch(`http://localhost:3000/campaigns/campaign/fundingstatus/${id}`, {
         fundingStatus: !data.fundingSatus,
-        refundStatus: !data.refundStatus,
       })
-      .then((res) => alert(res.data))
-      .catch((e) => console.log(e));
+      .then(() =>
+        axios
+          .patch(
+            `http://localhost:3000/campaigns/campaign/refundstatus/${id}`,
+            {
+              refundStatus: !data.refundStatus,
+            }
+          )
+          .then((res) => {
+            alert(`상태가 변경되었습니다`);
+            location.reload();
+          })
+          .catch((e) => console.log(e))
+      );
   };
 
   useEffect(() => {
-    axios("http://localhost:3000/campaigns/campaign_all")
-      .then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i].id === Number(id)) {
-            setData(res.data[i]);
-          }
-        }
-      })
+    axios(`http://localhost:3000/campaigns/campaign/${id}`)
+      .then((res) => setData(res.data))
       .catch((e) => console.log(e));
   }, []);
 
@@ -332,13 +339,9 @@ export default function Detail({
           <PercentBar />
           {/* <CurrentBar width={`${(data[4] / 10 ** 18 / data[3]) * 100}%`} /> */}
           <CurrentBar
-            width={`${
-              (data.currentAmount / 10 ** 18 / data.targetAmount) * 100
-            }%`}
+            width={`${(data.currentAmount / data.targetAmount) * 100}%`}
           />
-          <Percent>
-            {(data.currentAmount / 10 ** 18 / data.targetAmount) * 100}%
-          </Percent>
+          <Percent>{(data.currentAmount / data.targetAmount) * 100}%</Percent>
           <Klay>
             (<span>{data.currentAmount}</span>Klay /{" "}
             <span>{data.targetAmount}</span>

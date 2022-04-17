@@ -37,10 +37,9 @@ const Verifing = () => {
     async function fetchData() {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:3000/campaigns/campaign_all"
+        "http://localhost:3000/pre-campaigns/campaign_all"
       );
       setPosts(response.data);
-      //   setPosts(posts.reverse());
       setLoading(false);
     }
     fetchData();

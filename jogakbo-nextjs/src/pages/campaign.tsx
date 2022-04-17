@@ -117,7 +117,7 @@ function CreateCampaign() {
       category: _category,
     };
     axios
-      .post("http://localhost:3000/campaigns/create_campaign", data)
+      .post("http://localhost:3000/pre-campaigns/create_campaign", data)
       .then((res) => alert("정상적으로 제출되었습니다"))
       .catch((e) => console.log(e));
   };

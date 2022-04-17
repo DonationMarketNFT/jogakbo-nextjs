@@ -92,20 +92,14 @@ const VerifyCampaignModal = (props: { id: number; name: string }) => {
   const [data, setData] = useState<IDate>();
 
   useEffect(() => {
-    axios(`http://localhost:3000/campaigns/campaign_all`)
-      .then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i].id === Number(props.id)) {
-            setData(res.data[i]);
-          }
-        }
-      })
+    axios(`http://localhost:3000/pre-campaigns/campaign/${props.id}`)
+      .then((res) => setData(res.data))
       .catch((e) => console.log(e));
   }, []);
 
   const deleteData = () => {
     axios
-      .delete(`http://localhost:3000/campaigns/campaign/delete/${props.id}`)
+      .delete(`http://localhost:3000/pre-campaigns/campaign/delete/${props.id}`)
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
     setShowModal(false);
