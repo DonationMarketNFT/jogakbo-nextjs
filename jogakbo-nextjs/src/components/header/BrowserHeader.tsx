@@ -11,6 +11,7 @@ import {
   subMenuState,
 } from "../../../atom";
 import SubMenu from "./SubMenu";
+import { useRouter } from "next/dist/client/router";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -29,7 +30,7 @@ const headerVariants = {
   scroll: {
     backgroundColor: "rgba(255,255,255,0.25)",
     backdropFilter: "blur(7.5px)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
+    border: "1px solid rgba(225, 225, 225, 0.2)",
   },
 };
 
@@ -51,26 +52,56 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled.h1`
-  color: white;
+const Logo = styled(motion.h1)`
   font-family: "Gugi", cursive;
   font-size: 28px;
+  color: white;
+  transition: all 0.2s ease-in-out;
 `;
+
+const logoVariants = {
+  top: {
+    color: "white",
+    textShadow: "none",
+  },
+  scroll: {
+    color: "black",
+    textShadow: "#c1c1c1 0.3px 0.3px",
+  },
+};
 
 const Menu = styled.ul`
   display: flex;
   align-items: center;
   li {
+    position: relative;
     padding: 15px;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
     &:hover {
-      color: ${(prop) => prop.theme.gray};
+      color: #111;
     }
   }
   ${media[768]} {
     display: none;
   }
+`;
+
+const Circle = styled(motion.span)`
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  /* border-radius: 5px; */
+  /* bottom: -5px; */
+  /* left: 0;
+  right: 0; */
+  /* margin: 0 auto; */
+  background: #d14d4d;
 `;
 
 const SignInBtn = styled.div`
@@ -111,7 +142,9 @@ const Triger = styled.div`
 `;
 
 const BrowserHeader = () => {
+  const router = useRouter();
   const headerAnimation = useAnimation();
+  const logoAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
@@ -121,11 +154,13 @@ const BrowserHeader = () => {
     scrollY.onChange(() => {
       if (scrollY.get() > 20) {
         headerAnimation.start("scroll");
+        logoAnimation.start("scroll");
       } else {
         headerAnimation.start("top");
+        logoAnimation.start("top");
       }
     });
-  }, [scrollY, headerAnimation]);
+  }, [scrollY, headerAnimation, logoAnimation]);
 
   return (
     <>
@@ -134,7 +169,14 @@ const BrowserHeader = () => {
           <Col>
             <Link href="/">
               <a>
-                <Logo>조각보</Logo>
+                <Logo
+                  variants={logoVariants}
+                  animate={logoAnimation}
+                  initial={"top"}
+                  whileHover={"hover"}
+                >
+                  조각보
+                </Logo>
               </a>
             </Link>
           </Col>
@@ -142,12 +184,22 @@ const BrowserHeader = () => {
             <Menu>
               <Link href="/campaigns">
                 <a>
-                  <li>캠페인 둘러보기</li>
+                  <li>
+                    캠페인 둘러보기
+                    {router.pathname === "/campaigns" && (
+                      <Circle layoutId="circle" />
+                    )}
+                  </li>
                 </a>
               </Link>
               <Link href="/campaign">
                 <a>
-                  <li>캠페인 생성하기</li>
+                  <li>
+                    캠페인 생성하기
+                    {router.pathname === "/campaign" && (
+                      <Circle layoutId="circle" />
+                    )}
+                  </li>
                 </a>
               </Link>
             </Menu>

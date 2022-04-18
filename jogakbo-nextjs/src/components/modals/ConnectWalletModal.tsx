@@ -104,6 +104,7 @@ const ConnectWalletCard = styled.div`
     transform: translateY(-5px);
   }
   ${media[768]} {
+    width: 260px;
     margin-bottom: 20px;
   }
   ${media.mobile} {
