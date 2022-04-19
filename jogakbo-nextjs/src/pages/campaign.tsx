@@ -80,9 +80,10 @@ const Input = styled.input`
 const Button = styled.button`
   margin: 30px 0;
   padding: 30px;
-  background: pink;
+  background: #f49a4a;
   border-radius: 10px;
   text-align: center;
+  color: white;
   cursor: pointer;
 `;
 

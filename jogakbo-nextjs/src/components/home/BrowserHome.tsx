@@ -105,7 +105,7 @@ const DevProfile = styled.div`
 const Question = styled(motion.li)`
   margin-bottom: 10px;
   padding: 20px 30px;
-  background: ${(props) => props.theme.gray};
+  background: #f49a4a;
   border-radius: 10px;
   color: white;
   font-size: 18px;
@@ -173,18 +173,18 @@ const BrowserHome: NextPage = () => {
           <Title>✔️ 서비스 특징</Title>
           <Content>
             <Item>
-              <img src="/blockchain.png" />
+              <img src="/blockchain4.png" />
               <p>
                 블록체인을 이용한 <br />
                 투명한 기부가 가능합니다
               </p>
             </Item>
             <Item>
-              <img src="/nft.png" />
+              <img src="/nft4.png" />
               <p>기부증서로 NFT를 발행합니다</p>
             </Item>
             <Item>
-              <img src="/wallet.png" />
+              <img src="/wallet4.png" />
               <p>다양한 지갑 서비스를 제공합니다</p>
             </Item>
           </Content>

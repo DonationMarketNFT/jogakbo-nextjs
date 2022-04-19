@@ -106,7 +106,7 @@ const ProfileInfo = styled.div`
   }
 `;
 const WalletConnectButton = styled.button`
-  background: blue;
+  background: ${(props) => props.theme.gradient};
   width: 100%;
   margin: 5px 0;
   margin-bottom: 30px;

@@ -7,7 +7,8 @@ const flexCenter = css`
 `;
 
 export const lightTheme: DefaultTheme = {
-  gradient: "linear-gradient(45deg, #feac5e 0%, #c779d0 50%, #4bc0c8 100%)",
+  // gradient: "linear-gradient(45deg, #feac5e 0%, #c779d0 50%, #4bc0c8 100%)",
+  gradient: "linear-gradient(45deg, #ffe259 0%,#f49a4a 100%)",
   bgColor: "white",
   contentBgColor: "white",
   textColor: "#333",

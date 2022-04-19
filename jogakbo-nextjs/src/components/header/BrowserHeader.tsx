@@ -12,6 +12,14 @@ import {
 } from "../../../atom";
 import SubMenu from "./SubMenu";
 import { useRouter } from "next/dist/client/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLightbulb,
+  faToggleOff,
+  faToggleOn,
+} from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb as regular } from "@fortawesome/free-regular-svg-icons";
+import useDarkMode from "use-dark-mode";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -52,23 +60,12 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled(motion.h1)`
+const Logo = styled.h1`
   font-family: "Gugi", cursive;
   font-size: 28px;
-  color: white;
   transition: all 0.2s ease-in-out;
+  color: #f49a4a;
 `;
-
-const logoVariants = {
-  top: {
-    color: "white",
-    textShadow: "none",
-  },
-  scroll: {
-    color: "black",
-    textShadow: "#c1c1c1 0.3px 0.3px",
-  },
-};
 
 const Menu = styled.ul`
   display: flex;
@@ -96,19 +93,14 @@ const Circle = styled(motion.span)`
   left: 0;
   right: 0;
   margin: 0 auto;
-  /* border-radius: 5px; */
-  /* bottom: -5px; */
-  /* left: 0;
-  right: 0; */
-  /* margin: 0 auto; */
-  background: #d14d4d;
+  background: #f49a4a;
 `;
 
 const SignInBtn = styled.div`
   padding: 10px 20px;
-  background: ${(props) => props.theme.bgColor};
+  background: #f49a4a;
   border-radius: 10px;
-  color: ${(props) => props.theme.textColor};
+  color: white;
   font-size: 14px;
   font-weight: 500;
   transition: all 0.3s ease-in-out;
@@ -118,6 +110,15 @@ const SignInBtn = styled.div`
     /* color: ${(props) => props.theme.bgColor}; */
   }
 `;
+
+const ModeToggle = styled.div`
+  margin-left: 15px;
+  cursor: pointer;
+  svg {
+    width: 18px;
+  }
+`;
+
 const Triger = styled.div`
   display: none;
   flex-direction: column;
@@ -144,23 +145,26 @@ const Triger = styled.div`
 const BrowserHeader = () => {
   const router = useRouter();
   const headerAnimation = useAnimation();
-  const logoAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
+  const mode = useDarkMode();
+  console.log(mode);
+
+  const toggleMode = () => {
+    mode.toggle();
+  };
 
   useEffect(() => {
     scrollY.onChange(() => {
       if (scrollY.get() > 20) {
         headerAnimation.start("scroll");
-        logoAnimation.start("scroll");
       } else {
         headerAnimation.start("top");
-        logoAnimation.start("top");
       }
     });
-  }, [scrollY, headerAnimation, logoAnimation]);
+  }, [scrollY, headerAnimation]);
 
   return (
     <>
@@ -169,14 +173,7 @@ const BrowserHeader = () => {
           <Col>
             <Link href="/">
               <a>
-                <Logo
-                  variants={logoVariants}
-                  animate={logoAnimation}
-                  initial={"top"}
-                  whileHover={"hover"}
-                >
-                  조각보
-                </Logo>
+                <Logo>조각보</Logo>
               </a>
             </Link>
           </Col>
@@ -213,6 +210,15 @@ const BrowserHeader = () => {
               </Link>
             ) : (
               <SignInBtn onClick={() => setSignIn(true)}>로그인</SignInBtn>
+            )}
+            {mode.value ? (
+              <ModeToggle onClick={toggleMode}>
+                <FontAwesomeIcon icon={faLightbulb} />
+              </ModeToggle>
+            ) : (
+              <ModeToggle onClick={toggleMode}>
+                <FontAwesomeIcon icon={regular} />
+              </ModeToggle>
             )}
             <Triger onClick={() => setSubMenu(true)}>
               <div></div>
