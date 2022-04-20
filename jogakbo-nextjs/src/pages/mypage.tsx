@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { media } from "../../styles/theme";
+import { color, media } from "../../styles/theme";
 import {
   getBalance,
   testOwnTokenId,
@@ -21,6 +21,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConnectWalletModal from "../components/modals/ConnectWalletModal";
 import * as KlipAPI from "../api/UseKlip";
 import Seo from "../components/Seo";
+
+const Wrapper = styled.div`
+  height: 100vh;
+  background: ${(props) => props.theme.bgColor};
+`;
 
 const Container = styled.div`
   display: flex;
@@ -113,7 +118,7 @@ const WalletConnectButton = styled.button`
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.bgColor};
+  color: ${color.white};
   text-align: center;
   font-size: 20px;
   cursor: pointer;
@@ -143,6 +148,7 @@ const NFTContainer = styled.div`
   h3 {
     position: absolute;
     left: 30px;
+    color: ${(props) => props.theme.textColor};
   }
   ${media.tablet} {
     width: auto;
@@ -246,55 +252,57 @@ function Mypage() {
   return (
     <>
       <Seo title="마이페이지" />
-      <Container>
-        <ProfileContainer>
-          <ProfileImage bgphoto={profile} />
-          <ProfileInfoBox>
-            {myAddress !== "0x00" && (
+      <Wrapper>
+        <Container>
+          <ProfileContainer>
+            <ProfileImage bgphoto={profile} />
+            <ProfileInfoBox>
+              {myAddress !== "0x00" && (
+                <>
+                  <ProfileInfo>
+                    <label htmlFor="address">Wallet Address</label>
+                    <input
+                      id="address"
+                      readOnly
+                      type="text"
+                      value={myAddress}
+                      ref={copyLinkRef}
+                    />
+                    <CopyBox onClick={copyAddress}>
+                      <FontAwesomeIcon icon={faClone} />
+                    </CopyBox>
+                  </ProfileInfo>
+                  <ProfileInfo>
+                    <label htmlFor="balance">Wallet Balance</label>
+                    <input
+                      id="balance"
+                      readOnly
+                      type="text"
+                      value={`${myBalance} Klay`}
+                    />
+                  </ProfileInfo>
+                </>
+              )}
+              {myAddress === "0x00" && (
+                <WalletConnectButton onClick={getUserData}>
+                  Connect Wallet
+                </WalletConnectButton>
+              )}
+            </ProfileInfoBox>
+          </ProfileContainer>
+          <NFTContainer>
+            <h3>My NFTs</h3>
+            {ownToken.map((data, i) => (
               <>
-                <ProfileInfo>
-                  <label htmlFor="address">Wallet Address</label>
-                  <input
-                    id="address"
-                    readOnly
-                    type="text"
-                    value={myAddress}
-                    ref={copyLinkRef}
-                  />
-                  <CopyBox onClick={copyAddress}>
-                    <FontAwesomeIcon icon={faClone} />
-                  </CopyBox>
-                </ProfileInfo>
-                <ProfileInfo>
-                  <label htmlFor="balance">Wallet Balance</label>
-                  <input
-                    id="balance"
-                    readOnly
-                    type="text"
-                    value={`${myBalance} Klay`}
-                  />
-                </ProfileInfo>
+                <NFTBox key={i} variants={boxVariants} whileHover="hover">
+                  {data[1]}
+                </NFTBox>
               </>
-            )}
-            {myAddress === "0x00" && (
-              <WalletConnectButton onClick={getUserData}>
-                Connect Wallet
-              </WalletConnectButton>
-            )}
-          </ProfileInfoBox>
-        </ProfileContainer>
-        <NFTContainer>
-          <h3>My NFTs</h3>
-          {ownToken.map((data, i) => (
-            <>
-              <NFTBox key={i} variants={boxVariants} whileHover="hover">
-                {data[1]}
-              </NFTBox>
-            </>
-          ))}
-        </NFTContainer>
-        <Withdraw>회원 탈퇴</Withdraw>
-      </Container>
+            ))}
+          </NFTContainer>
+          <Withdraw>회원 탈퇴</Withdraw>
+        </Container>
+      </Wrapper>
       {connectWallet && <ConnectWalletModal />}
     </>
   );
