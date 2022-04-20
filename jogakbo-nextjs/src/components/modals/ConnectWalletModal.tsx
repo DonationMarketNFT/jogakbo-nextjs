@@ -11,6 +11,8 @@ import {
   showConnectWalletModalState,
 } from "../../../atom";
 import { useIsMobile } from "../../hook/isMobile";
+import { useState } from "react";
+import { kaikas } from "../../api/useKaikas";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -74,7 +76,7 @@ const ConnectWalletModalHeader = styled.div`
 
 const ConnectWalletModalContent = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   ${media[768]} {
     flex-direction: column;
@@ -87,7 +89,7 @@ const ConnectWalletCard = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 400px;
+  width: 180px;
   height: 160px;
   padding: 0 20px;
   box-sizing: border-box;
@@ -126,6 +128,13 @@ function ConnectWalletModal() {
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
   const isMobile = useIsMobile();
 
+  const [address, setAddress] = useState("");
+  const getData = async () => {
+    const results = await kaikas();
+    setAddress(results);
+  };
+
+  console.log(address);
   return (
     <ModalWrapper onClick={() => setShowModal(false)}>
       <ModalContent
@@ -149,13 +158,11 @@ function ConnectWalletModal() {
           <ConnectWalletModalContent>
             {qrvalue == "DEFAULT" ? (
               <>
-                {/* {!isMobile && (
-                  <ConnectWalletCard>
-                    <img src="wallet/kaikas-logo.svg" />
-                    <h5>Kaikas </h5>
-                  </ConnectWalletCard>
-                )}
-                <ConnectWalletCard>
+                <ConnectWalletCard onClick={getData}>
+                  <img src="wallet/kaikas-logo.svg" />
+                  <h5>Kaikas </h5>
+                </ConnectWalletCard>
+                {/* <ConnectWalletCard>
                   <img src="wallet/metamask-logo.svg" />
                   <h5>Metamask </h5>
                 </ConnectWalletCard> */}

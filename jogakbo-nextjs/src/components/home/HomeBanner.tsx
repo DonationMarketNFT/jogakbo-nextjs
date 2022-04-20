@@ -20,7 +20,7 @@ const Contents = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 250px 0 50px;
+  padding: 300px 0 50px;
   width: 1050px;
   height: 100%;
   ${media.tablet} {
@@ -33,22 +33,11 @@ const Contents = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  margin-bottom: 10px;
-  width: 50px;
-  ${media.mobile} {
-    width: 100px;
-  }
-`;
-
 const Title = styled.h5`
   margin-bottom: 15px;
-  color: white;
-  font-size: 42px;
-  /* text-shadow: rgba(0, 0, 0, 0.3) 3px 3px; */
-  span {
-    font-family: "Gugi", cursive;
-  }
+  color: ${(props) => props.theme.bgColor};
+  font-family: "Gugi", cursive;
+  font-size: 52px;
   ${media.mobile} {
     font-size: 28px;
   }
@@ -56,17 +45,15 @@ const Title = styled.h5`
 
 const SubTitle = styled.div`
   height: 100%;
-  color: white;
+  line-height: 20px;
+  color: ${(props) => props.theme.bgColor};
 `;
 
 export default function HomeBanner() {
   return (
     <Banner>
       <Contents>
-        <Logo src="/jogakbo2.png" />
-        <Title>
-          <span>조각보</span>
-        </Title>
+        <Title>조각보</Title>
         <SubTitle>
           <p>조각보를 설명할 좋은 문구를 고민중입니다...🤔</p>
           <p>조각보를 설명할 좋은 문구를 고민중입니다...🤔</p>

@@ -20,6 +20,7 @@ const Container = styled.div`
 const Title = styled.h3`
   font-size: 22px;
   margin-bottom: 10px;
+  color: ${(props) => props.theme.textColor};
 `;
 
 interface IGridBox {
@@ -52,7 +53,6 @@ const Box = styled.div`
   transition: all 0.2s ease-in-out;
   &:hover {
     background: ${(props) => props.theme.gradient};
-    opacity: 0.5;
   }
 `;
 

@@ -7,13 +7,13 @@ import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
 
 const Wrapper = styled.section`
-  box-sizing: border-box;
-  padding: 50px 0;
+  background: ${(props) => props.theme.bgColor};
 `;
 
 const Container = styled.div`
   display: flex;
   margin: 0 auto;
+  padding: 50px 0;
   width: 1050px;
   ${media.tablet} {
     width: auto;
