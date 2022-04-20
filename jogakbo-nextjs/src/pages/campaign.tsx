@@ -1,17 +1,17 @@
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import {
   modalPropsState,
   qrValueState,
   showConnectWalletModalState,
 } from "../../atom";
-import React, { createRef, useEffect, useState } from "react";
-import { media } from "../../styles/theme";
+import React, {createRef, useState} from "react";
+import {media} from "../../styles/theme";
 import axios from "axios";
 import Seo from "../components/Seo";
 
 const Wrapper = styled.div`
-  background: ${(props) => props.theme.bgColor};
+  background: ${props => props.theme.bgColor};
 `;
 
 const Container = styled.div`
@@ -27,7 +27,7 @@ const Container = styled.div`
 const 페이지타이틀 = styled.h3`
   text-align: center;
   font-size: 32px;
-  color: ${(props) => props.theme.textColor};
+  color: ${props => props.theme.textColor};
 `;
 
 const 공지사항 = styled.div`
@@ -37,16 +37,16 @@ const 공지사항 = styled.div`
   margin: 50px 0;
   padding: 50px;
   width: 100%;
-  background: ${(props) => props.theme.gray.gray5};
+  background: ${props => props.theme.gray.gray5};
   border-radius: 10px;
   div > h3 {
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
     margin-bottom: 10px;
     font-size: 24px;
   }
   div > p {
     margin-bottom: 50px;
-    color: ${(props) => props.theme.gray.gray7};
+    color: ${props => props.theme.gray.gray7};
   }
   ul {
     margin-bottom: 50px;
@@ -56,7 +56,7 @@ const 공지사항 = styled.div`
     font-size: 20px;
   }
   p {
-    color: ${(props) => props.theme.gray.gray7};
+    color: ${props => props.theme.gray.gray7};
   }
 `;
 
@@ -64,7 +64,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   label {
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
     font-size: 20px;
     margin-bottom: 10px;
   }
@@ -115,7 +115,7 @@ function CreateCampaign() {
     _targetAmount: number,
     _category: string,
     _fundingStatus?: boolean,
-    _refundStatus?: boolean
+    _refundStatus?: boolean,
   ) => {
     e.preventDefault();
     let data = {
@@ -129,8 +129,8 @@ function CreateCampaign() {
     };
     axios
       .post("http://localhost:3000/pre-campaigns/create_campaign", data)
-      .then((res) => alert("정상적으로 제출되었습니다"))
-      .catch((e) => console.log(e));
+      .then(res => alert("정상적으로 제출되었습니다"))
+      .catch(e => console.log(e));
   };
 
   return (
@@ -204,7 +204,7 @@ function CreateCampaign() {
               placeholder="목표 모금 금액을 입력해주세요"
               required
             />
-            <Button onClick={(e) => testPost2(e, name, desc, amount, category)}>
+            <Button onClick={e => testPost2(e, name, desc, amount, category)}>
               제출하기
             </Button>
           </Form>

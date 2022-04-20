@@ -1,14 +1,11 @@
 import axios from "axios";
-import { DeprecatedAccount } from "caver-js";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
-import { useState } from "react";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
+import {useRouter} from "next/dist/client/router";
+import {useEffect} from "react";
+import {useState} from "react";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
-import Loading from "../../components/Loading";
+import {media} from "../../../styles/theme";
 import Seo from "../../components/Seo";
-import Splash from "../../components/home/Splash";
 
 const 이미지 = styled.div`
   background-image: url(/멸종위기.jpg);
@@ -45,7 +42,7 @@ interface ICategory {
 const 카테고리 = styled.div<ICategory>`
   margin-right: 5px;
   padding: 5px 10px;
-  background: ${(props) =>
+  background: ${props =>
     props.bgcolor === "new"
       ? "#3558e6"
       : props.bgcolor === "popular"
@@ -88,7 +85,7 @@ interface ICurrentBar {
 const CurrentBar = styled.div<ICurrentBar>`
   position: absolute;
   top: 0;
-  width: ${(props) => props.width};
+  width: ${props => props.width};
   height: 10px;
   background: gray;
   border-radius: 5px;
@@ -249,7 +246,7 @@ const DonationForm = styled.form`
   }
 `;
 
-const DonationInput = styled.input.attrs({ required: true })`
+const DonationInput = styled.input.attrs({required: true})`
   all: unset;
   border-bottom: 1px solid lightgray;
   width: 100%;
@@ -308,20 +305,20 @@ export default function Detail({
             `http://localhost:3000/campaigns/campaign/refundstatus/${id}`,
             {
               refundStatus: !data.refundStatus,
-            }
+            },
           )
-          .then((res) => {
+          .then(res => {
             alert(`상태가 변경되었습니다`);
             location.reload();
           })
-          .catch((e) => console.log(e))
+          .catch(e => console.log(e)),
       );
   };
 
   useEffect(() => {
     axios(`http://localhost:3000/campaigns/campaign/${id}`)
-      .then((res) => setData(res.data))
-      .catch((e) => console.log(e));
+      .then(res => setData(res.data))
+      .catch(e => console.log(e));
   }, []);
 
   console.log(data);
@@ -368,7 +365,7 @@ export default function Detail({
               <p>{data.description}</p>
             </DescriptionBox>
           </CampaignRow>
-          <CampaignRow style={{ padding: "50px 0" }}>
+          <CampaignRow style={{padding: "50px 0"}}>
             <DonationBox>
               <CampaignName>{title}</CampaignName>
               <CampaignDesc>{data.description}</CampaignDesc>
@@ -395,7 +392,7 @@ export default function Detail({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-  params: { params },
+  params: {params},
 }: any) => {
   return {
     props: {

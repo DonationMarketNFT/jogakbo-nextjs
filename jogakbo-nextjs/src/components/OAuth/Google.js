@@ -1,10 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { isLoginedState } from "../../../atom";
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import {useRecoilState} from 'recoil';
+import {isLoginedState} from '../../../atom';
 
 const Container = styled.div`
   display: flex;
@@ -45,24 +43,24 @@ scope=https://www.googleapis.com/auth/userinfo.email`;
 
     const hash = url.hash;
     if (hash) {
-      const accessToken = hash.split("=")[1].split("&")[0];
+      const accessToken = hash.split('=')[1].split('&')[0];
       await axios
         .get(
-          "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" +
+          'https://www.googleapis.com/oauth2/v2/userinfo?access_token=' +
             accessToken,
           {
             headers: {
               authorization: `token ${accessToken}`,
-              accept: "application/json",
+              accept: 'application/json',
             },
-          }
+          },
         )
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setData(data);
           setLogin(true);
         })
-        .catch((e) => console.log("oAuth token expired"));
+        .catch(e => console.log('oAuth token expired'));
     }
   }, []);
 

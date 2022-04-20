@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Carousel } from "react-bootstrap";
+import {useState} from "react";
+import {Carousel} from "react-bootstrap";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -31,11 +31,11 @@ const Title = styled.h3`
   margin-bottom: 10px;
 `;
 
-function MobileBanner() {
+function MobileSlider() {
   const [index, setIndex] = useState(0);
   const handleSelect = (
     selectedIndex: number,
-    e: Record<string, unknown> | null
+    e: Record<string, unknown> | null,
   ) => {
     setIndex(selectedIndex);
   };
@@ -84,4 +84,4 @@ function MobileBanner() {
   );
 }
 
-export default MobileBanner;
+export default MobileSlider;

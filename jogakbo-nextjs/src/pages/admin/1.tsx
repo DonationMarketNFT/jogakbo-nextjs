@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import Pagination from "../../components/admin/Pagination";
 import Posts from "../../components/admin/Posts";
@@ -37,7 +37,7 @@ const Verifing = () => {
     async function fetchData() {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:3000/pre-campaigns/campaign_all"
+        "http://localhost:3000/pre-campaigns/campaign_all",
       );
       setPosts(response.data);
       setLoading(false);

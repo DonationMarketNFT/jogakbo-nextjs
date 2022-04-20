@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { color, media } from "../../styles/theme";
+import {motion} from "framer-motion";
+import {useEffect, useRef, useState} from "react";
+import {useRecoilState} from "recoil";
+import {color, media} from "../../styles/theme";
 import {
   getBalance,
   testOwnTokenId,
@@ -16,15 +16,15 @@ import {
   qrValueState,
   showConnectWalletModalState,
 } from "../../atom";
-import { faClone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faClone} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ConnectWalletModal from "../components/modals/ConnectWalletModal";
 import * as KlipAPI from "../api/UseKlip";
 import Seo from "../components/Seo";
 
 const Wrapper = styled.div`
   height: 100vh;
-  background: ${(props) => props.theme.bgColor};
+  background: ${props => props.theme.bgColor};
 `;
 
 const Container = styled.div`
@@ -55,7 +55,7 @@ interface IProfile {
 
 const ProfileImage = styled.div<IProfile>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.bgphoto});
+    url(${props => props.bgphoto});
   background-size: cover;
   background-position: center center;
   margin: 10px;
@@ -101,9 +101,9 @@ const ProfileInfo = styled.div`
   }
   &:first-child {
     input {
-      background: ${(props) => props.theme.gray};
+      background: ${props => props.theme.gray};
       border-radius: 5px;
-      color: white;
+      color: ${props => props.theme.textColor};
       ${media.mobile} {
         font-size: 13px;
       }
@@ -111,7 +111,7 @@ const ProfileInfo = styled.div`
   }
 `;
 const WalletConnectButton = styled.button`
-  background: ${(props) => props.theme.gradient};
+  background: ${props => props.theme.gradient};
   width: 100%;
   margin: 5px 0;
   margin-bottom: 30px;
@@ -148,7 +148,7 @@ const NFTContainer = styled.div`
   h3 {
     position: absolute;
     left: 30px;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
   }
   ${media.tablet} {
     width: auto;
@@ -184,7 +184,7 @@ const CopyBox = styled.div`
   cursor: pointer;
 `;
 
-const boxVariants = { hover: { scale: 1.05 } };
+const boxVariants = {hover: {scale: 1.05}};
 
 const DEFAULT_IMAGE =
   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -198,7 +198,7 @@ function Mypage() {
   // const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
 
   const [connectWallet, setConnectWallet] = useRecoilState(
-    showConnectWalletModalState
+    showConnectWalletModalState,
   );
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");

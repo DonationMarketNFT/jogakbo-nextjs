@@ -1,18 +1,18 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRecoilState } from "recoil";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import QRCode from "qrcode.react";
-import { isMobile } from "react-device-detect";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 import {
   modalPropsState,
+  myAddressState,
+  myBalanceState,
   qrValueState,
   showConnectWalletModalState,
 } from "../../../atom";
-import { useIsMobile } from "../../hook/isMobile";
-import { useState } from "react";
-import { kaikas } from "../../api/useKaikas";
+import {useIsMobile} from "../../hooks/isMobile";
+import {kaikas} from "../../api/useKaikas";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -93,16 +93,16 @@ const ConnectWalletCard = styled.div`
   height: 160px;
   padding: 0 20px;
   box-sizing: border-box;
-  background: ${(props) => props.theme.gradient};
+  background: ${props => props.theme.gradient};
   border-radius: 10px;
   h5 {
     margin-top: 15px;
     color: white;
   }
-  ${(props) => props.theme.boxShadow1};
+  ${props => props.theme.boxShadow1};
   transition: all 0.2s ease-in-out;
   &:hover {
-    ${(props) => props.theme.boxShadow2};
+    ${props => props.theme.boxShadow2};
     transform: translateY(-5px);
   }
   ${media[768]} {
@@ -127,18 +127,20 @@ function ConnectWalletModal() {
   const [modalProps, setModalProps] = useRecoilState(modalPropsState);
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
   const isMobile = useIsMobile();
-
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useRecoilState(myAddressState);
+  const [balance, setBalance] = useRecoilState(myBalanceState);
   const getData = async () => {
     const results = await kaikas();
-    setAddress(results);
+    setAddress(results?.account);
+    setBalance(results?.balance!);
+    setShowModal(false);
   };
 
   console.log(address);
   return (
     <ModalWrapper onClick={() => setShowModal(false)}>
       <ModalContent
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
         }}
       >

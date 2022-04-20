@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { isLoginedState } from "../../../atom";
+import styled from 'styled-components';
+import {useRecoilState} from 'recoil';
+import {isLoginedState} from '../../../atom';
 
 const Container = styled.div`
   display: flex;

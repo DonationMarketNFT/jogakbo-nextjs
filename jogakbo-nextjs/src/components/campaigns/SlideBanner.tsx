@@ -1,7 +1,5 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
-import { testCampaignList } from "../../api/UseCaver";
+import {media} from "../../../styles/theme";
 
 const Container = styled.div`
   width: 100%;
@@ -40,7 +38,7 @@ interface ITag {
 const Banner_태그 = styled.div<ITag>`
   margin-left: 10px;
   padding: 5px 10px;
-  background: ${(props) =>
+  background: ${props =>
     props.bgcolor === "new"
       ? "#3558e6"
       : props.bgcolor === "popular"

@@ -1,8 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 
 const Container = styled.div`
   width: 100%;
@@ -20,7 +19,7 @@ const Container = styled.div`
 const Title = styled.h3`
   font-size: 22px;
   margin-bottom: 10px;
-  color: ${(props) => props.theme.textColor};
+  color: ${props => props.theme.textColor};
 `;
 
 interface IGridBox {
@@ -31,12 +30,12 @@ const GridBox = styled.div<IGridBox>`
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(
-    ${(props) => (props.type === "All" ? 5 : 3)},
+    ${props => (props.type === "All" ? 5 : 3)},
     1fr
   );
   ${media.mobile} {
     grid-template-columns: repeat(
-      ${(props) => (props.type === "All" ? 3 : 1)},
+      ${props => (props.type === "All" ? 3 : 1)},
       1fr
     );
   }
@@ -52,7 +51,7 @@ const Box = styled.div`
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
   &:hover {
-    background: ${(props) => props.theme.gradient};
+    background: ${props => props.theme.gradient};
   }
 `;
 
@@ -68,7 +67,7 @@ const Slider = (props: any) => {
     } else if (type === "Popular") {
       const popularData = [...props.data];
       const results = popularData.sort(
-        (b: any, a: any) => b["targetAmount"] - a["targetAmount"]
+        (b: any, a: any) => b["targetAmount"] - a["targetAmount"],
       );
       results.reverse();
       setData(results.slice(0, 3));

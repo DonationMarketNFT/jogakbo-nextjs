@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilState } from "recoil";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import { color, flexColumnSet, media } from "../../../styles/theme";
-import { isLoginedState, showSignInModalState } from "../../../atom";
-import { useIsBrowser } from "../../hook/isBrowser";
+import {color, flexColumnSet, media} from "../../../styles/theme";
+import {isLoginedState, showSignInModalState} from "../../../atom";
+import {useIsBrowser} from "../../hooks/isBrowser";
 import Google from "../OAuth/Google";
 import Kakao from "../OAuth/Kakao";
 import Naver from "../OAuth/Naver";
@@ -34,18 +34,18 @@ const Modal = styled.div<IModal>`
   width: 360px;
   height: 432px;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.bgColor};
+  background-color: ${props => props.theme.bgColor};
   backdrop-filter: blur(7.5px);
-  border: ${(props) => props.theme.glass.border};
-  color: ${(props) => props.theme.glass.color};
-  box-shadow: ${(props) => props.theme.glass.boxShadow};
+  border: ${props => props.theme.glass.border};
+  color: ${props => props.theme.glass.color};
+  box-shadow: ${props => props.theme.glass.boxShadow};
   ${media.tablet} {
     width: 50%;
   }
   ${media.mobile} {
-    width: ${(props) => (props.isBrowser ? "360px" : "100%")};
-    height: ${(props) => (props.isBrowser ? "432px" : "100%")};
-    border-radius: ${(props) => (props.isBrowser ? "10px" : "0")};
+    width: ${props => (props.isBrowser ? "360px" : "100%")};
+    height: ${props => (props.isBrowser ? "432px" : "100%")};
+    border-radius: ${props => (props.isBrowser ? "10px" : "0")};
     justify-content: space-between;
     padding-bottom: 300px;
   }
@@ -81,8 +81,8 @@ const SocialSignUp = styled.div`
   ${flexColumnSet()};
   margin-bottom: 24px;
   padding: 0 8px;
-  background: ${(props) => props.theme.bgColor};
-  color: ${(props) => props.theme.gray};
+  background: ${props => props.theme.bgColor};
+  color: ${props => props.theme.gray};
   font-size: 12px;
 `;
 
@@ -105,7 +105,7 @@ const SignInModal = () => {
         <Container onClick={() => setSignIn(false)}>
           <Modal
             isBrowser={isBrowser}
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
             }}
           >

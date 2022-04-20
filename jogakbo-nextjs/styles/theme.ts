@@ -1,4 +1,4 @@
-import { css, DefaultTheme } from "styled-components";
+import {css, DefaultTheme} from "styled-components";
 
 export const flexSet = (just = "center", align = "center") => {
   return `display: flex;

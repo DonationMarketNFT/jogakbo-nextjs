@@ -1,6 +1,6 @@
 // 소개 배너 컴포넌트 Intro
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 
 // 배경이미지 삽입용
 const Banner = styled.div`
@@ -35,7 +35,7 @@ const Contents = styled.div`
 
 const Title = styled.h5`
   margin-bottom: 15px;
-  color: ${(props) => props.theme.bgColor};
+  color: ${props => props.theme.bgColor};
   font-family: "Gugi", cursive;
   font-size: 52px;
   ${media.mobile} {
@@ -46,7 +46,7 @@ const Title = styled.h5`
 const SubTitle = styled.div`
   height: 100%;
   line-height: 20px;
-  color: ${(props) => props.theme.bgColor};
+  color: ${props => props.theme.bgColor};
 `;
 
 export default function HomeBanner() {

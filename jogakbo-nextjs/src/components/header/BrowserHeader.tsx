@@ -1,9 +1,9 @@
-import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect, useState } from "react";
+import {motion, useAnimation, useViewportScroll} from "framer-motion";
+import {useEffect} from "react";
 import styled from "styled-components";
-import { color, flexSet, media } from "../../../styles/theme";
+import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 import SignInModal from "../modals/SignInModal";
 import {
   isLoginedState,
@@ -11,14 +11,10 @@ import {
   subMenuState,
 } from "../../../atom";
 import SubMenu from "./SubMenu";
-import { useRouter } from "next/dist/client/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLightbulb,
-  faToggleOff,
-  faToggleOn,
-} from "@fortawesome/free-solid-svg-icons";
-import { faLightbulb as regular } from "@fortawesome/free-regular-svg-icons";
+import {useRouter} from "next/dist/client/router";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
+import {faLightbulb as regular} from "@fortawesome/free-regular-svg-icons";
 import useDarkMode from "use-dark-mode";
 
 const Head = styled(motion.header)`
@@ -74,9 +70,9 @@ const Menu = styled.ul`
     padding: 15px;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
     &:hover {
-      color: ${(props) => props.theme.gray.gray2};
+      color: ${props => props.theme.gray.gray2};
     }
   }
   ${media[768]} {
@@ -106,8 +102,8 @@ const SignInBtn = styled.div`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    /* background: ${(props) => props.theme.gradient}; */
-    /* color: ${(props) => props.theme.bgColor}; */
+    /* background: ${props => props.theme.gradient}; */
+    /* color: ${props => props.theme.bgColor}; */
   }
 `;
 
@@ -153,7 +149,7 @@ const Triger = styled.div`
 const BrowserHeader = () => {
   const router = useRouter();
   const headerAnimation = useAnimation();
-  const { scrollY } = useViewportScroll();
+  const {scrollY} = useViewportScroll();
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);

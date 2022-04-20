@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import {NextPage} from "next";
 import BrowserHome from "../components/home/BrowserHome";
 import MobileHome from "../components/home/MobileHome";
 import Seo from "../components/Seo";
-import { useIsBrowser } from "../hook/isBrowser";
+import {useIsBrowser} from "../hooks/isBrowser";
 
 const Home: NextPage = () => {
   const isBroswer = useIsBrowser();

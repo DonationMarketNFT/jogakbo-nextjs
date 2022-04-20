@@ -1,14 +1,14 @@
-import { motion } from "framer-motion";
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
-import { color, media } from "../../../styles/theme";
+import {motion} from "framer-motion";
+import type {NextPage} from "next";
+import {useEffect, useState} from "react";
+import styled from "styled-components";
+import {color, media} from "../../../styles/theme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HomeBanner from "./HomeBanner";
 
 const Container = styled.div`
-  background: ${(props) => props.theme.bgColor};
+  background: ${props => props.theme.bgColor};
 `;
 
 const BrowserContainer = styled.div`
@@ -29,8 +29,8 @@ const Section = styled.section`
 const Title = styled.h3`
   margin-bottom: 70px;
   padding: 10px 0;
-  /* border-bottom: ${(props) => props.theme.borderColor}; */
-  color: ${(props) => props.theme.textColor};
+  /* border-bottom: ${props => props.theme.borderColor}; */
+  color: ${props => props.theme.textColor};
   font-size: 24px;
 `;
 
@@ -50,7 +50,7 @@ const Item = styled.div`
   width: 280px;
   height: 280px;
   padding: 10px;
-  background: ${(props) => props.theme.gray.gray7};
+  background: ${props => props.theme.gray.gray7};
   border-radius: 15px;
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 18%);
   img {
@@ -62,7 +62,7 @@ const Item = styled.div`
   p {
     text-align: center;
     padding: 20px 0;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
     ${media.tablet} {
       font-size: 14px;
     }
@@ -77,13 +77,13 @@ const TabContainer = styled.div`
   display: flex;
 `;
 
-const Tab = styled.div<{ tab: boolean }>`
+const Tab = styled.div<{tab: boolean}>`
   width: 150px;
   padding: 15px 0;
-  background: ${(props) =>
+  background: ${props =>
     props.tab ? props.theme.gray.gray7 : props.theme.gray.gray6};
   text-align: center;
-  color: ${(props) => props.theme.textColor};
+  color: ${props => props.theme.textColor};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   cursor: pointer;
@@ -103,7 +103,7 @@ const DevProfile = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  /* background: ${(props) => props.theme.gray.gray7}; */
+  /* background: ${props => props.theme.gray.gray7}; */
   background: ${color.mainColor};
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
 `;
@@ -111,7 +111,7 @@ const DevProfile = styled.div`
 const RoadMap = styled.p`
   display: block;
   padding: 30px;
-  background: ${(props) => props.theme.gray.gray7};
+  background: ${props => props.theme.gray.gray7};
   height: 300px;
   border-radius: 15px;
 `;
@@ -131,7 +131,7 @@ const Answer = styled(motion.div)`
   display: none;
   padding: 20px 30px;
   font-size: 18px;
-  color: ${(props) => props.theme.textColor};
+  color: ${props => props.theme.textColor};
 `;
 
 const BrowserHome: NextPage = () => {
@@ -140,7 +140,7 @@ const BrowserHome: NextPage = () => {
 
   const onClickQuestion = (a: number) => {
     const answer = document.getElementById(`${a}`);
-    setQuestion((prev) => !prev);
+    setQuestion(prev => !prev);
     question
       ? (answer!.style.display = "block")
       : (answer!.style.display = "none");
@@ -165,10 +165,10 @@ const BrowserHome: NextPage = () => {
       answer:
         "create campaign을 통해 양식을 제출하게 되면 심사 후 캠페인으로 등록됩니다.",
     },
-    { question: "질문3", answer: "답변3" },
-    { question: "질문4", answer: "답변4" },
-    { question: "질문5", answer: "답변5" },
-    { question: "질문6", answer: "답변6" },
+    {question: "질문3", answer: "답변3"},
+    {question: "질문4", answer: "답변4"},
+    {question: "질문5", answer: "답변5"},
+    {question: "질문6", answer: "답변6"},
   ];
 
   // const listItems = QuestionData.map((o, i) => (
@@ -261,8 +261,8 @@ export default BrowserHome;
 
 const TabBackground1 = styled.div`
   padding: 60px 30px;
-  background: ${(props) => props.theme.gray.gray7};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;
@@ -271,7 +271,7 @@ const StepContainer = styled.div`
   margin-bottom: 60px;
   p {
     padding: 0 20px;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
   }
   &:last-child {
     margin: 0;
@@ -285,7 +285,7 @@ const Step = styled.div`
   background: ${color.mainColor};
   color: ${color.white};
   border-radius: 20px;
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  box-shadow: ${props => props.theme.boxShadow1};
   text-align: center;
 `;
 
@@ -314,8 +314,8 @@ function Tab1() {
 
 const TabBackground2 = styled.div`
   padding: 60px 30px;
-  background: ${(props) => props.theme.gray.gray7};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;

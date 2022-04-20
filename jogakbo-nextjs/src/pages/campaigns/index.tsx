@@ -1,13 +1,12 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Link from "next/link";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
 
 const Wrapper = styled.section`
-  background: ${(props) => props.theme.bgColor};
+  background: ${props => props.theme.bgColor};
 `;
 
 const Container = styled.div`

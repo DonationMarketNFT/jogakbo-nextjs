@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import {motion} from "framer-motion";
+import {useState} from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,7 +20,7 @@ const Title = styled.h3`
 const Question = styled(motion.li)`
   margin-bottom: 10px;
   padding: 20px 30px;
-  background: ${(props) => props.theme.gray};
+  background: ${props => props.theme.gray};
   border-radius: 10px;
   color: white;
   font-size: 18px;
@@ -39,7 +39,7 @@ const QandA = () => {
 
   const onClickQuestion = (a: number) => {
     const answer = document.getElementById(`${a}`);
-    setQuestion((prev) => !prev);
+    setQuestion(prev => !prev);
     question
       ? (answer!.style.display = "block")
       : (answer!.style.display = "none");
@@ -55,10 +55,10 @@ const QandA = () => {
       answer:
         "create campaign을 통해 양식을 제출하게 되면 심사 후 캠페인으로 등록됩니다.",
     },
-    { question: "질문3", answer: "답변3" },
-    { question: "질문4", answer: "답변4" },
-    { question: "질문5", answer: "답변5" },
-    { question: "질문6", answer: "답변6" },
+    {question: "질문3", answer: "답변3"},
+    {question: "질문4", answer: "답변4"},
+    {question: "질문5", answer: "답변5"},
+    {question: "질문6", answer: "답변6"},
   ];
   return (
     <Container>

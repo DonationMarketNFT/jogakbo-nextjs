@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { flexColumnSet } from "../../../styles/theme";
+import {flexColumnSet} from "../../../styles/theme";
 
 const Menu = styled.header`
   ${flexColumnSet("space-between")}

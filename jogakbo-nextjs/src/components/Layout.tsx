@@ -1,10 +1,7 @@
-import { useRouter } from "next/dist/client/router";
-import { useIsMobile } from "../hook/isMobile";
+import {useRouter} from "next/dist/client/router";
 import BrowserHeader from "./header/BrowserHeader";
-import MobileHeader from "./header/MobileHeader";
 
-export default function Layout({ children }: any) {
-  const isMobile = useIsMobile();
+export default function Layout({children}: any) {
   const router = useRouter();
 
   return (
