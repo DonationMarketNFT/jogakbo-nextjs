@@ -5,16 +5,16 @@ import {media} from "../../../styles/theme";
 
 const Container = styled.div`
   margin: 0 auto;
-  padding: 30px;
-  width: 300px;
+  padding: 20px;
+  width: 500px;
   height: 400px;
-  /* background-color: rgba(255, 255, 255, 0.25); */
-  background-color: lightgray;
-  backdrop-filter: blur(7.5px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
-  color: rgba(255, 255, 255, 0.75);
+  background-color: ${props => props.theme.gray.gray7};
   border-radius: 20px;
+  .carousel-caption {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: ${props => props.theme.textColor};
+  }
   ${media.mobile} {
     width: 100%;
   }
@@ -22,8 +22,11 @@ const Container = styled.div`
 
 const Img = styled.img`
   display: block;
-  width: 70%;
+  width: 50%;
   margin: 20px auto;
+  ${media.mobile} {
+    width: 70%;
+  }
 `;
 
 const Title = styled.h3`
@@ -49,7 +52,7 @@ function MobileSlider() {
     >
       <Carousel.Item>
         <Container>
-          <Img src="/blockchain.png" alt="First slide" />
+          <Img src="/blockchain4.png" alt="First slide" />
           <Carousel.Caption>
             <Title>블록체인 기술</Title>
             <p>
@@ -61,7 +64,7 @@ function MobileSlider() {
       </Carousel.Item>
       <Carousel.Item>
         <Container>
-          <Img src="/nft.png" alt="Second slide" />
+          <Img src="/nft4.png" alt="Second slide" />
           <Carousel.Caption>
             <Title>NFT 발행</Title>
             <p>
@@ -73,7 +76,7 @@ function MobileSlider() {
       </Carousel.Item>
       <Carousel.Item>
         <Container>
-          <Img src="/wallet.png" alt="Third slide" />
+          <Img src="/wallet4.png" alt="Third slide" />
           <Carousel.Caption>
             <Title>다양한 지갑 서비스</Title>
             <p>원하는 지갑으로 편리하게 기부할 수 있습니다</p>

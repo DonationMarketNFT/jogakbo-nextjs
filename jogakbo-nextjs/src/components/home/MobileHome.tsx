@@ -7,10 +7,12 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import HomeBanner from "./HomeBanner";
 import MobileSlider from "./MobileSlider";
+import {faGratipay} from "@fortawesome/free-brands-svg-icons";
 
 const Container = styled.div`
   padding: 30px;
   padding-top: 80px;
+  background: ${props => props.theme.bgColor};
 `;
 
 const Section = styled.section`
@@ -23,6 +25,7 @@ const Title = styled.h3`
   margin-bottom: 70px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: ${props => props.theme.textColor};
 `;
 
 const Content = styled.div`
@@ -63,7 +66,8 @@ const TabContainer = styled.div`
 const Tab = styled.div<{tab: boolean}>`
   width: 150px;
   padding: 15px 20px;
-  background: ${props => (props.tab ? useTheme().bgColor : useTheme().gray)};
+  background: ${props =>
+    props.tab ? props.theme.gray.gray7 : useTheme().gray};
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -126,7 +130,7 @@ export default MobileHome;
 const TabBackground1 = styled.div`
   margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.gray.gray7};
   box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -188,7 +192,7 @@ function Tab1() {
 const TabBackground2 = styled.div`
   margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.gray.gray7};
   box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;

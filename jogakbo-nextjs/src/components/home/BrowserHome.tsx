@@ -17,7 +17,7 @@ const BrowserContainer = styled.div`
   padding: 80px 0;
   ${media.tablet} {
     width: 100%;
-    padding: 0 30px;
+    padding: 80px 30px;
   }
 `;
 
