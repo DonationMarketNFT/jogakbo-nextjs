@@ -71,7 +71,7 @@ function Naver() {
       clientId={CLIENT_ID}
       callbackUrl={REDIRECT_URI}
       onSuccess={naverUser => console.log(naverUser)}
-      onFailure={() => console.error(result)}
+      onFailure={result => console.error(result)}
       render={({onClick}) => (
         <Container
           onClick={e => {
