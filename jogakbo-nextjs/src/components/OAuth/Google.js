@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
-import {useRecoilState} from 'recoil';
-import {isLoginedState} from '../../../atom';
+import {useState, useEffect} from "react";
+import axios from "axios";
+import styled from "styled-components";
+import {useRecoilState} from "recoil";
+import {isLoginedState} from "../../../atom";
 
 const Container = styled.div`
   display: flex;
@@ -43,26 +43,44 @@ scope=https://www.googleapis.com/auth/userinfo.email`;
 
     const hash = url.hash;
     if (hash) {
-      const accessToken = hash.split('=')[1].split('&')[0];
+      const accessToken = hash.split("=")[1].split("&")[0];
       await axios
         .get(
-          'https://www.googleapis.com/oauth2/v2/userinfo?access_token=' +
+          "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" +
             accessToken,
           {
             headers: {
               authorization: `token ${accessToken}`,
-              accept: 'application/json',
+              accept: "application/json",
             },
           },
         )
-        .then(data => {
-          console.log(data);
-          setData(data);
+        .then(res => {
+          // console.log(res.data);
+          setData(res.data);
           setLogin(true);
         })
-        .catch(e => console.log('oAuth token expired'));
+        .catch(e => console.log("oAuth token expired"));
     }
   }, []);
+
+  // DB에 해당 이메일이 있는지 확인, 없으면 등록 있으면 로그인
+  // if (data)
+  //   axios
+  //     .post("http://localhost:3000/account/create_user", {
+  //       email: data.email,
+  //       thirdParty: "google",
+  //       walletAddress: "",
+  //       walletKind: "",
+  //       nickName: "",
+  //     })
+  //     .then(res => console.log("유저등록"))
+  //     .catch(e => console.log(e));
+
+  axios
+    .get("http://localhost:3000/account/user_all")
+    .then(res => console.log(res.data))
+    .catch(e => console.log(e));
 
   return (
     <Container id="oAuthBtn" onClick={oAuthHandler}>
