@@ -15,12 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/OAuth/Google.js",
-    "src/components/Admin/Posts.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/OAuth/Google.js", "src/components/Admin/Posts.js", "styles/GlobalStyle.js", "src/api/useKaikas.js"],
   "exclude": ["node_modules"]
 }

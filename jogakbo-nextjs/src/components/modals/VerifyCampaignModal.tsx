@@ -1,10 +1,10 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import {useEffect, useState} from "react";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import { VerifyModalState } from "../../../atom";
+import {VerifyModalState} from "../../../atom";
 
 const Container = styled.div`
   position: fixed;
@@ -87,21 +87,21 @@ interface IDate {
   refundState: boolean;
 }
 
-const VerifyCampaignModal = (props: { id: number; name: string }) => {
+const VerifyCampaignModal = (props: {id: number; name: string}) => {
   const [showModal, setShowModal] = useRecoilState(VerifyModalState);
   const [data, setData] = useState<IDate>();
 
   useEffect(() => {
     axios(`http://localhost:3000/pre-campaigns/campaign/${props.id}`)
-      .then((res) => setData(res.data))
-      .catch((e) => console.log(e));
+      .then(res => setData(res.data))
+      .catch(e => console.log(e));
   }, []);
 
   const deleteData = () => {
     axios
       .delete(`http://localhost:3000/pre-campaigns/campaign/delete/${props.id}`)
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
     setShowModal(false);
     location.reload();
   };
@@ -109,7 +109,7 @@ const VerifyCampaignModal = (props: { id: number; name: string }) => {
   return (
     <Container onClick={() => setShowModal(false)}>
       <Modal
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
         }}
       >

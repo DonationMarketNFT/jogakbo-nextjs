@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const PageUl = styled.ul`
   position: fixed;
@@ -23,7 +23,7 @@ const PageLi = styled.li`
   }
 `;
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
+const Pagination = ({postsPerPage, totalPosts, paginate}) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
@@ -32,7 +32,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     <div>
       <nav>
         <PageUl>
-          {pageNumbers.map((number) => (
+          {pageNumbers.map(number => (
             <PageLi key={number} onClick={() => paginate(number)}>
               {number}
             </PageLi>

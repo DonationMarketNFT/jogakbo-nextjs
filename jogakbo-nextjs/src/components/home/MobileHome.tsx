@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import styled, { useTheme } from "styled-components";
-import { isLoginedState } from "../../../atom";
-import { media } from "../../../styles/theme";
-import SignInModal from "../modals/SignInModal";
-import Intro from "./HomeBanner";
+import {useEffect, useState} from "react";
+import {useRecoilState} from "recoil";
+import styled, {useTheme} from "styled-components";
+import {isLoginedState} from "../../../atom";
+import {media} from "../../../styles/theme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HomeBanner from "./HomeBanner";
-import MobileBanner from "./MobileBanner";
+import MobileSlider from "./MobileSlider";
+import {faGratipay} from "@fortawesome/free-brands-svg-icons";
 
 const Container = styled.div`
   padding: 30px;
   padding-top: 80px;
+  background: ${props => props.theme.bgColor};
 `;
 
 const Section = styled.section`
@@ -25,6 +25,7 @@ const Title = styled.h3`
   margin-bottom: 70px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: ${props => props.theme.textColor};
 `;
 
 const Content = styled.div`
@@ -41,7 +42,7 @@ const Item = styled.div`
   width: 250px;
   height: 250px;
   padding: 10px;
-  background: ${(props) => props.theme.contentBgColor};
+  background: ${props => props.theme.contentBgColor};
   border-radius: 15px;
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 18%);
   img {
@@ -50,7 +51,7 @@ const Item = styled.div`
   p {
     text-align: center;
     padding: 20px 0;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
   }
 `;
 
@@ -62,10 +63,11 @@ const TabContainer = styled.div`
   }
 `;
 
-const Tab = styled.div<{ tab: boolean }>`
+const Tab = styled.div<{tab: boolean}>`
   width: 150px;
   padding: 15px 20px;
-  background: ${(props) => (props.tab ? useTheme().bgColor : useTheme().gray)};
+  background: ${props =>
+    props.tab ? props.theme.gray.gray7 : useTheme().gray};
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -104,7 +106,7 @@ const MobileHome = () => {
       <Container>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
           <Title>✔️ 서비스 특징</Title>
-          <MobileBanner />
+          <MobileSlider />
         </Section>
         <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
           <Title>✔️ 서비스 이용방법</Title>
@@ -128,8 +130,8 @@ export default MobileHome;
 const TabBackground1 = styled.div`
   margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${(props) => props.theme.bgColor};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background-color: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   ${media.mobile} {
@@ -155,9 +157,9 @@ const Step = styled.div`
   margin-bottom: 40px;
   padding: 10px 15px;
   width: 100px;
-  background: ${(props) => props.theme.contentBgColor};
+  background: ${props => props.theme.contentBgColor};
   border-radius: 20px;
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  box-shadow: ${props => props.theme.boxShadow1};
   text-align: center;
   ${media.mobile} {
     margin: 0 auto 40px auto;
@@ -190,8 +192,8 @@ function Tab1() {
 const TabBackground2 = styled.div`
   margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${(props) => props.theme.bgColor};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background-color: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   ${media.mobile} {

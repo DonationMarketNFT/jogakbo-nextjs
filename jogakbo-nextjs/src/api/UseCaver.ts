@@ -1,24 +1,24 @@
-import Caver, { AbiItem } from "caver-js";
+import Caver, {AbiItem} from 'caver-js';
 import {
   ACCESS_KEY_ID,
   CHAIN_ID,
   DONATION_CONTRACT_ADDRESS,
   SECRET_ACCRESS_KEY,
-} from "../constants/constants.cypress";
-import DONATIONABI from "../abi/DonationABI.json";
+} from '../constants/constants.cypress';
+import DONATIONABI from '../abi/DonationABI.json';
 
 const option = {
   headers: [
     {
-      name: "Authorization",
+      name: 'Authorization',
       value:
-        "Basic " +
-        Buffer.from(ACCESS_KEY_ID + ":" + SECRET_ACCRESS_KEY).toString(
-          "base64"
+        'Basic ' +
+        Buffer.from(ACCESS_KEY_ID + ':' + SECRET_ACCRESS_KEY).toString(
+          'base64',
         ),
     },
     {
-      name: "x-chain-id",
+      name: 'x-chain-id',
       value: CHAIN_ID,
     },
   ],
@@ -26,15 +26,15 @@ const option = {
 
 const caver = new Caver(
   new Caver.providers.HttpProvider(
-    "https://node-api.klaytnapi.com/v1/klaytn",
+    'https://node-api.klaytnapi.com/v1/klaytn',
     // "https://api.baobab.klaytn.net:8651/",
-    option
-  )
+    option,
+  ),
 );
 
 const DonationContract = new caver.contract(
   DONATIONABI as AbiItem[],
-  DONATION_CONTRACT_ADDRESS
+  DONATION_CONTRACT_ADDRESS,
 );
 
 export const testOwnTokenId = async (address: string) => {
@@ -71,10 +71,10 @@ export const testCampaignNumber = async () => {
 
 // klip 잔고 조회시 메인넷 chain_id 필요
 export const getBalance = (address: string) => {
-  return caver.rpc.klay.getBalance(address).then((response) => {
+  return caver.rpc.klay.getBalance(address).then(response => {
     const balance = caver.utils.convertFromPeb(
       caver.utils.hexToNumberString(response),
-      "KLAY"
+      'KLAY',
     );
     return balance;
   });

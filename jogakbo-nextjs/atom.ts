@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import {atom} from "recoil";
 
 const showSignInModalState = atom<boolean>({
   key: "signInKey",
@@ -38,7 +38,7 @@ interface IModalPropsState {
 
 const modalPropsState = atom<IModalPropsState>({
   key: "modalPropsKey",
-  default: { title: "MODAL", onConfirm: () => {} },
+  default: {title: "MODAL", onConfirm: () => {}},
 });
 
 const subMenuState = atom<boolean>({

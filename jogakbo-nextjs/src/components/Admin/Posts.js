@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
-import { VerifyModalState } from "../../../atom";
-import VerifyCampaignModal from "../modals/VerifyCampaignModal";
+import {useState} from 'react';
+import {useRecoilState} from 'recoil';
+import styled from 'styled-components';
+import {VerifyModalState} from '../../../atom';
+import VerifyCampaignModal from '../modals/VerifyCampaignModal';
 
 const PostContainer = styled.div`
   margin-bottom: 15px;
@@ -41,10 +41,10 @@ const Name = styled.li`
   padding: 8px;
 `;
 
-const Posts = ({ posts, loading }) => {
+const Posts = ({posts, loading}) => {
   const [showModal, setShowModal] = useRecoilState(VerifyModalState);
   const [id, setId] = useState(0);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   return (
     <>
       <PostContainer>
@@ -53,7 +53,7 @@ const Posts = ({ posts, loading }) => {
           <NameLabel>name</NameLabel>
         </MenuUl>
         {loading && <div> loading... </div>}
-        {posts.map((post) => (
+        {posts.map(post => (
           <MenuUl>
             <Id key={post.id}>{post.id}</Id>
             <Name

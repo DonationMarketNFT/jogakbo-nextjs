@@ -1,9 +1,9 @@
-import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { useEffect, useState } from "react";
+import {motion, useAnimation, useViewportScroll} from "framer-motion";
+import {useEffect} from "react";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 import SignInModal from "../modals/SignInModal";
 import {
   isLoginedState,
@@ -11,14 +11,10 @@ import {
   subMenuState,
 } from "../../../atom";
 import SubMenu from "./SubMenu";
-import { useRouter } from "next/dist/client/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLightbulb,
-  faToggleOff,
-  faToggleOn,
-} from "@fortawesome/free-solid-svg-icons";
-import { faLightbulb as regular } from "@fortawesome/free-regular-svg-icons";
+import {useRouter} from "next/dist/client/router";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
+import {faLightbulb as regular} from "@fortawesome/free-regular-svg-icons";
 import useDarkMode from "use-dark-mode";
 
 const Head = styled(motion.header)`
@@ -34,18 +30,18 @@ const headerVariants = {
     backgroundColor: "rgba(0, 0, 0, 0)",
     backdropFilter: "none",
     border: "none",
+    boxShadow: "none",
   },
   scroll: {
     backgroundColor: "rgba(255,255,255,0.25)",
     backdropFilter: "blur(7.5px)",
-    border: "1px solid rgba(225, 225, 225, 0.2)",
+    border: "2px solid rgba(255, 255, 255, 0.2)",
+    boxShadow: "0 2px 30px 0 rgba(0, 0, 0, 0.27)",
   },
 };
 
 const HeaderFlexBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  ${flexSet("space-between")};
   margin: 0 auto;
   padding: 0 30px;
   width: 1050px;
@@ -68,15 +64,15 @@ const Logo = styled.h1`
 `;
 
 const Menu = styled.ul`
-  display: flex;
-  align-items: center;
+  ${flexSet()};
   li {
     position: relative;
     padding: 15px;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
+    color: ${props => props.theme.textColor};
     &:hover {
-      color: #111;
+      color: ${props => props.theme.gray.gray2};
     }
   }
   ${media[768]} {
@@ -106,16 +102,24 @@ const SignInBtn = styled.div`
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    /* background: ${(props) => props.theme.gradient}; */
-    /* color: ${(props) => props.theme.bgColor}; */
+    /* background: ${props => props.theme.gradient}; */
+    /* color: ${props => props.theme.bgColor}; */
   }
 `;
 
 const ModeToggle = styled.div`
+  ${flexSet()};
   margin-left: 15px;
   cursor: pointer;
+  width: 20px;
+  height: 20px;
   svg {
-    width: 18px;
+    width: 12px;
+    color: ${color.mainColor};
+  }
+  &:hover {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
   }
 `;
 
@@ -145,12 +149,11 @@ const Triger = styled.div`
 const BrowserHeader = () => {
   const router = useRouter();
   const headerAnimation = useAnimation();
-  const { scrollY } = useViewportScroll();
+  const {scrollY} = useViewportScroll();
   const [signIn, setSignIn] = useRecoilState(showSignInModalState);
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
   const mode = useDarkMode();
-  console.log(mode);
 
   const toggleMode = () => {
     mode.toggle();

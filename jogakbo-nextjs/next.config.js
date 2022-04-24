@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  webpack: (config, { isServer, webpack }) => {
+  webpack: (config, {isServer, webpack}) => {
     if (!isServer) {
       config.node = {
         fs: `empty`,

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { media } from "../../styles/theme";
+import {motion} from "framer-motion";
+import {useEffect, useRef, useState} from "react";
+import {useRecoilState} from "recoil";
+import {color, media} from "../../styles/theme";
 import {
   getBalance,
   testOwnTokenId,
@@ -18,11 +18,16 @@ import {
   loginPlatformState,
   isLoginedState,
 } from "../../atom";
-import { faClone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faClone} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ConnectWalletModal from "../components/modals/ConnectWalletModal";
 import * as KlipAPI from "../api/UseKlip";
 import Seo from "../components/Seo";
+
+const Wrapper = styled.div`
+  height: 100vh;
+  background: ${props => props.theme.bgColor};
+`;
 
 const Container = styled.div`
   display: flex;
@@ -52,7 +57,7 @@ interface IProfile {
 
 const ProfileImage = styled.div<IProfile>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.bgphoto});
+    url(${props => props.bgphoto});
   background-size: cover;
   background-position: center center;
   margin: 10px;
@@ -98,9 +103,9 @@ const ProfileInfo = styled.div`
   }
   &:first-child {
     input {
-      background: ${(props) => props.theme.gray};
+      background: ${props => props.theme.gray};
       border-radius: 5px;
-      color: white;
+      color: ${props => props.theme.textColor};
       ${media.mobile} {
         font-size: 13px;
       }
@@ -108,14 +113,14 @@ const ProfileInfo = styled.div`
   }
 `;
 const WalletConnectButton = styled.button`
-  background: ${(props) => props.theme.gradient};
+  background: ${props => props.theme.gradient};
   width: 100%;
   margin: 5px 0;
   margin-bottom: 30px;
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.bgColor};
+  color: ${color.white};
   text-align: center;
   font-size: 20px;
   cursor: pointer;
@@ -145,6 +150,7 @@ const NFTContainer = styled.div`
   h3 {
     position: absolute;
     left: 30px;
+    color: ${props => props.theme.textColor};
   }
   ${media.tablet} {
     width: auto;
@@ -180,7 +186,7 @@ const CopyBox = styled.div`
   cursor: pointer;
 `;
 
-const boxVariants = { hover: { scale: 1.05 } };
+const boxVariants = {hover: {scale: 1.05}};
 
 const DEFAULT_IMAGE =
   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -194,7 +200,7 @@ function Mypage() {
   // const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
 
   const [connectWallet, setConnectWallet] = useRecoilState(
-    showConnectWalletModalState
+    showConnectWalletModalState,
   );
 
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
@@ -259,55 +265,57 @@ function Mypage() {
   return (
     <>
       <Seo title="마이페이지" />
-      <Container>
-        <ProfileContainer>
-          <ProfileImage bgphoto={profile} />
-          <ProfileInfoBox>
-            {myAddress !== "0x00" && (
+      <Wrapper>
+        <Container>
+          <ProfileContainer>
+            <ProfileImage bgphoto={profile} />
+            <ProfileInfoBox>
+              {myAddress !== "0x00" && (
+                <>
+                  <ProfileInfo>
+                    <label htmlFor="address">Wallet Address</label>
+                    <input
+                      id="address"
+                      readOnly
+                      type="text"
+                      value={myAddress}
+                      ref={copyLinkRef}
+                    />
+                    <CopyBox onClick={copyAddress}>
+                      <FontAwesomeIcon icon={faClone} />
+                    </CopyBox>
+                  </ProfileInfo>
+                  <ProfileInfo>
+                    <label htmlFor="balance">Wallet Balance</label>
+                    <input
+                      id="balance"
+                      readOnly
+                      type="text"
+                      value={`${myBalance} Klay`}
+                    />
+                  </ProfileInfo>
+                </>
+              )}
+              {myAddress === "0x00" && (
+                <WalletConnectButton onClick={getUserData}>
+                  Connect Wallet
+                </WalletConnectButton>
+              )}
+            </ProfileInfoBox>
+          </ProfileContainer>
+          <NFTContainer>
+            <h3>My NFTs</h3>
+            {ownToken.map((data, i) => (
               <>
-                <ProfileInfo>
-                  <label htmlFor="address">Wallet Address</label>
-                  <input
-                    id="address"
-                    readOnly
-                    type="text"
-                    value={myAddress}
-                    ref={copyLinkRef}
-                  />
-                  <CopyBox onClick={copyAddress}>
-                    <FontAwesomeIcon icon={faClone} />
-                  </CopyBox>
-                </ProfileInfo>
-                <ProfileInfo>
-                  <label htmlFor="balance">Wallet Balance</label>
-                  <input
-                    id="balance"
-                    readOnly
-                    type="text"
-                    value={`${myBalance} Klay`}
-                  />
-                </ProfileInfo>
+                <NFTBox key={i} variants={boxVariants} whileHover="hover">
+                  {data[1]}
+                </NFTBox>
               </>
-            )}
-            {myAddress === "0x00" && (
-              <WalletConnectButton onClick={getUserData}>
-                Connect Wallet
-              </WalletConnectButton>
-            )}
-          </ProfileInfoBox>
-        </ProfileContainer>
-        <NFTContainer>
-          <h3>My NFTs</h3>
-          {ownToken.map((data, i) => (
-            <>
-              <NFTBox key={i} variants={boxVariants} whileHover="hover">
-                {data[1]}
-              </NFTBox>
-            </>
-          ))}
-        </NFTContainer>
-        <Withdraw>회원 탈퇴</Withdraw>
-      </Container>
+            ))}
+          </NFTContainer>
+          <Withdraw>회원 탈퇴</Withdraw>
+        </Container>
+      </Wrapper>
       {connectWallet && <ConnectWalletModal />}
     </>
   );

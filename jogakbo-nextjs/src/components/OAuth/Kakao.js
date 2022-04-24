@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import { useRouter } from "next/dist/client/router";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { isLoginedState, loginPlatformState } from "../../../atom";
+=======
+import {useRouter} from 'next/dist/client/router';
+import {useRecoilState} from 'recoil';
+import styled from 'styled-components';
+import {isLoginedState} from '../../../atom';
+>>>>>>> 0bd618ab9007aae4e55e250d78f4a8d43df8dd4b
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +37,7 @@ const Kakao = () => {
   const REST_API_KEY = "87ec2852b1a816aba24acbd1e66aa2fe";
   //TODO: this api key should be encrypted.
   const REDIRECT_URI = "http://localhost:3003/mypage";
+
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const router = useRouter();
   const [login, setLogin] = useRecoilState(isLoginedState);

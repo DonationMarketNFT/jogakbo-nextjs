@@ -1,44 +1,16 @@
-import { css, DefaultTheme } from "styled-components";
+import {css, DefaultTheme} from "styled-components";
 
-const flexCenter = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const lightTheme: DefaultTheme = {
-  // gradient: "linear-gradient(45deg, #feac5e 0%, #c779d0 50%, #4bc0c8 100%)",
-  gradient: "linear-gradient(45deg, #ffe259 0%,#f49a4a 100%)",
-  bgColor: "white",
-  contentBgColor: "white",
-  textColor: "#333",
-  boxShadow1: "4px 12px 30px 6px rgb(0 0 0 / 9%)",
-  boxShadow2: "4px 12px 30px 6px rgb(0 0 0 / 18%)",
-  gray: "lightgray",
-  glass: {
-    bgColor: "rgba(255, 255, 255, 0.25)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
-    boxShadow: "rgba(142, 142, 142, 0.19) 0px 6px 15px 0px",
-    color: "rgb(28,28,28)",
-  },
-  flexCenter,
+export const flexSet = (just = "center", align = "center") => {
+  return `display: flex;
+  justify-content: ${just};
+  align-items: ${align};`;
 };
 
-export const darkTheme: DefaultTheme = {
-  gradient: "linear-gradient(45deg, #4bc0c8 0%, #c779d0 50%, #feac5e 100%)",
-  bgColor: "black",
-  contentBgColor: "gray",
-  textColor: "rgba(255,255,255,0.8)",
-  boxShadow1: "4px 12px 30px 6px rgb(255 255 255 / 9%)",
-  boxShadow2: "4px 12px 30px 6px rgb(255 255 255 / 18%)",
-  gray: "gray",
-  glass: {
-    bgColor: "rgba(89, 89, 89, 0.25)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
-    boxShadow: "rgba(14, 14, 14, 0.19) 0px 6px 15px 0px",
-    color: "rgb(255, 255, 255, 0.75)",
-  },
-  flexCenter,
+export const flexColumnSet = (just = "center", align = "center") => {
+  return `display: flex;
+  flex-direction: column;
+  justify-content: ${just};
+  align-items: ${align};`;
 };
 
 const customMediaQuery = (maxWidth: number): string =>
@@ -49,4 +21,67 @@ export const media = {
   768: customMediaQuery(768),
   tablet: customMediaQuery(1100),
   mobile: customMediaQuery(500),
+};
+
+export const color = {
+  mainColor: "#f49a4a",
+  white: "#fff",
+  gray1: "#f8f9fa",
+  gray2: "#e5e5e5",
+  gray3: "#cecece",
+  gray4: "#b4b4b4",
+  gray5: "#9c9c9c",
+  gray6: "#767676",
+  gray7: "#585858",
+  black: "#333",
+};
+
+export const lightTheme: DefaultTheme = {
+  textColor: "#333",
+  bgColor: "#fff",
+  contentBgColor: "#fff",
+  borderColor: "1px solid rgba(0, 0, 0, 0.1)",
+  gradient: "linear-gradient(45deg, #ffe259 0%,#f49a4a 100%)",
+  boxShadow1: "4px 12px 30px 6px rgb(0 0 0 / 9%)",
+  boxShadow2: "4px 12px 30px 6px rgb(0 0 0 / 18%)",
+  gray: {
+    gray1: "#585858",
+    gray2: "#767676",
+    gray3: "#9c9c9c",
+    gray4: "#b4b4b4",
+    gray5: "#cecece",
+    gray6: "#e5e5e5",
+    gray7: "#f8f9fa",
+  },
+  glass: {
+    bgColor: "rgba(255, 255, 255, 0.25)",
+    border: "1px solid rgba(255, 255, 255, 0.18)",
+    boxShadow: "rgba(142, 142, 142, 0.19) 0px 6px 15px 0px",
+    color: "rgb(28,28,28)",
+  },
+};
+
+export const darkTheme: DefaultTheme = {
+  textColor: "rgba(255,255,255,0.8)",
+  bgColor: "#000",
+  contentBgColor: "gray",
+  borderColor: "1px solid rgba(255, 255, 255, 0.3)",
+  gradient: "linear-gradient(45deg, #ffe259 0%,#f49a4a 100%)",
+  boxShadow1: "4px 12px 30px 6px rgb(255 255 255 / 9%)",
+  boxShadow2: "4px 12px 30px 6px rgb(255 255 255 / 18%)",
+  gray: {
+    gray1: "#f8f9fa",
+    gray2: "#e5e5e5",
+    gray3: "#cecece",
+    gray4: "#b4b4b4",
+    gray5: "#9c9c9c",
+    gray6: "#767676",
+    gray7: "#585858",
+  },
+  glass: {
+    bgColor: "rgba(89, 89, 89, 0.25)",
+    border: "1px solid rgba(255, 255, 255, 0.18)",
+    boxShadow: "rgba(14, 14, 14, 0.19) 0px 6px 15px 0px",
+    color: "rgb(255, 255, 255, 0.75)",
+  },
 };

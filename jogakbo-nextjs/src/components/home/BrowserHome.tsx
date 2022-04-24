@@ -1,19 +1,23 @@
-import { motion } from "framer-motion";
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
-import { media } from "../../../styles/theme";
+import {motion} from "framer-motion";
+import type {NextPage} from "next";
+import {useEffect, useState} from "react";
+import styled from "styled-components";
+import {color, media} from "../../../styles/theme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HomeBanner from "./HomeBanner";
 
+const Container = styled.div`
+  background: ${props => props.theme.bgColor};
+`;
+
 const BrowserContainer = styled.div`
-  width: 1100px;
-  margin: 80px auto 300px;
-  padding: 30px 0;
+  width: 1050px;
+  margin: 0 auto;
+  padding: 80px 0;
   ${media.tablet} {
     width: 100%;
-    padding: 0 30px;
+    padding: 80px 30px;
   }
 `;
 
@@ -23,16 +27,16 @@ const Section = styled.section`
 `;
 
 const Title = styled.h3`
-  font-size: 24px;
   margin-bottom: 70px;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* border-bottom: ${props => props.theme.borderColor}; */
+  color: ${props => props.theme.textColor};
+  font-size: 24px;
 `;
 
 const Content = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 30px;
   ${media.tablet} {
     padding: 0;
   }
@@ -43,10 +47,10 @@ const Item = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 250px;
-  height: 250px;
+  width: 280px;
+  height: 280px;
   padding: 10px;
-  background: ${(props) => props.theme.contentBgColor};
+  background: ${props => props.theme.gray.gray7};
   border-radius: 15px;
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 18%);
   img {
@@ -58,7 +62,7 @@ const Item = styled.div`
   p {
     text-align: center;
     padding: 20px 0;
-    color: ${(props) => props.theme.textColor};
+    color: ${props => props.theme.textColor};
     ${media.tablet} {
       font-size: 14px;
     }
@@ -71,14 +75,15 @@ const Item = styled.div`
 
 const TabContainer = styled.div`
   display: flex;
-  padding: 0 30px;
 `;
 
-const Tab = styled.div<{ tab: boolean }>`
+const Tab = styled.div<{tab: boolean}>`
   width: 150px;
-  padding: 15px 20px;
-  background: ${(props) => (props.tab ? useTheme().bgColor : useTheme().gray)};
+  padding: 15px 0;
+  background: ${props =>
+    props.tab ? props.theme.gray.gray7 : props.theme.gray.gray6};
   text-align: center;
+  color: ${props => props.theme.textColor};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   cursor: pointer;
@@ -98,16 +103,25 @@ const DevProfile = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: lightgray;
+  /* background: ${props => props.theme.gray.gray7}; */
+  background: ${color.mainColor};
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+`;
+
+const RoadMap = styled.p`
+  display: block;
+  padding: 30px;
+  background: ${props => props.theme.gray.gray7};
+  height: 300px;
+  border-radius: 15px;
 `;
 
 const Question = styled(motion.li)`
   margin-bottom: 10px;
   padding: 20px 30px;
-  background: #f49a4a;
+  background: ${color.mainColor};
   border-radius: 10px;
-  color: white;
+  color: ${color.white};
   font-size: 18px;
   cursor: pointer;
 `;
@@ -117,6 +131,7 @@ const Answer = styled(motion.div)`
   display: none;
   padding: 20px 30px;
   font-size: 18px;
+  color: ${props => props.theme.textColor};
 `;
 
 const BrowserHome: NextPage = () => {
@@ -125,7 +140,7 @@ const BrowserHome: NextPage = () => {
 
   const onClickQuestion = (a: number) => {
     const answer = document.getElementById(`${a}`);
-    setQuestion((prev) => !prev);
+    setQuestion(prev => !prev);
     question
       ? (answer!.style.display = "block")
       : (answer!.style.display = "none");
@@ -150,10 +165,10 @@ const BrowserHome: NextPage = () => {
       answer:
         "create campaign을 통해 양식을 제출하게 되면 심사 후 캠페인으로 등록됩니다.",
     },
-    { question: "질문3", answer: "답변3" },
-    { question: "질문4", answer: "답변4" },
-    { question: "질문5", answer: "답변5" },
-    { question: "질문6", answer: "답변6" },
+    {question: "질문3", answer: "답변3"},
+    {question: "질문4", answer: "답변4"},
+    {question: "질문5", answer: "답변5"},
+    {question: "질문6", answer: "답변6"},
   ];
 
   // const listItems = QuestionData.map((o, i) => (
@@ -166,86 +181,78 @@ const BrowserHome: NextPage = () => {
 
   return (
     <>
-      <HomeBanner />
-      {/* <BrowserHome /> */}
-      <BrowserContainer>
-        <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-          <Title>✔️ 서비스 특징</Title>
-          <Content>
-            <Item>
-              <img src="/blockchain4.png" />
-              <p>
-                블록체인을 이용한 <br />
-                투명한 기부가 가능합니다
-              </p>
-            </Item>
-            <Item>
-              <img src="/nft4.png" />
-              <p>기부증서로 NFT를 발행합니다</p>
-            </Item>
-            <Item>
-              <img src="/wallet4.png" />
-              <p>다양한 지갑 서비스를 제공합니다</p>
-            </Item>
-          </Content>
-        </Section>
-        <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-          <Title>✔️ 서비스 이용방법</Title>
-          <TabContainer>
-            <Tab tab={tab} onClick={() => setTab(true)}>
-              기부 참여
-            </Tab>
-            <Tab tab={!tab} onClick={() => setTab(false)}>
-              캠페인 생성
-            </Tab>
-          </TabContainer>
-          {tab ? <Tab1 /> : <Tab2 />}
-        </Section>
-        <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-          <Title>✔️ 개발자 소개</Title>
-          <Content>
-            <Dev>
-              <DevProfile data-aos="flip-left"></DevProfile>
-              <p>개발자1</p>
-            </Dev>
-            <Dev>
-              <DevProfile data-aos="flip-left"></DevProfile>
-              <p>개발자2</p>
-            </Dev>
-            <Dev>
-              <DevProfile data-aos="flip-left"></DevProfile>
-              <p>개발자3</p>
-            </Dev>
-          </Content>
-        </Section>
-        <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-          <Title>✔️ 로드맵</Title>
-          <p
-            style={{
-              display: "block",
-              padding: "30px",
-              backgroundColor: useTheme().gray,
-              height: "300px",
-              borderRadius: 15,
-            }}
-          >
-            준비중입니다
-          </p>
-        </Section>
-        <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-          <Title>✔️ Q&A</Title>
-          <ul>
-            {QuestionData.map((a, i) => (
-              <>
-                <Question key={i} onClick={() => onClickQuestion(i)}>
-                  ❔ {a.question}
-                </Question>
-                <Answer id={`${i}`}>❗️ {a.answer}</Answer>
-              </>
-            ))}
-          </ul>
-        </Section>
-      </BrowserContainer>
+      <Container>
+        <HomeBanner />
+        {/* <BrowserHome /> */}
+        <BrowserContainer>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ 서비스 특징</Title>
+            <Content>
+              <Item>
+                <img src="/blockchain4.png" />
+                <p>
+                  블록체인을 이용한 <br />
+                  투명한 기부가 가능합니다
+                </p>
+              </Item>
+              <Item>
+                <img src="/nft4.png" />
+                <p>기부증서로 NFT를 발행합니다</p>
+              </Item>
+              <Item>
+                <img src="/wallet4.png" />
+                <p>다양한 지갑 서비스를 제공합니다</p>
+              </Item>
+            </Content>
+          </Section>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ 서비스 이용방법</Title>
+            <TabContainer>
+              <Tab tab={tab} onClick={() => setTab(true)}>
+                기부 참여
+              </Tab>
+              <Tab tab={!tab} onClick={() => setTab(false)}>
+                캠페인 생성
+              </Tab>
+            </TabContainer>
+            {tab ? <Tab1 /> : <Tab2 />}
+          </Section>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ 개발자 소개</Title>
+            <Content>
+              <Dev>
+                <DevProfile data-aos="flip-left"></DevProfile>
+                <p>개발자1</p>
+              </Dev>
+              <Dev>
+                <DevProfile data-aos="flip-left"></DevProfile>
+                <p>개발자2</p>
+              </Dev>
+              <Dev>
+                <DevProfile data-aos="flip-left"></DevProfile>
+                <p>개발자3</p>
+              </Dev>
+            </Content>
+          </Section>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ 로드맵</Title>
+            <RoadMap>준비중입니다</RoadMap>
+          </Section>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ Q&A</Title>
+            <ul>
+              {QuestionData.map((a, i) => (
+                <>
+                  <Question key={i} onClick={() => onClickQuestion(i)}>
+                    ❔ {a.question}
+                  </Question>
+                  <Answer id={`${i}`}>❗️ {a.answer}</Answer>
+                </>
+              ))}
+            </ul>
+          </Section>
+        </BrowserContainer>
+      </Container>
     </>
   );
 };
@@ -253,10 +260,9 @@ const BrowserHome: NextPage = () => {
 export default BrowserHome;
 
 const TabBackground1 = styled.div`
-  margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${(props) => props.theme.bgColor};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;
@@ -265,6 +271,7 @@ const StepContainer = styled.div`
   margin-bottom: 60px;
   p {
     padding: 0 20px;
+    color: ${props => props.theme.textColor};
   }
   &:last-child {
     margin: 0;
@@ -275,9 +282,10 @@ const Step = styled.div`
   margin-bottom: 40px;
   padding: 10px 15px;
   width: 100px;
-  background: ${(props) => props.theme.contentBgColor};
+  background: ${color.mainColor};
+  color: ${color.white};
   border-radius: 20px;
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  box-shadow: ${props => props.theme.boxShadow1};
   text-align: center;
 `;
 
@@ -305,10 +313,9 @@ function Tab1() {
 }
 
 const TabBackground2 = styled.div`
-  margin: 0 30px;
   padding: 60px 30px;
-  background-color: ${(props) => props.theme.bgColor};
-  box-shadow: ${(props) => props.theme.boxShadow1};
+  background: ${props => props.theme.gray.gray7};
+  box-shadow: ${props => props.theme.boxShadow1};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;

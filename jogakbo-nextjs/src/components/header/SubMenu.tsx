@@ -1,11 +1,11 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import { subMenuState } from "../../../atom";
-import { useIsBrowser } from "../../hook/isBrowser";
-import { useIsMobile } from "../../hook/isMobile";
+import {subMenuState} from "../../../atom";
+import {useIsBrowser} from "../../hooks/isBrowser";
+import {useIsMobile} from "../../hooks/isMobile";
 
 const Container = styled.div`
   position: fixed;

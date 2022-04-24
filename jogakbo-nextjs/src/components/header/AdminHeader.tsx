@@ -1,17 +1,15 @@
 import Link from "next/link";
 import styled from "styled-components";
+import {flexColumnSet} from "../../../styles/theme";
 
 const Menu = styled.header`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  ${flexColumnSet("space-between")}
   position: fixed;
   left: 0;
   padding: 50px 0;
   width: 250px;
   height: 100%;
-  border: 1px solid blue;
+  background: lightgray;
   li {
     padding: 12px;
   }
@@ -27,7 +25,7 @@ const Col = styled.div`
   &:last-child {
     a {
       padding: 10px 15px;
-      background: gray;
+      background: #f49a4a;
       border-radius: 5px;
       color: white;
     }

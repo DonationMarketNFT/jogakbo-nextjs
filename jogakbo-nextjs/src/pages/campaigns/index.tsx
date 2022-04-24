@@ -1,19 +1,18 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Link from "next/link";
+import {GetServerSideProps, InferGetServerSidePropsType} from "next";
 import styled from "styled-components";
-import { media } from "../../../styles/theme";
+import {media} from "../../../styles/theme";
 import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
 
 const Wrapper = styled.section`
-  box-sizing: border-box;
-  padding: 50px 0;
+  background: ${props => props.theme.bgColor};
 `;
 
 const Container = styled.div`
   display: flex;
   margin: 0 auto;
+  padding: 50px 0;
   width: 1050px;
   ${media.tablet} {
     width: auto;

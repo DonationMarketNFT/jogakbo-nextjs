@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
 
