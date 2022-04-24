@@ -15,6 +15,8 @@ import {
   myBalanceState,
   qrValueState,
   showConnectWalletModalState,
+  loginPlatformState,
+  isLoginedState,
 } from "../../atom";
 import { faClone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -194,10 +196,21 @@ function Mypage() {
   const [connectWallet, setConnectWallet] = useRecoilState(
     showConnectWalletModalState
   );
+
+  const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
+  const [login, setLogin] = useRecoilState(isLoginedState);
+
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
   const copyLinkRef = useRef<any>();
   const [ownToken, setOwnToken] = useState<any[]>([]);
+
+  if (typeof window !== "undefined") {
+    const uri = window.location.href;
+    console.log(uri);
+    console.log(loginPlatform);
+    console.log(login);
+  }
 
   const getOwnTokenIds = async (address: string) => {
     const ids = await testOwnTokenId(address);

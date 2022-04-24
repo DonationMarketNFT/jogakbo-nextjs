@@ -51,6 +51,11 @@ const VerifyModalState = atom<boolean>({
   default: false,
 });
 
+const loginPlatformState = atom<string>({
+  key: "loginPlatformState",
+  default: "None",
+});
+
 export {
   showSignInModalState,
   showConnectWalletModalState,
@@ -61,4 +66,5 @@ export {
   modalPropsState,
   subMenuState,
   VerifyModalState,
+  loginPlatformState,
 };
