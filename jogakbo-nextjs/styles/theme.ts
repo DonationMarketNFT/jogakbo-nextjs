@@ -46,11 +46,11 @@ export const lightTheme: DefaultTheme = {
   boxShadow2: "4px 12px 30px 6px rgb(0 0 0 / 18%)",
   gray: {
     gray1: "#585858",
-    gray2: "#767676",
-    gray3: "#9c9c9c",
-    gray4: "#b4b4b4",
-    gray5: "#cecece",
-    gray6: "#e5e5e5",
+    gray2: "#737373",
+    gray3: "#8d8e8e",
+    gray4: "#a8a9a9",
+    gray5: "#c3c3c4",
+    gray6: "#dddedf",
     gray7: "#f8f9fa",
   },
   glass: {
