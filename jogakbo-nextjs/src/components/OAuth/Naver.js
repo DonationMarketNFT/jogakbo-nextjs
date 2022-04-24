@@ -2,6 +2,8 @@ import styled from "styled-components";
 import {useRecoilState} from "recoil";
 import {isLoginedState} from "../../../atom";
 import {useRouter} from "next/dist/client/router";
+import React, {useState, useEffect} from "react";
+import NaverLogin from "react-naver-login";
 
 const Container = styled.div`
   display: flex;
@@ -38,15 +40,24 @@ function Naver() {
   const [login, setLogin] = useRecoilState(isLoginedState);
 
   return (
-    <Container
-      onClick={() => {
-        setLogin(true);
-        router.push(NAVER_AUTH_URL);
-      }}
-    >
-      <Logo src="oauth/naver.svg" />
-      <Text>네이버 로그인</Text>
-    </Container>
+    <NaverLogin
+      clientId={CLIENT_ID}
+      callbackUrl={REDIRECT_URI}
+      onSuccess={naverUser => console.log(naverUser)}
+      onFailure={() => console.error(result)}
+      render={({onClick}) => (
+        <Container
+          onClick={e => {
+            setLogin(true);
+            e.preventDefault();
+            onClick();
+          }}
+        >
+          <Logo src="oauth/naver.svg" />
+          <Text>네이버 로그인</Text>
+        </Container>
+      )}
+    ></NaverLogin>
   );
 }
 
