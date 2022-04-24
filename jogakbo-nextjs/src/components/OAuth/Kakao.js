@@ -39,7 +39,6 @@ const Kakao = () => {
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
   const platform_name = "KAKAO";
-  setLoginPlatform(platform_name);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -69,6 +68,7 @@ const Kakao = () => {
         <Container
           onClick={e => {
             setLogin(true);
+            setLoginPlatform(platform_name);
             e.preventDefault();
             onClick();
           }}
