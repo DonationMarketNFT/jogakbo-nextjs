@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import {useRecoilState} from "recoil";
-import {isLoginedState} from "../../../atom";
+import {isLoginedState, loginPlatformState} from "../../../atom";
 import {useRouter} from "next/dist/client/router";
+import React, {useState, useEffect} from "react";
+import NaverLogin from "react-naver-login";
 
 const Container = styled.div`
   display: flex;
@@ -29,24 +31,62 @@ const Text = styled.h5`
 const CLIENT_ID = "pwHyAdW1aYVUv1EVlAHI";
 
 function Naver() {
-  const REDIRECT_URI = "http://localhost:3003/mypage";
+  const REDIRECT_URI = "http://127.0.0.1:3003";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
     REDIRECT_URI,
   )}`;
   const router = useRouter();
+  const platform_name = "NAVER";
 
   const [login, setLogin] = useRecoilState(isLoginedState);
+  const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
+
+  const UserProfile = () => {
+    window.location.href.includes("access_token") && GetUser();
+    function GetUser() {
+      const location = window.location.href.split("=")[1];
+      const token = location.split("&")[0];
+      console.log("token: ", token);
+      // fetch(`${API}/account/sign-in`, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-type": "application/json",
+      //     Authorization: token,
+      //   },
+      // })
+      //   .then(res => res.json())
+      //   .then(res => {
+      //     localStorage.setItem("access_token", res.token);
+      //     setUserData({
+      //       nickname: res.nickname,
+      //       image: res.image,
+      //     });
+      //   })
+      //   .catch(err => console.log("err : ", err));
+    }
+  };
 
   return (
-    <Container
-      onClick={() => {
-        setLogin(true);
-        router.push(NAVER_AUTH_URL);
-      }}
-    >
-      <Logo src="oauth/naver.svg" />
-      <Text>네이버 로그인</Text>
-    </Container>
+    <NaverLogin
+      clientId={CLIENT_ID}
+      callbackUrl={REDIRECT_URI}
+      onSuccess={naverUser => console.log(naverUser)}
+      onFailure={() => console.error(result)}
+      render={({onClick}) => (
+        <Container
+          onClick={e => {
+            UserProfile();
+            setLogin(true);
+            setLoginPlatform(platform_name);
+            e.preventDefault();
+            onClick();
+          }}
+        >
+          <Logo src="oauth/naver.svg" />
+          <Text>네이버 로그인</Text>
+        </Container>
+      )}
+    ></NaverLogin>
   );
 }
 
