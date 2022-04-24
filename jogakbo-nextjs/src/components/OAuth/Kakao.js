@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import { useRouter } from "next/dist/client/router";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { isLoginedState, loginPlatformState } from "../../../atom";
-=======
-import {useRouter} from 'next/dist/client/router';
-import {useRecoilState} from 'recoil';
-import styled from 'styled-components';
-import {isLoginedState} from '../../../atom';
->>>>>>> 0bd618ab9007aae4e55e250d78f4a8d43df8dd4b
 
 const Container = styled.div`
   display: flex;
