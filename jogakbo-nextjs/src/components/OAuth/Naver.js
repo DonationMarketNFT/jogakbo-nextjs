@@ -31,7 +31,7 @@ const Text = styled.h5`
 const CLIENT_ID = "pwHyAdW1aYVUv1EVlAHI";
 
 function Naver() {
-  const REDIRECT_URI = "http://127.0.0.1:3003";
+  const REDIRECT_URI = "http://127.0.0.1:3003/naverPopUp";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
     REDIRECT_URI,
   )}`;
@@ -40,31 +40,6 @@ function Naver() {
 
   const [login, setLogin] = useRecoilState(isLoginedState);
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
-
-  const UserProfile = () => {
-    window.location.href.includes("access_token") && GetUser();
-    function GetUser() {
-      const location = window.location.href.split("=")[1];
-      const token = location.split("&")[0];
-      console.log("token: ", token);
-      // fetch(`${API}/account/sign-in`, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-type": "application/json",
-      //     Authorization: token,
-      //   },
-      // })
-      //   .then(res => res.json())
-      //   .then(res => {
-      //     localStorage.setItem("access_token", res.token);
-      //     setUserData({
-      //       nickname: res.nickname,
-      //       image: res.image,
-      //     });
-      //   })
-      //   .catch(err => console.log("err : ", err));
-    }
-  };
 
   return (
     <NaverLogin
@@ -75,7 +50,6 @@ function Naver() {
       render={({onClick}) => (
         <Container
           onClick={e => {
-            UserProfile();
             setLogin(true);
             setLoginPlatform(platform_name);
             e.preventDefault();

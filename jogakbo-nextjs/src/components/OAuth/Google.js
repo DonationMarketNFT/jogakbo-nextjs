@@ -90,7 +90,7 @@ function Google() {
       onFailure={() => console.error(result)}
       cookiePolicy={"single_host_origin"}
       render={({onClick}) => (
-        <Container id="oAuthBtn" onClick={oAuthHandler}>
+        <Container id="oAuthBtn" onClick={e => {}}>
           <Logo src="oauth/google.svg" />
           <Text>구글 로그인</Text>
         </Container>
