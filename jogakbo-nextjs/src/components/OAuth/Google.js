@@ -65,12 +65,30 @@ function Google() {
   //   }
   // }, []);
 
+  // DB에 해당 이메일이 있는지 확인, 없으면 등록 있으면 로그인
+  // if (data)
+  //   axios
+  //     .post("http://localhost:3000/account/create_user", {
+  //       email: data.email,
+  //       thirdParty: "google",
+  //       walletAddress: "",
+  //       walletKind: "",
+  //       nickName: "",
+  //     })
+  //     .then(res => console.log("유저등록"))
+  //     .catch(e => console.log(e));
+
+  axios
+    .get("http://localhost:3000/account/user_all")
+    .then(res => console.log(res.data))
+    .catch(e => console.log(e));
+
   return (
     <GoogleLogin
-      clientId={}
+      //clientId={}
       onSuccess={naverUser => console.log(naverUser)}
       onFailure={() => console.error(result)}
-      cookiePolicy={'single_host_origin'}
+      cookiePolicy={"single_host_origin"}
       render={({onClick}) => (
         <Container id="oAuthBtn" onClick={oAuthHandler}>
           <Logo src="oauth/google.svg" />
