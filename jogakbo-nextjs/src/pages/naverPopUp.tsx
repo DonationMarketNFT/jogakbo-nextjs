@@ -30,8 +30,22 @@ const UserProfile = () => {
           console.log(res.response.nickname);
           console.log("email");
           console.log(res.response.email);
+
+          findEmail(res.response.email);
         })
         .catch(err => console.log("err : ", err));
+    }
+  }
+
+  async function findEmail(email: string) {
+    console.log(email);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/account/user/${email}`,
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
     }
   }
 };
