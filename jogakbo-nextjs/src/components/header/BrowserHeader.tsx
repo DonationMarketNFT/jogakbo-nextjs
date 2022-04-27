@@ -16,6 +16,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {faLightbulb as regular} from "@fortawesome/free-regular-svg-icons";
 import useDarkMode from "use-dark-mode";
+import GoogleLogOutBtn from "../OAuth/GoogleLogOutBtn";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -206,11 +207,15 @@ const BrowserHeader = () => {
           </Col>
           <Col>
             {login ? (
-              <Link href="/mypage">
-                <a>
-                  <SignInBtn>My Page</SignInBtn>
-                </a>
-              </Link>
+              <>
+                {/* db에 저장된 사용자의 thirdParty가 구글이라면 */}
+                <GoogleLogOutBtn />
+                <Link href="/mypage">
+                  <a>
+                    <SignInBtn>My Page</SignInBtn>
+                  </a>
+                </Link>
+              </>
             ) : (
               <SignInBtn onClick={() => setSignIn(true)}>로그인</SignInBtn>
             )}

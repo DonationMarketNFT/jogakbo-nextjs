@@ -1,9 +1,12 @@
-import {useState, useEffect} from "react";
-import axios from "axios";
-import styled from "styled-components";
-import {useRecoilState} from "recoil";
-import {isLoginedState} from "../../../atom";
 import GoogleLogin from "react-google-login";
+import {useRecoilState} from "recoil";
+import styled from "styled-components";
+import {
+  isLoginedState,
+  loginPlatformState,
+  showSignInModalState,
+} from "../../../atom";
+import {refreshTokenSetup} from "../utils/refreshTokenSetup";
 
 const Container = styled.div`
   display: flex;
@@ -27,76 +30,53 @@ const Text = styled.h5`
   text-align: center;
 `;
 
-function Google() {
-  const [data, setData] = useState(null);
-  const [login, setLogin] = useRecoilState(isLoginedState);
+const clientId =
+  "991698652827-vu3q9s8470ko9tu9sl342j69rn7ckpl9.apps.googleusercontent.com";
 
-  //   const oAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=991698652827-vu3q9s8470ko9tu9sl342j69rn7ckpl9.apps.googleusercontent.com&
-  // response_type=token&
-  // redirect_uri=http://localhost:3003&
-  // scope=https://www.googleapis.com/auth/userinfo.email`;
-  //   const oAuthHandler = () => {
-  //     window.location.assign(oAuthURL);
-  //   };
+const PLATFORM_NAME = "GOOGLE";
 
-  // useEffect(async () => {
-  //   const url = new URL(window.location.href);
+const Google = () => {
+  const [showSignInModal, setShowSignInModal] =
+    useRecoilState(showSignInModalState);
+  const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
+  const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
+  const onSuccess = res => {
+    refreshTokenSetup(res);
+    //access_token
+    console.log("[Login Success] res: ", res);
+    console.log("[Login Success] currentUser: ", res.profileObj);
+    console.log("닉네임");
+    console.log(res.profileObj.name);
+    console.log("email");
+    console.log(res.profileObj.email);
+    setIsLogined(true);
+    setLoginPlatform(PLATFORM_NAME);
+    // 모달만 닫음
+    setShowSignInModal(false);
+    // res.profiledObj.googleId 이용해서 유저 id로 사용
+    // 구글에서 id 값을 줬다면, id 주인이 맞다는 것이므로 유저 인증가능
+  };
 
-  //   const hash = url.hash;
-  //   if (hash) {
-  //     const accessToken = hash.split("=")[1].split("&")[0];
-  //     await axios
-  //       .get(
-  //         "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" +
-  //           accessToken,
-  //         {
-  //           headers: {
-  //             authorization: `token ${accessToken}`,
-  //             accept: "application/json",
-  //           },
-  //         },
-  //       )
-  //       .then(data => {
-  //         console.log(data);
-  //         setData(data);
-  //         setLogin(true);
-  //       })
-  //       .catch(e => console.log("oAuth token expired"));
-  //   }
-  // }, []);
-
-  // DB에 해당 이메일이 있는지 확인, 없으면 등록 있으면 로그인
-  // if (data)
-  //   axios
-  //     .post("http://localhost:3000/account/create_user", {
-  //       email: data.email,
-  //       thirdParty: "google",
-  //       walletAddress: "",
-  //       walletKind: "",
-  //       nickName: "",
-  //     })
-  //     .then(res => console.log("유저등록"))
-  //     .catch(e => console.log(e));
-
-  axios
-    .get("http://localhost:3000/account/user_all")
-    .then(res => console.log(res.data))
-    .catch(e => console.log(e));
+  const onFailure = res => {
+    console.log("[Login Failed] res: ", res);
+  };
 
   return (
     <GoogleLogin
-      //clientId={}
-      onSuccess={naverUser => console.log(naverUser)}
-      onFailure={() => console.error(result)}
+      clientId={clientId}
+      buttonText="Login"
+      onSuccess={onSuccess}
+      onFailure={onFailure}
       cookiePolicy={"single_host_origin"}
-      render={({onClick}) => (
-        <Container id="oAuthBtn" onClick={e => {}}>
+      isSignedIn={true}
+      render={props => (
+        <Container onClick={props.onClick} disabled={props.disabled}>
           <Logo src="oauth/google.svg" />
           <Text>구글 로그인</Text>
         </Container>
       )}
-    ></GoogleLogin>
+    />
   );
-}
+};
 
 export default Google;
