@@ -31,7 +31,7 @@ const Text = styled.h5`
 const CLIENT_ID = "pwHyAdW1aYVUv1EVlAHI";
 
 function Naver() {
-  const REDIRECT_URI = "http://127.0.0.1:3003/naverPopUp";
+  const REDIRECT_URI = "http://localhost:3003//naverPopUp";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
     REDIRECT_URI,
   )}`;

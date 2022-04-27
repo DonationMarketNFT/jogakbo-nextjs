@@ -7,6 +7,7 @@ import {
   showSignInModalState,
 } from "../../../atom";
 import {refreshTokenSetup} from "../utils/refreshTokenSetup";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +41,19 @@ const Google = () => {
     useRecoilState(showSignInModalState);
   const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
+
+  async function findEmail(email) {
+    console.log(email);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/account/user/${email}`,
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const onSuccess = res => {
     refreshTokenSetup(res);
     //access_token
@@ -49,6 +63,9 @@ const Google = () => {
     console.log(res.profileObj.name);
     console.log("email");
     console.log(res.profileObj.email);
+
+    findEmail(res.profileObj.email);
+
     setIsLogined(true);
     setLoginPlatform(PLATFORM_NAME);
     // 모달만 닫음

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {isLoginedState, loginPlatformState} from "../../../atom";
 import React, {useState, useEffect} from "react";
 import KakaoLogin from "react-kakao-login";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +41,18 @@ const Kakao = () => {
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
   const platform_name = "KAKAO";
 
+  async function findEmail(email) {
+    console.log(email);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/account/user/${email}`,
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.Kakao.init(JAVASCRIPT_API_KEY);
@@ -57,6 +70,7 @@ const Kakao = () => {
         console.log(err.profile.kakao_account.profile.nickname);
         console.log("email");
         console.log(err.profile.kakao_account.email);
+        findEmail(err.profile.kakao_account.email);
       }} // 성공 시 실행할 함수
       onFail={err => {
         console.log("로그인실패", err);
