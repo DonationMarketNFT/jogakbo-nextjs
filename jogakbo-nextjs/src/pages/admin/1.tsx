@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
+import {getPreCampaigns} from "../../api/preCampaigns";
 import Pagination from "../../components/admin/Pagination";
 import Posts from "../../components/admin/Posts";
 import AdminHeader from "../../components/header/AdminHeader";
@@ -34,15 +35,7 @@ const Verifing = () => {
   const [postsPerPage, setPostsPerPage] = useState(10);
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const response = await axios.get(
-        "http://localhost:3000/pre-campaigns/campaign_all",
-      );
-      setPosts(response.data);
-      setLoading(false);
-    }
-    fetchData();
+    getPreCampaigns(setPosts);
   }, []);
 
   const indexOfLast = currentPage * postsPerPage;

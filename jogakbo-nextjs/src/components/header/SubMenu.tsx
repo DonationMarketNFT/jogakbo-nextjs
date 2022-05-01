@@ -80,19 +80,19 @@ const SubMenu = () => {
         </Link>
         <Link href="/campaigns">
           <a onClick={() => setSubMenu(false)}>
-            <li>Campaigns</li>
+            <li>캠페인 둘러보기</li>
           </a>
         </Link>
         <Link href="/campaign">
           <a onClick={() => setSubMenu(false)}>
-            <li>Create Campaign</li>
+            <li>캠페인 생성하기</li>
           </a>
         </Link>
-        <Link href="/mypage">
+        {/* <Link href="/mypage">
           <a onClick={() => setSubMenu(false)}>
             <li>My page</li>
           </a>
-        </Link>
+        </Link> */}
       </MenuUl>
       {!isBrowser && (
         <IntroUl>

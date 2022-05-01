@@ -1,8 +1,8 @@
-import {useState} from 'react';
-import {useRecoilState} from 'recoil';
-import styled from 'styled-components';
-import {VerifyModalState} from '../../../atom';
-import VerifyCampaignModal from '../modals/VerifyCampaignModal';
+import {useState} from "react";
+import {useRecoilState} from "recoil";
+import styled from "styled-components";
+import {VerifyModalState} from "../../../atom";
+import VerifyCampaignModal from "./VerifyCampaignModal";
 
 const PostContainer = styled.div`
   margin-bottom: 15px;
@@ -44,7 +44,7 @@ const Name = styled.li`
 const Posts = ({posts, loading}) => {
   const [showModal, setShowModal] = useRecoilState(VerifyModalState);
   const [id, setId] = useState(0);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   return (
     <>
       <PostContainer>

@@ -291,7 +291,6 @@ export default function Detail({
   params,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [data, setData] = useState<any>(DEFAULT_DATA);
-  const router = useRouter();
   const [title, id] = params || [];
 
   const changeState = () => {

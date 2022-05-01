@@ -4,28 +4,17 @@ import {useEffect, useRef, useState} from "react";
 import {useRecoilState} from "recoil";
 import {color, media} from "../../styles/theme";
 import {
-  getBalance,
   testOwnTokenId,
   testTokenId2Description,
   testTokenId2Name,
 } from "../api/UseCaver";
-import {
-  modalPropsState,
-  myAddressState,
-  myBalanceState,
-  qrValueState,
-  showConnectWalletModalState,
-  loginPlatformState,
-  isLoginedState,
-} from "../../atom";
+import {myAddressState, myBalanceState} from "../../atom";
 import {faClone} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ConnectWalletModal from "../components/modals/ConnectWalletModal";
-import * as KlipAPI from "../api/UseKlip";
 import Seo from "../components/Seo";
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 100%;
   background: ${props => props.theme.bgColor};
 `;
 
@@ -96,34 +85,12 @@ const ProfileInfo = styled.div`
   }
   input {
     all: unset;
+    color: ${props => props.theme.textColor};
     height: 40px;
     padding: 0 10px;
     font-size: 18px;
     width: 100%;
   }
-  &:first-child {
-    input {
-      background: ${props => props.theme.gray};
-      border-radius: 5px;
-      color: ${props => props.theme.textColor};
-      ${media.mobile} {
-        font-size: 13px;
-      }
-    }
-  }
-`;
-const WalletConnectButton = styled.button`
-  background: ${props => props.theme.gradient};
-  width: 100%;
-  margin: 5px 0;
-  margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  color: ${color.white};
-  text-align: center;
-  font-size: 20px;
-  cursor: pointer;
 `;
 
 const Withdraw = styled.button`
@@ -195,64 +162,44 @@ function Mypage() {
   const [profile, setProfile] = useState(DEFAULT_IMAGE);
   const [myAddress, setMyAddress] = useRecoilState(myAddressState);
   const [myBalance, setMyBalance] = useRecoilState(myBalanceState);
-  const [modalProps, setModalProps] = useRecoilState(modalPropsState);
-  const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
-  // const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
-
-  const [connectWallet, setConnectWallet] = useRecoilState(
-    showConnectWalletModalState,
-  );
-
-  const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
-  const [login, setLogin] = useRecoilState(isLoginedState);
-
-  const [show, setShow] = useState(false);
-  const [value, setValue] = useState("");
   const copyLinkRef = useRef<any>();
   const [ownToken, setOwnToken] = useState<any[]>([]);
 
-  if (typeof window !== "undefined") {
-    const uri = window.location.href;
-    console.log(uri);
-    console.log(loginPlatform);
-    console.log(login);
-  }
+  // const getOwnTokenIds = async (address: string) => {
+  //   const ids = await testOwnTokenId(address);
+  //   return ids;
+  // };
 
-  const getOwnTokenIds = async (address: string) => {
-    const ids = await testOwnTokenId(address);
-    return ids;
-  };
-  const getOwnTokenInfo = async () => {
-    if (myAddress !== "0x00") {
-      let ownTokenArray = [];
-      const ids = await getOwnTokenIds(myAddress);
-      for (let id of ids) {
-        const description = await testTokenId2Description(id);
-        const name = await testTokenId2Name(id);
-        ownTokenArray.push([id, name, description]);
-      }
-      setOwnToken(ownTokenArray);
-    }
-  };
+  // const getOwnTokenInfo = async () => {
+  //   if (myAddress !== "0x00") {
+  //     let ownTokenArray = [];
+  //     const ids = await getOwnTokenIds(myAddress);
+  //     for (let id of ids) {
+  //       const description = await testTokenId2Description(id);
+  //       const name = await testTokenId2Name(id);
+  //       ownTokenArray.push([id, name, description]);
+  //     }
+  //     setOwnToken(ownTokenArray);
+  //   }
+  // };
 
-  const getUserData = async () => {
-    setModalProps({
-      title: "Klip 지갑을 연동하시겠습니까?",
-      onConfirm: () => {
-        KlipAPI.getAddress(setQrvalue, async (address: string) => {
-          setMyAddress(address);
-          const _balance = await getBalance(address);
-          setMyBalance(_balance);
-        });
-      },
-    });
-    setConnectWallet(true);
-  };
+  // const getUserData = async () => {
+  //   setModalProps({
+  //     title: "Klip 지갑을 연동하시겠습니까?",
+  //     onConfirm: () => {
+  //       KlipAPI.getAddress(setQrvalue, async (address: string) => {
+  //         setMyAddress(address);
+  //         const _balance = await getBalance(address);
+  //         setMyBalance(_balance);
+  //       });
+  //     },
+  //   });
+  //   // setConnectWallet(true);
+  // };
 
-  useEffect(() => {
-    getOwnTokenInfo();
-    getUserData();
-  }, []);
+  // useEffect(() => {
+  // getOwnTokenInfo();
+  // }, []);
 
   const copyAddress = () => {
     copyLinkRef.current.focus();
@@ -296,11 +243,6 @@ function Mypage() {
                   </ProfileInfo>
                 </>
               )}
-              {myAddress === "0x00" && (
-                <WalletConnectButton onClick={getUserData}>
-                  Connect Wallet
-                </WalletConnectButton>
-              )}
             </ProfileInfoBox>
           </ProfileContainer>
           <NFTContainer>
@@ -316,7 +258,6 @@ function Mypage() {
           <Withdraw>회원 탈퇴</Withdraw>
         </Container>
       </Wrapper>
-      {connectWallet && <ConnectWalletModal />}
     </>
   );
 }

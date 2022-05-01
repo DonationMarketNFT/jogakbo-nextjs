@@ -9,6 +9,7 @@ import React, {createRef, useState} from "react";
 import {media} from "../../styles/theme";
 import axios from "axios";
 import Seo from "../components/Seo";
+import {postPreCampaign} from "../api/preCampaigns";
 
 const Wrapper = styled.div`
   background: ${props => props.theme.bgColor};
@@ -114,23 +115,9 @@ function CreateCampaign() {
     _description: string,
     _targetAmount: number,
     _category: string,
-    _fundingStatus?: boolean,
-    _refundStatus?: boolean,
   ) => {
     e.preventDefault();
-    let data = {
-      name: _name,
-      description: _description,
-      targetAmount: Number(_targetAmount),
-      currentAmount: 0,
-      fundingStatus: true,
-      refundStatus: false,
-      category: _category,
-    };
-    axios
-      .post("http://localhost:3000/pre-campaigns/create_campaign", data)
-      .then(res => alert("정상적으로 제출되었습니다"))
-      .catch(e => console.log(e));
+    postPreCampaign(_name, _description, _targetAmount, _category);
   };
 
   return (

@@ -3,11 +3,14 @@ import {useEffect} from "react";
 import styled from "styled-components";
 import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
-import {useRecoilState} from "recoil";
-import SignInModal from "../modals/SignInModal";
+import {useRecoilState, useResetRecoilState} from "recoil";
 import {
   isLoginedState,
-  showSignInModalState,
+  modalPropsState,
+  myAddressState,
+  myBalanceState,
+  qrValueState,
+  showConnectWalletModalState,
   subMenuState,
 } from "../../../atom";
 import SubMenu from "./SubMenu";
@@ -17,6 +20,9 @@ import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {faLightbulb as regular} from "@fortawesome/free-regular-svg-icons";
 import useDarkMode from "use-dark-mode";
 import GoogleLogOutBtn from "../OAuth/GoogleLogOutBtn";
+import ConnectWalletModal from "../modals/ConnectWalletModal";
+import * as KlipAPI from "../../api/UseKlip";
+import {getBalance} from "../../api/UseCaver";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -93,7 +99,8 @@ const Circle = styled(motion.span)`
   background: #f49a4a;
 `;
 
-const SignInBtn = styled.div`
+const UserBtn = styled.div`
+  margin-left: 15px;
   padding: 10px 20px;
   background: #f49a4a;
   border-radius: 10px;
@@ -102,10 +109,6 @@ const SignInBtn = styled.div`
   font-weight: 500;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  &:hover {
-    /* background: ${props => props.theme.gradient}; */
-    /* color: ${props => props.theme.bgColor}; */
-  }
 `;
 
 const ModeToggle = styled.div`
@@ -151,13 +154,33 @@ const BrowserHeader = () => {
   const router = useRouter();
   const headerAnimation = useAnimation();
   const {scrollY} = useViewportScroll();
-  const [signIn, setSignIn] = useRecoilState(showSignInModalState);
-  const [login, setLogin] = useRecoilState(isLoginedState);
+  const [showConnectWallet, setShowConnectWallet] = useRecoilState(
+    showConnectWalletModalState,
+  );
+  const [modalProps, setModalProps] = useRecoilState(modalPropsState);
   const [subMenu, setSubMenu] = useRecoilState(subMenuState);
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
+  const [myBalance, setMyBalance] = useRecoilState(myBalanceState);
+  const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
+  const resetAddressState = useResetRecoilState(myAddressState);
   const mode = useDarkMode();
 
   const toggleMode = () => {
     mode.toggle();
+  };
+
+  const getUserData = async () => {
+    setModalProps({
+      title: "Connect Wallet",
+      onConfirm: () => {
+        KlipAPI.getAddress(setQrvalue, async (address: string) => {
+          setMyAddress(address);
+          const _balance = await getBalance(address);
+          setMyBalance(_balance);
+        });
+      },
+    });
+    setShowConnectWallet(true);
   };
 
   useEffect(() => {
@@ -206,18 +229,18 @@ const BrowserHeader = () => {
             </Menu>
           </Col>
           <Col>
-            {login ? (
+            {myAddress !== "0x00" ? (
               <>
                 {/* db에 저장된 사용자의 thirdParty가 구글이라면 */}
-                <GoogleLogOutBtn />
+                <UserBtn onClick={resetAddressState}>로그아웃</UserBtn>
                 <Link href="/mypage">
                   <a>
-                    <SignInBtn>My Page</SignInBtn>
+                    <UserBtn>My Page</UserBtn>
                   </a>
                 </Link>
               </>
             ) : (
-              <SignInBtn onClick={() => setSignIn(true)}>로그인</SignInBtn>
+              <UserBtn onClick={getUserData}>connect wallet</UserBtn>
             )}
             {mode.value ? (
               <ModeToggle onClick={toggleMode}>
@@ -236,7 +259,7 @@ const BrowserHeader = () => {
           </Col>
         </HeaderFlexBox>
       </Head>
-      {signIn && <SignInModal />}
+      {showConnectWallet && <ConnectWalletModal />}
       {subMenu && <SubMenu />}
     </>
   );

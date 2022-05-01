@@ -5,14 +5,15 @@ import styled from "styled-components";
 import QRCode from "qrcode.react";
 import {media} from "../../../styles/theme";
 import {
+  isLoginedState,
   modalPropsState,
   myAddressState,
   myBalanceState,
   qrValueState,
   showConnectWalletModalState,
 } from "../../../atom";
-import {useIsMobile} from "../../hooks/isMobile";
 import {kaikas} from "../../api/useKaikas";
+import {getBalance} from "../../api/UseCaver";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -98,6 +99,7 @@ const ConnectWalletCard = styled.div`
   h5 {
     margin-top: 15px;
     color: white;
+    font-size: 14px;
   }
   ${props => props.theme.boxShadow1};
   transition: all 0.2s ease-in-out;
@@ -126,74 +128,77 @@ function ConnectWalletModal() {
   const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
   const [modalProps, setModalProps] = useRecoilState(modalPropsState);
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
-  const isMobile = useIsMobile();
   const [address, setAddress] = useRecoilState(myAddressState);
   const [balance, setBalance] = useRecoilState(myBalanceState);
-  const getData = async () => {
-    const results = await kaikas();
-    setAddress(results?.account);
-    setBalance(results?.balance!);
+  const [logined, setLogined] = useRecoilState(isLoginedState);
+
+  const getKaikasData = async () => {
+    const result = await kaikas();
+    setBalance(await getBalance(result));
+    setAddress(result);
     setShowModal(false);
   };
 
   console.log(address);
+  console.log(balance);
   return (
-    <ModalWrapper onClick={() => setShowModal(false)}>
-      <ModalContent
-        onClick={e => {
-          e.stopPropagation();
-        }}
-      >
-        <ConnectWalletContainer>
-          <ConnectWalletModalHeader>
-            <h5>{modalProps.title}</h5>
-            <button>
-              <FontAwesomeIcon
-                onClick={() => {
-                  setShowModal(false);
-                  setQrvalue("DEFAULT");
-                }}
-                icon={faTimes}
-              />
-            </button>
-          </ConnectWalletModalHeader>
-          <ConnectWalletModalContent>
-            {qrvalue == "DEFAULT" ? (
-              <>
-                <ConnectWalletCard onClick={getData}>
-                  <img src="wallet/kaikas-logo.svg" />
-                  <h5>Kaikas </h5>
-                </ConnectWalletCard>
-                {/* <ConnectWalletCard>
-                  <img src="wallet/metamask-logo.svg" />
-                  <h5>Metamask </h5>
-                </ConnectWalletCard> */}
-
-                <ConnectWalletCard
+    <>
+      <ModalWrapper onClick={() => setShowModal(false)}>
+        <ModalContent
+          onClick={e => {
+            e.stopPropagation();
+          }}
+        >
+          <ConnectWalletContainer>
+            <ConnectWalletModalHeader>
+              <h5>{modalProps.title}</h5>
+              <button>
+                <FontAwesomeIcon
                   onClick={() => {
-                    modalProps.onConfirm();
+                    setShowModal(false);
+                    setQrvalue("DEFAULT");
                   }}
-                >
-                  <img src="wallet/klip-logo.svg" />
-                  <h5>Klip </h5>
-                </ConnectWalletCard>
-              </>
-            ) : (
-              <>
-                <QRContainer>
-                  <QRCode
-                    value={qrvalue}
-                    // bgColor fgColor
-                    size={256}
-                    includeMargin
-                  />
-                </QRContainer>
-              </>
-            )}
-          </ConnectWalletModalContent>
-        </ConnectWalletContainer>
-      </ModalContent>
-    </ModalWrapper>
+                  icon={faTimes}
+                />
+              </button>
+            </ConnectWalletModalHeader>
+            <ConnectWalletModalContent>
+              {qrvalue == "DEFAULT" ? (
+                <>
+                  {/* <ConnectWalletCard>
+                    <img src="wallet/metamask-logo.svg" />
+                    <h5>Metamask </h5>
+                  </ConnectWalletCard> */}
+                  <ConnectWalletCard onClick={getKaikasData}>
+                    <img src="wallet/kaikas-logo.svg" />
+                    <h5>Connect To Kaikas </h5>
+                  </ConnectWalletCard>
+                  <ConnectWalletCard
+                    onClick={() => {
+                      modalProps.onConfirm();
+                    }}
+                  >
+                    <img src="wallet/klip-logo.svg" />
+                    <h5>Connect To Klip </h5>
+                  </ConnectWalletCard>
+                </>
+              ) : (
+                <>
+                  <QRContainer>
+                    <QRCode
+                      value={qrvalue}
+                      // bgColor fgColor
+                      size={256}
+                      includeMargin
+                    />
+                  </QRContainer>
+                </>
+              )}
+            </ConnectWalletModalContent>
+          </ConnectWalletContainer>
+        </ModalContent>
+      </ModalWrapper>
+    </>
   );
 }
 
