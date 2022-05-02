@@ -1,5 +1,5 @@
 import {motion, useAnimation, useViewportScroll} from "framer-motion";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
@@ -23,6 +23,7 @@ import GoogleLogOutBtn from "../OAuth/GoogleLogOutBtn";
 import ConnectWalletModal from "../modals/ConnectWalletModal";
 import * as KlipAPI from "../../api/UseKlip";
 import {getBalance} from "../../api/UseCaver";
+import {postAccount} from "../../api/accountWc";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -177,6 +178,7 @@ const BrowserHeader = () => {
           setMyAddress(address);
           const _balance = await getBalance(address);
           setMyBalance(_balance);
+          postAccount(address, "klip");
         });
       },
     });
@@ -231,7 +233,6 @@ const BrowserHeader = () => {
           <Col>
             {myAddress !== "0x00" ? (
               <>
-                {/* db에 저장된 사용자의 thirdParty가 구글이라면 */}
                 <UserBtn onClick={resetAddressState}>로그아웃</UserBtn>
                 <Link href="/mypage">
                   <a>

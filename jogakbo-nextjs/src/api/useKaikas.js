@@ -1,4 +1,5 @@
 import Caver from "caver-js";
+import {getAccount, postAccount} from "./accountWc";
 
 export const kaikas = async () => {
   if (typeof window.klaytn !== "undefined") {
@@ -7,7 +8,8 @@ export const kaikas = async () => {
   }
   try {
     const accounts = await window.klaytn.enable();
-    return accounts[0];
+    postAccount(accounts[0], "kaikas");
+    return null;
   } catch (error) {
     console.error(error);
   }

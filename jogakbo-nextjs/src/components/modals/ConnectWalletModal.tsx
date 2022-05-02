@@ -14,6 +14,8 @@ import {
 } from "../../../atom";
 import {kaikas} from "../../api/useKaikas";
 import {getBalance} from "../../api/UseCaver";
+import {getAccount, postAccount} from "../../api/accountWc";
+import {useEffect, useState} from "react";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -130,17 +132,18 @@ function ConnectWalletModal() {
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
   const [address, setAddress] = useRecoilState(myAddressState);
   const [balance, setBalance] = useRecoilState(myBalanceState);
-  const [logined, setLogined] = useRecoilState(isLoginedState);
 
   const getKaikasData = async () => {
     const result = await kaikas();
-    setBalance(await getBalance(result));
-    setAddress(result);
-    setShowModal(false);
+    console.log(result);
+    // setAddress(result);
+    // setBalance(await getBalance(address));
+    // setShowModal(false);
   };
 
-  console.log(address);
-  console.log(balance);
+  // console.log(address);
+  // console.log(balance);
+
   return (
     <>
       <ModalWrapper onClick={() => setShowModal(false)}>
