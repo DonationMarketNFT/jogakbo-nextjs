@@ -1,11 +1,12 @@
 import Link from "next/link";
 import {useEffect, useState} from "react";
+import {Carousel} from "react-bootstrap";
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
+import {카테고리} from "../../pages/campaigns/[...params]";
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 30px;
   box-sizing: border-box;
   ${media.tablet} {
     &:first-child {
@@ -17,47 +18,63 @@ const Container = styled.div`
   }
 `;
 const Title = styled.h3`
+  padding: 0 70px;
   font-size: 22px;
   margin-bottom: 10px;
   color: ${props => props.theme.textColor};
 `;
 
-interface IGridBox {
-  type: string;
-}
-
-const GridBox = styled.div<IGridBox>`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(
-    ${props => (props.type === "All" ? 5 : 3)},
-    1fr
-  );
-  ${media.mobile} {
-    grid-template-columns: repeat(
-      ${props => (props.type === "All" ? 3 : 1)},
-      1fr
-    );
+const 캐러셀 = styled(Carousel)`
+  a.carousel-control-prev,
+  a.carousel-control-next {
+    width: 70px;
+    height: 170px;
+  }
+  a.carousel-control-prev span {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+  }
+  a.carousel-control-next span {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   }
 `;
 
-const Box = styled.div`
+const 이미지 = styled.div`
+  margin: 0 auto;
+  width: 385px;
+  height: 170px;
+  background: url(/멸종위기.jpg) center center;
+  background-size: cover;
+  ${media.tablet} {
+    margin: 0 70px;
+    width: auto;
+  }
+`;
+
+const Item = styled(Carousel.Item)`
+  height: 250px;
+`;
+
+const Caption = styled(Carousel.Caption)`
+  position: absolute;
+  left: 70px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 200px;
-  background: lightgray;
-  border-radius: 10px;
-  transition: all 0.2s ease-in-out;
-  &:hover {
-    background: ${props => props.theme.gradient};
+  span {
+    color: ${props => props.theme.textColor};
+    margin-left: 10px;
   }
 `;
 
 const Slider = (props: any) => {
   const type = props.type;
+  const [index, setIndex] = useState(0);
   const [data, setData] = useState<any>([]);
+  const handleSelect = (
+    selectedIndex: number,
+    e: Record<string, unknown> | null,
+  ) => {
+    setIndex(selectedIndex);
+  };
 
   function matchData() {
     if (type === "New") {
@@ -83,7 +100,29 @@ const Slider = (props: any) => {
   return (
     <Container>
       <Title>{type} Campaigns</Title>
-      <GridBox type={type}>
+      <캐러셀
+        activeIndex={index}
+        onSelect={handleSelect}
+        // prevIcon={false}
+        // nextIcon={false}
+      >
+        {data.map((data: any, i: number) => (
+          <Item>
+            <Link href={`campaigns/${data.name}/${data.id}`} key={data.id}>
+              <a>
+                <이미지 />
+                <Caption>
+                  <카테고리 bgcolor={data.category}>
+                    {data.category ? data.category : "일반"}
+                  </카테고리>
+                  <span>{data.name}</span>
+                </Caption>
+              </a>
+            </Link>
+          </Item>
+        ))}
+      </캐러셀>
+      {/* <GridBox type={type}>
         {data.map((data: any, i: number) => (
           <Link href={`campaigns/${data.name}/${data.id}`} key={data.id}>
             <a>
@@ -95,7 +134,7 @@ const Slider = (props: any) => {
             </a>
           </Link>
         ))}
-      </GridBox>
+      </GridBox> */}
     </Container>
   );
 };

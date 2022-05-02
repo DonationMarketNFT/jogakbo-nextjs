@@ -39,7 +39,7 @@ interface ICategory {
   bgcolor?: string;
 }
 
-const 카테고리 = styled.div<ICategory>`
+export const 카테고리 = styled.div<ICategory>`
   margin-right: 5px;
   padding: 5px 10px;
   background: ${props =>
@@ -53,9 +53,14 @@ const 카테고리 = styled.div<ICategory>`
       ? "#a665eb"
       : props.bgcolor === "사회"
       ? "#e8e854"
+      : props.bgcolor === "지구평화"
+      ? "#64e8c7"
+      : props.bgcolor
+      ? props.bgcolor
       : "#e0e0e0"};
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 `;
 
 const 캠페인이름 = styled.div`
@@ -328,7 +333,9 @@ export default function Detail({
       <Container>
         <Seo title={title} />
         <타이틀>
-          <카테고리 bgcolor={data.category}>{data.category}</카테고리>
+          <카테고리 bgcolor={data.category}>
+            {data.category ? data.category : "일반"}
+          </카테고리>
           <캠페인이름>{title}</캠페인이름>
         </타이틀>
         <Bars>
