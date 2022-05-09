@@ -1,17 +1,18 @@
 import Caver from "caver-js";
-import {getAccount, postAccount} from "./accountWc";
+import {getAccount, getUserAddress, postAccount} from "./accountWc";
 
-export const kaikas = async () => {
+export const kaikas = async setMyAddress => {
   if (typeof window.klaytn !== "undefined") {
     const provider = window["klaytn"];
     // Kaikas user detected. You can now use the provider.
   }
   try {
     const accounts = await window.klaytn.enable();
-    postAccount(accounts[0], "kaikas");
-    return null;
+    await postAccount(accounts[0], "kaikas", setMyAddress);
+    return accounts[0];
   } catch (error) {
     console.error(error);
+    await postAccount(accounts[0], "kaikas", setMyAddress);
   }
 };
 

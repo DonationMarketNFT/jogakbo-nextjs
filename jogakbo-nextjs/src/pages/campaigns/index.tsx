@@ -31,6 +31,9 @@ const AllContainer = styled.div`
   padding: 50px 30px;
   width: 1050px;
   height: 100vh;
+  ${media.tablet} {
+    width: auto;
+  }
 `;
 
 const Title = styled.h3`
@@ -62,7 +65,7 @@ const GridBox = styled.div`
   gap: 5px;
   grid-template-columns: repeat(3, 1fr);
   ${media.mobile} {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -111,6 +114,9 @@ export default function Campaigns({
           <Title>All Campaigns</Title>
           <CategoryOptions>
             <카테고리 onClick={() => setCategory("all")}>All</카테고리>
+            <카테고리 bgcolor="환경" onClick={() => setCategory("환경보호")}>
+              환경보호
+            </카테고리>
             <카테고리 bgcolor="사회" onClick={() => setCategory("사회")}>
               사회
             </카테고리>

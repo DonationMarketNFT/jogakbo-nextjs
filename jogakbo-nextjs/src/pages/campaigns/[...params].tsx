@@ -49,6 +49,8 @@ export const 카테고리 = styled.div<ICategory>`
       ? "#f2114d"
       : props.bgcolor === "환경"
       ? "#abc949"
+      : props.bgcolor === "환경보호"
+      ? "#abc949"
       : props.bgcolor === "공익"
       ? "#a665eb"
       : props.bgcolor === "사회"

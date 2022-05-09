@@ -2,10 +2,14 @@ import {motion} from "framer-motion";
 import type {NextPage} from "next";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
-import {color, media} from "../../../styles/theme";
+import {color, flexColumnSet, media} from "../../../styles/theme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HomeBanner from "./HomeBanner";
+import {getAccount, getUserAddress} from "../../api/accountWc";
+import {getAddress} from "../../api/UseKlip";
+import Link from "next/link";
+import link from "next/link";
 
 const Container = styled.div`
   background: ${props => props.theme.bgColor};
@@ -39,6 +43,14 @@ const Content = styled.div`
   justify-content: space-between;
   ${media.tablet} {
     padding: 0;
+  }
+  &.devContent {
+    ${media.tablet} {
+      flex-direction: column;
+      & > div {
+        margin-bottom: 30px;
+      }
+    }
   }
 `;
 
@@ -96,6 +108,13 @@ const Dev = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  p {
+    color: ${props => props.theme.textColor};
+  }
+  p.nickname {
+    font-weight: 600;
+    font-size: 20px;
+  }
 `;
 
 const DevProfile = styled.div`
@@ -109,11 +128,12 @@ const DevProfile = styled.div`
 `;
 
 const RoadMap = styled.p`
-  display: block;
+  ${flexColumnSet("space-evenly", "flex-start")};
   padding: 30px;
   background: ${props => props.theme.gray.gray7};
   height: 300px;
   border-radius: 15px;
+  color: ${props => props.theme.textColor};
 `;
 
 const Question = styled(motion.li)`
@@ -134,9 +154,27 @@ const Answer = styled(motion.div)`
   color: ${props => props.theme.textColor};
 `;
 
+class 개발자 {
+  nickName: string;
+  role: string;
+  intro: string;
+  constructor(nickName: string, role: string, intro: string) {
+    this.nickName = nickName;
+    this.role = role;
+    this.intro = intro;
+  }
+}
+
 const BrowserHome: NextPage = () => {
   const [tab, setTab] = useState(true);
   const [question, setQuestion] = useState(true);
+  const 다운 = new 개발자(
+    "DownyK",
+    "BackEnd, DB",
+    "블록체인, Dapp, NFT에 관심많은 임베디드 개발자",
+  );
+  const 시아 = new 개발자("Sia", "FrontEnd", "");
+  const 지선 = new 개발자("Jiseon", "Smart Contract", "");
 
   const onClickQuestion = (a: number) => {
     const answer = document.getElementById(`${a}`);
@@ -158,17 +196,32 @@ const BrowserHome: NextPage = () => {
     {
       question: "캠페인 기부 조건을 달성하지 못할 시 환불절차는 어떻게 되나요?",
       answer:
-        "조건 금액을 달성하지 못한 캠페인은 환불 상태로 변경되며 기간 내 환불 요청이 가능해지게 됩니다",
+        "기부조건(금액, 시간)에 도달하지 못할 시, 캠페인은 관리자에 의해 환불 상태로 변경되며 사용자 별로 기간 내 환불 요청이 가능하게 됩니다.",
     },
     {
       question: "캠페인은 아무나 생성할 수 있나요?",
       answer:
-        "create campaign을 통해 양식을 제출하게 되면 심사 후 캠페인으로 등록됩니다.",
+        "캠페인은 create campaign 페이지를 통하여 정해진 양식을 제출해주시면 심사 후 등록되게 됩니다. (단, 심사 시 목적이 불분명하거나 불건전한 경우 거부될 수 있습니다.)",
     },
-    {question: "질문3", answer: "답변3"},
-    {question: "질문4", answer: "답변4"},
-    {question: "질문5", answer: "답변5"},
-    {question: "질문6", answer: "답변6"},
+    {
+      question: "연말정산 시 기부금 항목으로 증빙할 수 있나요?",
+      answer:
+        "현재는 불가합니다. 다만, 가능한 여러가지 방법으로 확인 후 정부 정책 상 가능 시, 최대한 빨리 지원하도록 하겠습니다.",
+    },
+    {
+      question: "Klip, Kaikas 외에 지갑으로도 연결이 가능한가요?",
+      answer: "현재는 두 가지 지갑만 지원이 가능합니다. ",
+    },
+    {
+      question: "klaytn network 외에 다른 network로 확장할 계획이 있으신가요?",
+      answer: "로드맵 참고 부탁드립니다. ",
+    },
+    {
+      question:
+        "캠페인에서 모금된 금액이 목적대로 사용되는지 확인이 가능한가요?",
+      answer:
+        "캠페인 달성 후, 비용 처리 증빙 자료를 통하여 게시토록 하겠습니다.",
+    },
   ];
 
   // const listItems = QuestionData.map((o, i) => (
@@ -185,6 +238,27 @@ const BrowserHome: NextPage = () => {
         <HomeBanner />
         {/* <BrowserHome /> */}
         <BrowserContainer>
+          <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <Title>✔️ 서비스 소개</Title>
+            <RoadMap>
+              <p>
+                조각보는 쓰다 남은 색색의 천 조각을 이어서 만든 것을 의미합니다.
+              </p>
+              <p>
+                일상생활에서 쓰다 남은 천을 활용한다는 생활의 지혜의 소산이며,
+                천 조각을 나름대로 머릿속으로 그려서 마르고 꿰매어 잇는 작업은
+                상당히 공들여야 하는 일입니다.
+              </p>
+              <p>
+                저희 팀은 블록체인과 기부를 접목하면서 그 속에서 조각보의 속성을
+                발견하였습니다.
+              </p>
+              <p>
+                개인과 개인의 조그마한 천 조각과 같은 정성이 모여 다채롭고
+                아름다운 일들을 해낼 수 있다고 믿습니다.
+              </p>
+            </RoadMap>
+          </Section>
           <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
             <Title>✔️ 서비스 특징</Title>
             <Content>
@@ -219,24 +293,38 @@ const BrowserHome: NextPage = () => {
           </Section>
           <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
             <Title>✔️ 개발자 소개</Title>
-            <Content>
+            <Content className="devContent">
               <Dev>
                 <DevProfile data-aos="flip-left"></DevProfile>
-                <p>개발자1</p>
+                <p className="nickname">{다운.nickName}</p>
+                <p className="role">[{다운.role}]</p>
+                <p className="intro">{다운.intro}</p>
               </Dev>
               <Dev>
                 <DevProfile data-aos="flip-left"></DevProfile>
-                <p>개발자2</p>
+                <p className="nickname">{시아.nickName}</p>
+                <p className="role">[{시아.role}]</p>
+                <p className="intro">{시아.intro}</p>
               </Dev>
               <Dev>
                 <DevProfile data-aos="flip-left"></DevProfile>
-                <p>개발자3</p>
+                <p className="nickname">{지선.nickName}</p>
+                <p className="role">[{지선.role}]</p>
+                <p className="intro">{지선.intro}</p>
               </Dev>
             </Content>
           </Section>
           <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
             <Title>✔️ 로드맵</Title>
-            <RoadMap>준비중입니다</RoadMap>
+            <RoadMap>
+              <p>
+                1. 조각보 v1.0 앱스토어, 플레이스토어, 웹앱 런칭 (날짜 미정)
+              </p>
+              <p>2. 커뮤니티 기능 및 랭킹, 프로필 조회 기능</p>
+              <p>3. 인앱 조각보 NFT 마켓 런칭</p>
+              <p>4. 추후 공개</p>
+              <p>5. 추후 공개</p>
+            </RoadMap>
           </Section>
           <Section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
             <Title>✔️ Q&A</Title>
@@ -295,7 +383,12 @@ function Tab1() {
       <div data-aos="fade-up" data-aos-anchor-placement="center-bottom">
         <StepContainer>
           <Step>Step1</Step>
-          <p>Campaign 메뉴를 통해 둘러보세요</p>
+          <p>
+            <Link href="/campaigns">
+              <a style={{color: `${color.mainColor}`}}>캠페인 둘러보기 </a>
+            </Link>
+            페이지로 이동하세요
+          </p>
         </StepContainer>
         <StepContainer>
           <Step>Step2</Step>
@@ -326,7 +419,12 @@ function Tab2() {
       <div data-aos="fade-up" data-aos-anchor-placement="center-bottom">
         <StepContainer>
           <Step>Step1</Step>
-          <p>Campaign 페이지의 create campaign 버튼을 클릭하세요</p>
+          <p>
+            <Link href="/campaign">
+              <a style={{color: `${color.mainColor}`}}>캠페인 생성하기 </a>
+            </Link>
+            페이지로 이동하세요
+          </p>
         </StepContainer>
         <StepContainer>
           <Step>Step2</Step>

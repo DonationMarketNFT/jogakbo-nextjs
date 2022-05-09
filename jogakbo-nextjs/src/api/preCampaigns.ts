@@ -10,6 +10,7 @@ interface IPreCampaigns {
   fundingStatus: boolean;
   refundStatus: boolean;
   category: string;
+  creatorAddress: string;
 }
 
 // 모든 데이터 조회
@@ -24,6 +25,7 @@ export const postPreCampaign = (
   _description: string,
   _targetAmount: number,
   _category: string,
+  _creatorAddress: string,
 ) => {
   const data: IPreCampaigns = {
     name: _name,
@@ -33,6 +35,7 @@ export const postPreCampaign = (
     fundingStatus: true,
     refundStatus: false,
     category: _category,
+    creatorAddress: _creatorAddress,
   };
   axios
     .post(`${BASE_PATH}/create_campaign`, data)

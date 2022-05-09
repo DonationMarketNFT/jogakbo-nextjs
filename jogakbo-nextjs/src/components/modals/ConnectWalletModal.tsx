@@ -13,9 +13,12 @@ import {
   showConnectWalletModalState,
 } from "../../../atom";
 import {kaikas} from "../../api/useKaikas";
-import {getBalance} from "../../api/UseCaver";
-import {getAccount, postAccount} from "../../api/accountWc";
-import {useEffect, useState} from "react";
+import {
+  deleteAccount,
+  getAccount,
+  getAccounts,
+  patchNickname,
+} from "../../api/accountWc";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -86,7 +89,12 @@ const ConnectWalletModalContent = styled.div`
     align-items: center;
   }
 `;
-const ConnectWalletCard = styled.div`
+
+interface IConnectWalletCard {
+  onClick?: any;
+}
+
+const ConnectWalletCard = styled.div<IConnectWalletCard>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,19 +138,19 @@ function ConnectWalletModal() {
   const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
   const [modalProps, setModalProps] = useRecoilState(modalPropsState);
   const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
-  const [address, setAddress] = useRecoilState(myAddressState);
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
   const [balance, setBalance] = useRecoilState(myBalanceState);
+  const [login, setLogin] = useRecoilState(isLoginedState);
 
-  const getKaikasData = async () => {
-    const result = await kaikas();
-    console.log(result);
-    // setAddress(result);
-    // setBalance(await getBalance(address));
-    // setShowModal(false);
+  const getKaikasData = async (login: boolean, setLogin: Function) => {
+    const results = await kaikas(setMyAddress);
+    setShowModal(false);
   };
 
-  // console.log(address);
-  // console.log(balance);
+  function getUser() {
+    const result = getAccounts();
+    console.log(result);
+  }
 
   return (
     <>
@@ -172,7 +180,9 @@ function ConnectWalletModal() {
                     <img src="wallet/metamask-logo.svg" />
                     <h5>Metamask </h5>
                   </ConnectWalletCard> */}
-                  <ConnectWalletCard onClick={getKaikasData}>
+                  <ConnectWalletCard
+                    onClick={() => getKaikasData(login, setLogin)}
+                  >
                     <img src="wallet/kaikas-logo.svg" />
                     <h5>Connect To Kaikas </h5>
                   </ConnectWalletCard>
@@ -184,6 +194,8 @@ function ConnectWalletModal() {
                     <img src="wallet/klip-logo.svg" />
                     <h5>Connect To Klip </h5>
                   </ConnectWalletCard>
+                  <button onClick={getUser}>get User here</button>
+                  {/* <button onClick={testDelete}>test here</button> */}
                 </>
               ) : (
                 <>

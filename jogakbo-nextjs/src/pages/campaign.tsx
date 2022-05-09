@@ -2,6 +2,7 @@ import {useRecoilState} from "recoil";
 import styled from "styled-components";
 import {
   modalPropsState,
+  myAddressState,
   qrValueState,
   showConnectWalletModalState,
 } from "../../atom";
@@ -108,6 +109,7 @@ function CreateCampaign() {
   const [category, setCategory] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState<number>(0);
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
 
   const testPost2 = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -117,7 +119,7 @@ function CreateCampaign() {
     _category: string,
   ) => {
     e.preventDefault();
-    postPreCampaign(_name, _description, _targetAmount, _category);
+    postPreCampaign(_name, _description, _targetAmount, _category, myAddress);
   };
 
   return (

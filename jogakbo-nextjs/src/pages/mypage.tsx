@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import {motion} from "framer-motion";
 import {useEffect, useRef, useState} from "react";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useResetRecoilState} from "recoil";
 import {color, media} from "../../styles/theme";
 import {
+  getBalance,
   testOwnTokenId,
   testTokenId2Description,
   testTokenId2Name,
@@ -12,6 +13,8 @@ import {myAddressState, myBalanceState} from "../../atom";
 import {faClone} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Seo from "../components/Seo";
+import {deleteAccount, getAccount, getUserAddress} from "../api/accountWc";
+import {useRouter} from "next/dist/client/router";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -161,9 +164,12 @@ const DEFAULT_IMAGE =
 function Mypage() {
   const [profile, setProfile] = useState(DEFAULT_IMAGE);
   const [myAddress, setMyAddress] = useRecoilState(myAddressState);
+  const setDefaultADdress = useResetRecoilState(myAddressState);
   const [myBalance, setMyBalance] = useRecoilState(myBalanceState);
   const copyLinkRef = useRef<any>();
   const [ownToken, setOwnToken] = useState<any[]>([]);
+  const [userId, setUserId] = useState(0);
+  const router = useRouter();
 
   // const getOwnTokenIds = async (address: string) => {
   //   const ids = await testOwnTokenId(address);
@@ -201,6 +207,13 @@ function Mypage() {
   // getOwnTokenInfo();
   // }, []);
 
+  const deleteUser = () => {
+    deleteAccount(userId);
+    alert("이용해주셔서 감사합니다");
+    setDefaultADdress();
+    router.push("/");
+  };
+
   const copyAddress = () => {
     copyLinkRef.current.focus();
     copyLinkRef.current.select();
@@ -208,6 +221,21 @@ function Mypage() {
       alert("주소를 복사했습니다.");
     });
   };
+
+  const getUserData = () => {
+    if (myAddress !== "0x00") {
+      // const result = await getUserAddress(myAddress, setData);
+      getUserAddress(myAddress, async (id: number) => {
+        await setUserId(id);
+        const balance = await getBalance(myAddress);
+        setMyBalance(balance);
+      });
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, [myAddress]);
 
   return (
     <>
@@ -255,7 +283,7 @@ function Mypage() {
               </>
             ))}
           </NFTContainer>
-          <Withdraw>회원 탈퇴</Withdraw>
+          <Withdraw onClick={deleteUser}>회원 탈퇴</Withdraw>
         </Container>
       </Wrapper>
     </>

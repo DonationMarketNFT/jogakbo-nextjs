@@ -178,7 +178,7 @@ const BrowserHeader = () => {
           setMyAddress(address);
           const _balance = await getBalance(address);
           setMyBalance(_balance);
-          postAccount(address, "klip");
+          postAccount(address, "klip", setMyAddress);
         });
       },
     });

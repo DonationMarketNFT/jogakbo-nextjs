@@ -14,7 +14,7 @@ const Container = styled.div`
     }
   }
   ${media.mobile} {
-    padding: 0 20px;
+    padding: 0;
   }
 `;
 const Title = styled.h3`
@@ -22,6 +22,10 @@ const Title = styled.h3`
   font-size: 22px;
   margin-bottom: 10px;
   color: ${props => props.theme.textColor};
+  ${media.mobile} {
+    padding: 0 30px;
+    text-align: center;
+  }
 `;
 
 const 캐러셀 = styled(Carousel)`
@@ -29,6 +33,13 @@ const 캐러셀 = styled(Carousel)`
   a.carousel-control-next {
     width: 70px;
     height: 170px;
+    ${media.tablet} {
+      height: 300px;
+    }
+    ${media.mobile} {
+      width: 40px;
+      height: 200px;
+    }
   }
   a.carousel-control-prev span {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
@@ -47,11 +58,22 @@ const 이미지 = styled.div`
   ${media.tablet} {
     margin: 0 70px;
     width: auto;
+    height: 300px;
+  }
+  ${media.mobile} {
+    margin: 0 40px;
+    height: 200px;
   }
 `;
 
 const Item = styled(Carousel.Item)`
   height: 250px;
+  ${media.tablet} {
+    height: 380px;
+  }
+  ${media.mobile} {
+    height: 280px;
+  }
 `;
 
 const Caption = styled(Carousel.Caption)`
@@ -62,6 +84,9 @@ const Caption = styled(Carousel.Caption)`
   span {
     color: ${props => props.theme.textColor};
     margin-left: 10px;
+  }
+  ${media.mobile} {
+    left: 40px;
   }
 `;
 
