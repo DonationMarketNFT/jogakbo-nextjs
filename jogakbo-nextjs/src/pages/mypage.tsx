@@ -15,6 +15,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Seo from "../components/Seo";
 import {deleteAccount, getAccount, getUserAddress} from "../api/accountWc";
 import {useRouter} from "next/dist/client/router";
+import axios from "axios";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -164,12 +165,12 @@ const DEFAULT_IMAGE =
 function Mypage() {
   const [profile, setProfile] = useState(DEFAULT_IMAGE);
   const [myAddress, setMyAddress] = useRecoilState(myAddressState);
-  const setDefaultADdress = useResetRecoilState(myAddressState);
   const [myBalance, setMyBalance] = useRecoilState(myBalanceState);
   const copyLinkRef = useRef<any>();
   const [ownToken, setOwnToken] = useState<any[]>([]);
   const [userId, setUserId] = useState(0);
   const router = useRouter();
+  const resetAddressState = useResetRecoilState(myAddressState);
 
   // const getOwnTokenIds = async (address: string) => {
   //   const ids = await testOwnTokenId(address);
@@ -207,10 +208,16 @@ function Mypage() {
   // getOwnTokenInfo();
   // }, []);
 
+  const handleLogOut = async () => {
+    const user = await axios.get("/api/auth/logout");
+    console.log(user);
+    resetAddressState();
+  };
+
   const deleteUser = () => {
     deleteAccount(userId);
     alert("이용해주셔서 감사합니다");
-    setDefaultADdress();
+    handleLogOut();
     router.push("/");
   };
 

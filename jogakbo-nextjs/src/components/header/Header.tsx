@@ -5,7 +5,6 @@ import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
 import {useRecoilState, useResetRecoilState} from "recoil";
 import {
-  isLoginedState,
   modalPropsState,
   myAddressState,
   myBalanceState,
@@ -19,11 +18,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {faLightbulb as regular} from "@fortawesome/free-regular-svg-icons";
 import useDarkMode from "use-dark-mode";
-import GoogleLogOutBtn from "../OAuth/GoogleLogOutBtn";
 import ConnectWalletModal from "../modals/ConnectWalletModal";
 import * as KlipAPI from "../../api/UseKlip";
 import {getBalance} from "../../api/UseCaver";
 import {postAccount} from "../../api/accountWc";
+import axios from "axios";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -185,6 +184,27 @@ const BrowserHeader = () => {
     setShowConnectWallet(true);
   };
 
+  const handleGetUser = async () => {
+    const user = await axios.get("/api/user");
+
+    if (user.data.address) {
+      setMyAddress(user.data.address);
+      console.log(myAddress);
+    } else {
+      console.log(user);
+    }
+  };
+
+  const handleLogOut = async () => {
+    const user = await axios.get("/api/auth/logout");
+    console.log(user);
+    resetAddressState();
+  };
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
   useEffect(() => {
     scrollY.onChange(() => {
       if (scrollY.get() > 20) {
@@ -233,7 +253,7 @@ const BrowserHeader = () => {
           <Col>
             {myAddress !== "0x00" ? (
               <>
-                <UserBtn onClick={resetAddressState}>로그아웃</UserBtn>
+                <UserBtn onClick={handleLogOut}>로그아웃</UserBtn>
                 <Link href="/mypage">
                   <a>
                     <UserBtn>My Page</UserBtn>
@@ -257,6 +277,9 @@ const BrowserHeader = () => {
               <div></div>
               <div></div>
             </Triger>
+          </Col>
+          <Col>
+            <button onClick={handleGetUser}>get user from cookie</button>
           </Col>
         </HeaderFlexBox>
       </Head>

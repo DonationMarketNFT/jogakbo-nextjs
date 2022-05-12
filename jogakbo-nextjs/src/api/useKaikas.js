@@ -1,18 +1,27 @@
+import axios from "axios";
 import Caver from "caver-js";
 import {getAccount, getUserAddress, postAccount} from "./accountWc";
 
-export const kaikas = async setMyAddress => {
+// const loginPOST = async myAddress => {
+//   const credentials = {myAddress};
+//   const user = await axios.post("/api/auth/login", credentials);
+//   console.log(user);
+// };
+
+export const kaikas = async (myAddress, setMyAddress) => {
   if (typeof window.klaytn !== "undefined") {
     const provider = window["klaytn"];
     // Kaikas user detected. You can now use the provider.
   }
   try {
     const accounts = await window.klaytn.enable();
-    await postAccount(accounts[0], "kaikas", setMyAddress);
+    postAccount(accounts[0], "kaikas", setMyAddress);
+    // loginPOST(accounts[0]);
     return accounts[0];
   } catch (error) {
     console.error(error);
-    await postAccount(accounts[0], "kaikas", setMyAddress);
+    postAccount(accounts[0], "kaikas", setMyAddress);
+    // loginPOST(accounts[0]);
   }
 };
 

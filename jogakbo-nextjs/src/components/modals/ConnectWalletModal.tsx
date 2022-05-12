@@ -13,12 +13,7 @@ import {
   showConnectWalletModalState,
 } from "../../../atom";
 import {kaikas} from "../../api/useKaikas";
-import {
-  deleteAccount,
-  getAccount,
-  getAccounts,
-  patchNickname,
-} from "../../api/accountWc";
+import {getAccounts} from "../../api/accountWc";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -143,7 +138,7 @@ function ConnectWalletModal() {
   const [login, setLogin] = useRecoilState(isLoginedState);
 
   const getKaikasData = async (login: boolean, setLogin: Function) => {
-    const results = await kaikas(setMyAddress);
+    const results = await kaikas(myAddress, setMyAddress);
     setShowModal(false);
   };
 
@@ -151,6 +146,12 @@ function ConnectWalletModal() {
     const result = getAccounts();
     console.log(result);
   }
+
+  // const handleSubmit = async () => {};
+
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, [myAddress]);
 
   return (
     <>
@@ -194,7 +195,7 @@ function ConnectWalletModal() {
                     <img src="wallet/klip-logo.svg" />
                     <h5>Connect To Klip </h5>
                   </ConnectWalletCard>
-                  <button onClick={getUser}>get User here</button>
+                  {/* <button onClick={getUser}>get User here</button> */}
                   {/* <button onClick={testDelete}>test here</button> */}
                 </>
               ) : (

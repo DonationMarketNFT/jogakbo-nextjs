@@ -39,3 +39,15 @@ export const postCampaign = (
     .then(res => alert("정상적으로 제출되었습니다 :)"))
     .catch(e => console.log(e));
 };
+
+// funding 중인 캠페인만 출력
+export const getFunding = async (setAllData: Function) => {
+  const results = await axios.get(`${BASE_PATH}/campaign/Onfunding`);
+  setAllData(results.data);
+};
+
+// refunding 중인 캠페인만 출력
+export const getRefunding = async (setAllData: Function) => {
+  const results = await axios.get(`${BASE_PATH}/campaign/OnRefund`);
+  setAllData(results.data);
+};

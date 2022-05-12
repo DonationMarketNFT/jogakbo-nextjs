@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import {flexSet, media} from "../../../styles/theme";
-import {getCampaigns} from "../../api/campaigns";
+import {getCampaigns, getFunding, getRefunding} from "../../api/campaigns";
 import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
@@ -30,7 +30,6 @@ const AllContainer = styled.div`
   margin: 0 auto;
   padding: 50px 30px;
   width: 1050px;
-  height: 100vh;
   ${media.tablet} {
     width: auto;
   }
@@ -47,17 +46,23 @@ const CategoryOptions = styled.div`
   margin-bottom: 15px;
 `;
 
-const Category = styled.div`
+const StatusOptions = styled.div`
+  display: flex;
+  margin-bottom: 15px;
+`;
+
+interface IStatus {
+  funding: boolean;
+  onClick: Function;
+}
+
+const Status = styled.div<IStatus>`
   margin-right: 5px;
-  padding: 10px 15px;
+  padding: 5px 10px;
+  background: ${props => (props.funding ? "#3558e6" : "gray")};
   border-radius: 5px;
-  color: ${props => props.theme.gray.gray3};
-
+  color: white;
   cursor: pointer;
-
-  &:hover {
-    color: ${props => props.theme.textColor};
-  }
 `;
 
 const GridBox = styled.div`
@@ -95,6 +100,15 @@ export default function Campaigns({
   const [category, setCategory] = useState("all");
   const [allData, setAllData] = useState([]);
 
+  function setFunding() {
+    getFunding(setAllData);
+    console.log(allData);
+  }
+
+  function setRefunding() {
+    getRefunding(setAllData);
+  }
+
   useEffect(() => {
     getCampaigns(setAllData);
   }, []);
@@ -131,6 +145,14 @@ export default function Campaigns({
             </카테고리>
             <카테고리 onClick={() => setCategory("")}>일반</카테고리>
           </CategoryOptions>
+          <StatusOptions>
+            <Status funding onClick={setFunding}>
+              진행 중
+            </Status>
+            <Status funding onClick={setRefunding}>
+              진행 종료
+            </Status>
+          </StatusOptions>
           <GridBox>
             {category === "all" ? (
               <>

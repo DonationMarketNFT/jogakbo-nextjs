@@ -32,6 +32,12 @@ export const getUserAddress = async (addr: string, callback: Function) => {
   // return results;
 };
 
+const loginPOST = async (myAddress: string) => {
+  const credentials = {myAddress};
+  const user = await axios.post("/api/auth/login", credentials);
+  console.log(user);
+};
+
 // 첫 지갑연결 시 DB에 유저정보 추가
 export const postAccount = (
   _walletAddress: string,
@@ -48,10 +54,12 @@ export const postAccount = (
     .then(res => {
       setMyAddress(_walletAddress);
       console.log("유저등록");
+      loginPOST(_walletAddress);
     })
     .catch(e => {
       setMyAddress(_walletAddress);
       console.log("로그인성공");
+      loginPOST(_walletAddress);
     });
 };
 

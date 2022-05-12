@@ -7,7 +7,7 @@ import {
   showConnectWalletModalState,
 } from "../../atom";
 import React, {createRef, useState} from "react";
-import {media} from "../../styles/theme";
+import {flexColumnSet, media} from "../../styles/theme";
 import axios from "axios";
 import Seo from "../components/Seo";
 import {postPreCampaign} from "../api/preCampaigns";
@@ -39,26 +39,39 @@ const 공지사항 = styled.div`
   margin: 50px 0;
   padding: 50px;
   width: 100%;
-  background: ${props => props.theme.gray.gray5};
+  background: ${props => props.theme.gray.gray4};
   border-radius: 10px;
   div > h3 {
     color: ${props => props.theme.textColor};
     margin-bottom: 10px;
     font-size: 24px;
+    text-align: center;
   }
   div > p {
     margin-bottom: 50px;
     color: ${props => props.theme.gray.gray7};
   }
   ul {
-    margin-bottom: 50px;
+    ${flexColumnSet()};
   }
   ul li {
     margin: 10px 0;
     font-size: 20px;
   }
-  p {
+  ul li span {
+    margin-right: 10px;
+    color: ${props => props.theme.textColor};
+    font-weight: 600;
+  }
+  & > p {
+    margin-top: 50px;
     color: ${props => props.theme.gray.gray7};
+  }
+  &:nth-of-type(2) {
+    background: ${props => props.theme.gray.gray5};
+    ul {
+      align-items: flex-start;
+    }
   }
 `;
 
@@ -140,7 +153,27 @@ function CreateCampaign() {
                 3. 등록 후 수정이 불가하니 신중하게 작성하여 제출해주세요.
               </li>
             </ul>
-            <p> 기타 문의사항은 이메일로 문의해주세요</p>
+            <p> 기타 문의사항은 이메일로 문의해주세요!</p>
+          </공지사항>
+          <공지사항>
+            <div>
+              <h3>카테고리별 설명</h3>
+              <p></p>
+            </div>
+            <ul>
+              <li>
+                <span>환경</span> 지구를 살리는 일에 기여하고 환경 오염으로
+                발생하는 시회적 비용을 절감할 수 있는 캠페인
+              </li>
+              <li>
+                <span>공익</span> 타인에게 금전, 물품 또는 금전적 가치가 있는
+                것을 제공하는 자발적인 행위를 포함하는 캠페인
+              </li>
+              <li>
+                <span>사회</span> 사회단체 또는 공공기관 등에 기부하여 사회에
+                공헌할 수 있는 캠페인
+              </li>
+            </ul>
           </공지사항>
           <Form>
             <label htmlFor="category">카테고리</label>
