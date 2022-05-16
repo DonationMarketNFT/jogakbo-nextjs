@@ -1,6 +1,7 @@
 import axios from "axios";
 import Caver from "caver-js";
 import {getAccount, getUserAddress, postAccount} from "./accountWc";
+import {login} from "./Login";
 
 // const loginPOST = async myAddress => {
 //   const credentials = {myAddress};
@@ -19,13 +20,18 @@ export const kaikas = async (myAddress, setMyAddress) => {
     // loginPOST(accounts[0]);
     return accounts[0];
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     postAccount(accounts[0], "kaikas", setMyAddress);
     // loginPOST(accounts[0]);
   }
 };
 
-export const testKaikas = async () => {};
+export const testKaikas = async callback => {
+  await klaytn.on("accountsChanged", function (accounts) {
+    console.log("계정바뀜", accounts[0]);
+    login(accounts[0], callback);
+  });
+};
 
 // useEffect(() => {
 //   console.log(1);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {login} from "./Login";
 
 const BASE_PATH = "http://localhost:3000/account-wc";
 
@@ -32,12 +33,6 @@ export const getUserAddress = async (addr: string, callback: Function) => {
   // return results;
 };
 
-const loginPOST = async (myAddress: string) => {
-  const credentials = {myAddress};
-  const user = await axios.post("/api/auth/login", credentials);
-  console.log(user);
-};
-
 // 첫 지갑연결 시 DB에 유저정보 추가
 export const postAccount = (
   _walletAddress: string,
@@ -52,14 +47,14 @@ export const postAccount = (
   axios
     .post(`${BASE_PATH}/create_user`, data)
     .then(res => {
-      setMyAddress(_walletAddress);
+      // setMyAddress(_walletAddress);
       console.log("유저등록");
-      loginPOST(_walletAddress);
+      login(_walletAddress, setMyAddress);
     })
     .catch(e => {
-      setMyAddress(_walletAddress);
+      // setMyAddress(_walletAddress);
       console.log("로그인성공");
-      loginPOST(_walletAddress);
+      login(_walletAddress, setMyAddress);
     });
 };
 

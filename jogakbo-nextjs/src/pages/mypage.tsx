@@ -16,6 +16,7 @@ import Seo from "../components/Seo";
 import {deleteAccount, getAccount, getUserAddress} from "../api/accountWc";
 import {useRouter} from "next/dist/client/router";
 import axios from "axios";
+import {getDataFromCookie} from "../api/Login";
 
 const Wrapper = styled.div`
   height: 100%;

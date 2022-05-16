@@ -23,6 +23,9 @@ import * as KlipAPI from "../../api/UseKlip";
 import {getBalance} from "../../api/UseCaver";
 import {postAccount} from "../../api/accountWc";
 import axios from "axios";
+import {testKaikas} from "../../api/useKaikas";
+import {getDataFromCookie, isValidToken} from "../../api/Login";
+import {request} from "http";
 
 const Head = styled(motion.header)`
   position: fixed;
@@ -185,24 +188,25 @@ const BrowserHeader = () => {
   };
 
   const handleGetUser = async () => {
-    const user = await axios.get("/api/user");
-
-    if (user.data.address) {
-      setMyAddress(user.data.address);
-      console.log(myAddress);
-    } else {
-      console.log(user);
-    }
+    await getDataFromCookie(setMyAddress).then(() => {
+      console.log("address", myAddress);
+    });
   };
 
   const handleLogOut = async () => {
     const user = await axios.get("/api/auth/logout");
     console.log(user);
+
     resetAddressState();
+  };
+
+  const testK = () => {
+    testKaikas(setMyAddress);
   };
 
   useEffect(() => {
     handleGetUser();
+    testK();
   }, []);
 
   useEffect(() => {
@@ -252,6 +256,7 @@ const BrowserHeader = () => {
           </Col>
           <Col>
             {myAddress !== "0x00" ? (
+              // {token ? (
               <>
                 <UserBtn onClick={handleLogOut}>로그아웃</UserBtn>
                 <Link href="/mypage">
@@ -280,6 +285,7 @@ const BrowserHeader = () => {
           </Col>
           <Col>
             <button onClick={handleGetUser}>get user from cookie</button>
+            <button onClick={testK}>test K</button>
           </Col>
         </HeaderFlexBox>
       </Head>
