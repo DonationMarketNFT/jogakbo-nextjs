@@ -37,15 +37,15 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8"></meta>
-          <script
+          {/* <script
             defer
             src="https://developers.kakao.com/sdk/js/kakao.js"
-          ></script>
-          <script
+          ></script> */}
+          {/* <script
             type="text/javascript"
             src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
             charSet="utf-8"
-          ></script>
+          ></script> */}
         </Head>
         <body>
           <Main />

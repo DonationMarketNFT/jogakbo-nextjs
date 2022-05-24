@@ -52,6 +52,7 @@ export const postAccount = (
       login(_walletAddress, setMyAddress);
     })
     .catch(e => {
+      console.log(e);
       // setMyAddress(_walletAddress);
       console.log("로그인성공");
       login(_walletAddress, setMyAddress);

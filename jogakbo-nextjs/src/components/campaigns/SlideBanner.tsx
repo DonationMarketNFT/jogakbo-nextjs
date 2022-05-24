@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
-import {카테고리} from "../../pages/campaigns/[...params]";
+import {카테고리} from "../../../styles/theme";
 
 const Container = styled.div`
   width: 100%;

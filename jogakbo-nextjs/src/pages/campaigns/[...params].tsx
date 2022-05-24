@@ -6,6 +6,7 @@ import {useState} from "react";
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
 import Seo from "../../components/Seo";
+import {카테고리} from "../../../styles/theme";
 
 const 이미지 = styled.div`
   background-image: url(/멸종위기.jpg);
@@ -33,36 +34,6 @@ const Container = styled.div`
 const 타이틀 = styled.div`
   display: flex;
   align-items: center;
-`;
-
-interface ICategory {
-  bgcolor?: string;
-}
-
-export const 카테고리 = styled.div<ICategory>`
-  margin-right: 5px;
-  padding: 5px 10px;
-  background: ${props =>
-    props.bgcolor === "new"
-      ? "#3558e6"
-      : props.bgcolor === "popular"
-      ? "#f2114d"
-      : props.bgcolor === "환경"
-      ? "#abc949"
-      : props.bgcolor === "환경보호"
-      ? "#abc949"
-      : props.bgcolor === "공익"
-      ? "#a665eb"
-      : props.bgcolor === "사회"
-      ? "#e8e854"
-      : props.bgcolor === "지구평화"
-      ? "#64e8c7"
-      : props.bgcolor
-      ? props.bgcolor
-      : "#e0e0e0"};
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
 `;
 
 const 캠페인이름 = styled.div`

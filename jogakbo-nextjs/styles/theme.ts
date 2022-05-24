@@ -1,4 +1,34 @@
-import {css, DefaultTheme} from "styled-components";
+import styled, {css, DefaultTheme} from "styled-components";
+
+interface ICategory {
+  bgcolor?: string;
+}
+
+export const 카테고리 = styled.div<ICategory>`
+  margin-right: 5px;
+  padding: 5px 10px;
+  background: ${props =>
+    props.bgcolor === "new"
+      ? "#3558e6"
+      : props.bgcolor === "popular"
+      ? "#f2114d"
+      : props.bgcolor === "환경"
+      ? "#abc949"
+      : props.bgcolor === "환경보호"
+      ? "#abc949"
+      : props.bgcolor === "공익"
+      ? "#a665eb"
+      : props.bgcolor === "사회"
+      ? "#e8e854"
+      : props.bgcolor === "지구평화"
+      ? "#64e8c7"
+      : props.bgcolor
+      ? props.bgcolor
+      : "#e0e0e0"};
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+`;
 
 export const flexSet = (just = "center", align = "center") => {
   return `display: flex;
@@ -18,8 +48,8 @@ const customMediaQuery = (maxWidth: number): string =>
 
 export const media = {
   custom: customMediaQuery,
-  768: customMediaQuery(768),
   tablet: customMediaQuery(1100),
+  768: customMediaQuery(768),
   mobile: customMediaQuery(500),
 };
 

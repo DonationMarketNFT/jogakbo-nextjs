@@ -1,22 +1,19 @@
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import {
-  modalPropsState,
-  myAddressState,
-  qrValueState,
-  showConnectWalletModalState,
-} from "../../atom";
-import React, {createRef, useState} from "react";
+import {myAddressState, showCategoryModalState} from "../../atom";
+import React, {useState} from "react";
 import {flexColumnSet, media} from "../../styles/theme";
-import axios from "axios";
 import Seo from "../components/Seo";
 import {postPreCampaign} from "../api/preCampaigns";
+import 카테고리설명모달 from "../components/modals/CategoryModal";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
 
-const Wrapper = styled.div`
+const 배경용박스 = styled.div`
   background: ${props => props.theme.bgColor};
 `;
 
-const Container = styled.div`
+const 컨테이너 = styled.div`
   width: 1050px;
   margin: 0 auto;
   padding: 30px;
@@ -26,7 +23,7 @@ const Container = styled.div`
   }
 `;
 
-const 페이지타이틀 = styled.h3`
+const 타이틀 = styled.h3`
   text-align: center;
   font-size: 32px;
   color: ${props => props.theme.textColor};
@@ -75,26 +72,25 @@ const 공지사항 = styled.div`
   }
 `;
 
-const Form = styled.form`
+const 폼 = styled.form`
+  position: relative;
   display: flex;
   flex-direction: column;
   label {
     color: ${props => props.theme.textColor};
     font-size: 20px;
-    margin-bottom: 10px;
+    margin: 15px 0;
   }
 `;
 
-const Select = styled.select`
-  margin-bottom: 10px;
+const 셀렉트 = styled.select`
   padding: 10px 20px;
-  width: 150px;
+  width: 100%;
 `;
 
 const Option = styled.option``;
 
-const Input = styled.input`
-  margin-bottom: 10px;
+const 인풋 = styled.input`
   padding: 10px 20px;
   font-size: 20px;
   &#name {
@@ -102,7 +98,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
+const 버튼 = styled.button`
   margin: 30px 0;
   padding: 30px;
   background: #f49a4a;
@@ -112,17 +108,29 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const 카테고리안내 = styled.div`
+  position: absolute;
+  top: 9px;
+  right: 0;
+  padding: 7px 10px;
+  background: ${props => props.theme.gray.gray4};
+  color: ${props => props.theme.bgColor};
+  cursor: pointer;
+  svg {
+    margin-right: 5px;
+    width: 16px;
+  }
+`;
+
 function CreateCampaign() {
-  const [modalProps, setModalProps] = useRecoilState(modalPropsState);
-  const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
-  const [qrvalue, setQrvalue] = useRecoilState(qrValueState);
-  const inputRef = createRef();
-  const [get, setGet] = useState([]);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [myAddress, setMyAddress] = useRecoilState(myAddressState);
+  const [showCategoryModal, setShowCategoryModal] = useRecoilState(
+    showCategoryModalState,
+  );
 
   const testPost2 = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -138,9 +146,9 @@ function CreateCampaign() {
   return (
     <>
       <Seo title="캠페인 생성하기" />
-      <Wrapper>
-        <Container>
-          <페이지타이틀>CREATE CAMPAIGN</페이지타이틀>
+      <배경용박스>
+        <컨테이너>
+          <타이틀>CREATE CAMPAIGN</타이틀>
           <공지사항>
             <div>
               <h3>announcement</h3>
@@ -155,29 +163,9 @@ function CreateCampaign() {
             </ul>
             <p> 기타 문의사항은 이메일로 문의해주세요!</p>
           </공지사항>
-          <공지사항>
-            <div>
-              <h3>카테고리별 설명</h3>
-              <p></p>
-            </div>
-            <ul>
-              <li>
-                <span>환경</span> 지구를 살리는 일에 기여하고 환경 오염으로
-                발생하는 시회적 비용을 절감할 수 있는 캠페인
-              </li>
-              <li>
-                <span>공익</span> 타인에게 금전, 물품 또는 금전적 가치가 있는
-                것을 제공하는 자발적인 행위를 포함하는 캠페인
-              </li>
-              <li>
-                <span>사회</span> 사회단체 또는 공공기관 등에 기부하여 사회에
-                공헌할 수 있는 캠페인
-              </li>
-            </ul>
-          </공지사항>
-          <Form>
+          <폼>
             <label htmlFor="category">카테고리</label>
-            <Select
+            <셀렉트
               value={category}
               onChange={(e: any) => {
                 setCategory(e.target.value);
@@ -185,13 +173,17 @@ function CreateCampaign() {
               id="category"
               required
             >
-              <Option value="환경">환경</Option>
               <Option value="공익">공익</Option>
               <Option value="사회">사회</Option>
+              <Option value="환경">환경</Option>
               <option></option>
-            </Select>
+            </셀렉트>
+            <카테고리안내 onClick={() => setShowCategoryModal(true)}>
+              <FontAwesomeIcon icon={faQuestionCircle} />
+              카테고리 안내
+            </카테고리안내>
             <label htmlFor="name">캠페인 이름</label>
-            <Input
+            <인풋
               value={name}
               onChange={(e: any) => {
                 setName(e.target.value);
@@ -203,7 +195,7 @@ function CreateCampaign() {
               autoComplete="off"
             />
             <label htmlFor="desc">캠페인 설명</label>
-            <Input
+            <인풋
               value={desc}
               onChange={(e: any) => {
                 setDesc(e.target.value);
@@ -216,7 +208,7 @@ function CreateCampaign() {
               autoComplete="off"
             />
             <label htmlFor="amount">목표 모금 금액</label>
-            <Input
+            <인풋
               value={amount}
               onChange={(e: any) => {
                 setAmount(e.target.value);
@@ -226,12 +218,13 @@ function CreateCampaign() {
               placeholder="목표 모금 금액을 입력해주세요"
               required
             />
-            <Button onClick={e => testPost2(e, name, desc, amount, category)}>
+            <버튼 onClick={e => testPost2(e, name, desc, amount, category)}>
               제출하기
-            </Button>
-          </Form>
-        </Container>
-      </Wrapper>
+            </버튼>
+          </폼>
+        </컨테이너>
+      </배경용박스>
+      {showCategoryModal && <카테고리설명모달 />}
     </>
   );
 }

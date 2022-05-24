@@ -10,6 +10,11 @@ const showConnectWalletModalState = atom<boolean>({
   default: false,
 });
 
+const showCategoryModalState = atom<boolean>({
+  key: "showCategoryModalState",
+  default: false,
+});
+
 const isLoginedState = atom<boolean>({
   key: "loginKey",
   default: false,
@@ -59,6 +64,7 @@ const loginPlatformState = atom<string>({
 export {
   showSignInModalState,
   showConnectWalletModalState,
+  showCategoryModalState,
   isLoginedState,
   myAddressState,
   myBalanceState,

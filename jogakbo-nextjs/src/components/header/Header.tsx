@@ -1,5 +1,5 @@
 import {motion, useAnimation, useViewportScroll} from "framer-motion";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import styled from "styled-components";
 import {color, flexSet, media} from "../../../styles/theme";
 import Link from "next/link";
@@ -23,7 +23,7 @@ import * as KlipAPI from "../../api/UseKlip";
 import {getBalance} from "../../api/UseCaver";
 import {postAccount} from "../../api/accountWc";
 import axios from "axios";
-import {testKaikas} from "../../api/useKaikas";
+import {confirmKaikas, testKaikas} from "../../api/useKaikas";
 import {getDataFromCookie, isValidToken} from "../../api/Login";
 import {request} from "http";
 
@@ -204,9 +204,14 @@ const BrowserHeader = () => {
     testKaikas(setMyAddress);
   };
 
+  const confirm = () => {
+    confirmKaikas();
+  };
+
   useEffect(() => {
     handleGetUser();
     testK();
+    confirm();
   }, []);
 
   useEffect(() => {
@@ -283,10 +288,11 @@ const BrowserHeader = () => {
               <div></div>
             </Triger>
           </Col>
-          <Col>
+          {/* <Col>
             <button onClick={handleGetUser}>get user from cookie</button>
             <button onClick={testK}>test K</button>
-          </Col>
+            <button onClick={confirm}>test confirm</button>
+          </Col> */}
         </HeaderFlexBox>
       </Head>
       {showConnectWallet && <ConnectWalletModal />}

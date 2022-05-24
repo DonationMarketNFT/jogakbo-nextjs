@@ -7,7 +7,7 @@ import {getCampaigns, getFunding, getRefunding} from "../../api/campaigns";
 import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
-import {카테고리} from "../../pages/campaigns/[...params]";
+import {카테고리} from "../../../styles/theme";
 
 const Wrapper = styled.section`
   background: ${props => props.theme.bgColor};

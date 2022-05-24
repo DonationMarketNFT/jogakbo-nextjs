@@ -1,7 +1,7 @@
 import axios from "axios";
 import Caver from "caver-js";
 import {getAccount, getUserAddress, postAccount} from "./accountWc";
-import {login} from "./Login";
+import {login, logout} from "./Login";
 
 // const loginPOST = async myAddress => {
 //   const credentials = {myAddress};
@@ -31,6 +31,14 @@ export const testKaikas = async callback => {
     console.log("계정바뀜", accounts[0]);
     login(accounts[0], callback);
   });
+};
+
+export const confirmKaikas = async () => {
+  const inUnlocked = await window.klaytn._kaikas.isUnlocked();
+  if (!inUnlocked) {
+    logout();
+  }
+  console.log(inUnlocked);
 };
 
 // useEffect(() => {

@@ -5,14 +5,12 @@ export const login = async (myAddress: string, callback: Function) => {
   const user = await axios.get("/api/user");
   // 쿠키 존재한다면 쿠키 삭제
   if (user.data.address) {
-    const logoutData = axios.get("/api/auth/logout");
-    console.log(logoutData);
+    axios.get("/api/auth/logout");
   }
   // 쿠키 생성
   const credentials = {myAddress};
-  const loginData = axios.post("/api/auth/login", credentials);
+  axios.post("/api/auth/login", credentials);
   callback(myAddress);
-  //   console.log(user.data.address);
 };
 
 // 쿠키 삭제 (로그아웃)

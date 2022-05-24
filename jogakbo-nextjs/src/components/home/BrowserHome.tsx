@@ -108,6 +108,7 @@ const Dev = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 33%;
   p {
     color: ${props => props.theme.textColor};
   }
@@ -171,7 +172,8 @@ const BrowserHome: NextPage = () => {
   const 다운 = new 개발자(
     "DownyK",
     "BackEnd, DB",
-    "블록체인, Dapp, NFT에 관심많은 임베디드 개발자",
+    // "블록체인, Dapp, NFT에 관심많은 임베디드 개발자",
+    "",
   );
   const 시아 = new 개발자("Sia", "FrontEnd", "");
   const 지선 = new 개발자("Jiseon", "Smart Contract", "");
