@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchWrap} from "../components/utils/axios";
 import {login} from "./Login";
 
 const BASE_PATH = "http://localhost:3000/account-wc";

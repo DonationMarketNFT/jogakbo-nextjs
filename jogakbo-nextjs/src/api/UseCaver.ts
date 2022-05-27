@@ -1,24 +1,26 @@
-import Caver, {AbiItem} from 'caver-js';
+import Caver, {AbiItem} from "caver-js";
 import {
   ACCESS_KEY_ID,
   CHAIN_ID,
-  DONATION_CONTRACT_ADDRESS,
+  JOGAKBO_CONTRACT_ADDRESS,
+  NFT_CONTRACT_ADDRESS,
   SECRET_ACCRESS_KEY,
-} from '../constants/constants.cypress';
-import DONATIONABI from '../abi/DonationABI.json';
+} from "../constants/constants.baobab";
+import JOGAKBOABI from "../abi/JogakboABI.json";
+import NFTABI from "../abi/NftABI.json";
 
 const option = {
   headers: [
     {
-      name: 'Authorization',
+      name: "Authorization",
       value:
-        'Basic ' +
-        Buffer.from(ACCESS_KEY_ID + ':' + SECRET_ACCRESS_KEY).toString(
-          'base64',
+        "Basic " +
+        Buffer.from(ACCESS_KEY_ID + ":" + SECRET_ACCRESS_KEY).toString(
+          "base64",
         ),
     },
     {
-      name: 'x-chain-id',
+      name: "x-chain-id",
       value: CHAIN_ID,
     },
   ],
@@ -26,45 +28,50 @@ const option = {
 
 const caver = new Caver(
   new Caver.providers.HttpProvider(
-    'https://node-api.klaytnapi.com/v1/klaytn',
-    // "https://api.baobab.klaytn.net:8651/",
+    // "https://node-api.klaytnapi.com/v1/klaytn",
+    "https://api.baobab.klaytn.net:8651/",
     option,
   ),
 );
 
-const DonationContract = new caver.contract(
-  DONATIONABI as AbiItem[],
-  DONATION_CONTRACT_ADDRESS,
+const JogakboContract = new caver.contract(
+  JOGAKBOABI as AbiItem[],
+  JOGAKBO_CONTRACT_ADDRESS,
+);
+
+const NFTContract = new caver.contract(
+  NFTABI as AbiItem[],
+  NFT_CONTRACT_ADDRESS,
 );
 
 export const testOwnTokenId = async (address: string) => {
-  const ids = await DonationContract.methods.tokenIds(address).call();
+  const ids = await JogakboContract.methods.tokenIds(address).call();
   return ids;
 };
 
 export const testTokenId2Description = async (id: number) => {
-  const des = await DonationContract.methods.tokenDescription(id).call();
+  const des = await JogakboContract.methods.tokenDescription(id).call();
   return des;
 };
 
 export const testTokenId2Name = async (id: number) => {
-  const des = await DonationContract.methods.tokenName(id).call();
+  const des = await JogakboContract.methods.tokenName(id).call();
   return des;
 };
 
 export const testCampaignList = async () => {
-  const Number = await DonationContract.methods.CampaignNumber().call();
+  const Number = await JogakboContract.methods.CampaignNumber().call();
 
   const lists = [];
   for (let i = 0; i < Number; i++) {
-    const list = await DonationContract.methods.campaignList([i]).call();
+    const list = await JogakboContract.methods.campaignList([i]).call();
     lists.push(list);
   }
   return lists;
 };
 
 export const testCampaignNumber = async () => {
-  const Number = await DonationContract.methods.CampaignNumber().call();
+  const Number = await JogakboContract.methods.CampaignNumber().call();
   console.log(`number:${Number}`);
   return Number;
 };
@@ -74,7 +81,7 @@ export const getBalance = (address: string) => {
   return caver.rpc.klay.getBalance(address).then(response => {
     const balance = caver.utils.convertFromPeb(
       caver.utils.hexToNumberString(response),
-      'KLAY',
+      "KLAY",
     );
     return balance;
   });

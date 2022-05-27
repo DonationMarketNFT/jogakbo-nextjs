@@ -99,9 +99,7 @@ const Card = styled.div`
 `;
 
 const CategoryModal = () => {
-  const [showCategoryModal, setShowCategoryModal] = useRecoilState(
-    showCategoryModalState,
-  );
+  const [, setShowCategoryModal] = useRecoilState(showCategoryModalState);
 
   return (
     <ModalWrapper onClick={() => setShowCategoryModal(false)}>

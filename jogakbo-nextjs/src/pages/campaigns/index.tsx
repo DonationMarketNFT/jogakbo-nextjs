@@ -8,6 +8,7 @@ import SlideBanner from "../../components/campaigns/SlideBanner";
 import Slider from "../../components/campaigns/Slider";
 import Seo from "../../components/Seo";
 import {카테고리} from "../../../styles/theme";
+import Category from "../../components/Category";
 
 const Wrapper = styled.section`
   background: ${props => props.theme.bgColor};
@@ -52,14 +53,13 @@ const StatusOptions = styled.div`
 `;
 
 interface IStatus {
-  funding: boolean;
   onClick: Function;
 }
 
 const Status = styled.div<IStatus>`
   margin-right: 5px;
   padding: 5px 10px;
-  background: ${props => (props.funding ? "#3558e6" : "gray")};
+  background: #3558e6;
   border-radius: 5px;
   color: white;
   cursor: pointer;
@@ -127,40 +127,22 @@ export default function Campaigns({
         <AllContainer>
           <Title>All Campaigns</Title>
           <CategoryOptions>
-            <카테고리 onClick={() => setCategory("all")}>All</카테고리>
-            <카테고리 bgcolor="환경" onClick={() => setCategory("환경보호")}>
-              환경보호
-            </카테고리>
-            <카테고리 bgcolor="사회" onClick={() => setCategory("사회")}>
-              사회
-            </카테고리>
-            <카테고리
-              bgcolor="지구평화"
-              onClick={() => setCategory("지구평화")}
-            >
-              지구평화
-            </카테고리>
-            <카테고리 bgcolor="공익" onClick={() => setCategory("공익")}>
-              공익
-            </카테고리>
-            <카테고리 onClick={() => setCategory("")}>일반</카테고리>
+            <Category type="all" onClick={() => setCategory("all")} />
+            <Category type="환경" onClick={() => setCategory("환경보호")} />
+            <Category type="사회" onClick={() => setCategory("사회")} />
+            <Category type="지구평화" onClick={() => setCategory("지구평화")} />
+            <Category type="공익" onClick={() => setCategory("공익")} />
+            <Category type="일반" onClick={() => setCategory("")} />
           </CategoryOptions>
           <StatusOptions>
-            <Status funding onClick={setFunding}>
-              진행 중
-            </Status>
-            <Status funding onClick={setRefunding}>
-              진행 종료
-            </Status>
+            <Status onClick={setFunding}>진행 중</Status>
+            <Status onClick={setRefunding}>진행 종료</Status>
           </StatusOptions>
           <GridBox>
             {category === "all" ? (
               <>
                 {allData.map((data: any) => (
-                  <Link
-                    href={`campaigns/${data.name}/${data.id}`}
-                    key={data.id}
-                  >
+                  <Link href={`campaigns/${data.name}${data.id}`} key={data.id}>
                     <a>
                       <Box>{data.name}</Box>
                     </a>
@@ -173,7 +155,7 @@ export default function Campaigns({
                   .filter((o: any) => o.category === category)
                   .map((data: any) => (
                     <Link
-                      href={`campaigns/${data.name}/${data.id}`}
+                      href={`campaigns/${data.name}${data.id}`}
                       key={data.id}
                     >
                       <a>

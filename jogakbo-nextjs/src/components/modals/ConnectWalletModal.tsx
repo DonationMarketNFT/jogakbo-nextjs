@@ -183,7 +183,7 @@ function ConnectWalletModal() {
                 <ConnectWalletCard
                   onClick={() => getKaikasData(login, setLogin)}
                 >
-                  <img src="wallet/kaikas-logo.svg" />
+                  <img src="/kaikas-logo.svg" />
                   <h5>Connect To Kaikas </h5>
                 </ConnectWalletCard>
                 <ConnectWalletCard
@@ -191,7 +191,7 @@ function ConnectWalletModal() {
                     modalProps.onConfirm();
                   }}
                 >
-                  <img src="wallet/klip-logo.svg" />
+                  <img src="/klip-logo.svg" />
                   <h5>Connect To Klip </h5>
                 </ConnectWalletCard>
                 {/* <button onClick={getUser}>get User here</button> */}

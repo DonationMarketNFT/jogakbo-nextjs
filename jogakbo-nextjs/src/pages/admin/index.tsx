@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import styled from "styled-components";
 import AdminHeader from "../../components/header/AdminHeader";
 
@@ -11,8 +12,8 @@ const Container = styled.div`
 const AdminHome = () => {
   return (
     <>
+      <Seo title="admin" />
       <AdminHeader />
-
       <Container>hi</Container>
     </>
   );

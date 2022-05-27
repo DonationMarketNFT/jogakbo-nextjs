@@ -127,12 +127,12 @@ function CreateCampaign() {
   const [category, setCategory] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState<number>(0);
-  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
+  const [myAddress] = useRecoilState(myAddressState);
   const [showCategoryModal, setShowCategoryModal] = useRecoilState(
     showCategoryModalState,
   );
 
-  const testPost2 = (
+  const testPost2 = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     _name: string,
     _description: string,
@@ -140,7 +140,15 @@ function CreateCampaign() {
     _category: string,
   ) => {
     e.preventDefault();
-    postPreCampaign(_name, _description, _targetAmount, _category, myAddress);
+    await postPreCampaign({
+      name: _name as string,
+      description: _description as string,
+      targetAmount: _targetAmount as number,
+      category: _category as "공익" | "사회" | "환경",
+      creatorAddress: myAddress as string,
+    }).then(res => {
+      alert("성공");
+    });
   };
 
   return (

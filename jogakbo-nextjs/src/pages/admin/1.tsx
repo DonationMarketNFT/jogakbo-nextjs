@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
 import {getPreCampaigns} from "../../api/preCampaigns";
@@ -46,6 +47,8 @@ const Verifing = () => {
   }
   return (
     <>
+      <Seo title="캠페인 신청 리스트" />
+
       <AdminHeader />
       <Container>
         <PageTitle>캠페인 신청 리스트</PageTitle>

@@ -116,6 +116,9 @@ const Dev = styled.div`
     font-weight: 600;
     font-size: 20px;
   }
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const DevProfile = styled.div`

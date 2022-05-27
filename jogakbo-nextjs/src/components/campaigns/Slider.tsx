@@ -4,6 +4,7 @@ import {Carousel} from "react-bootstrap";
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
 import {카테고리} from "../../../styles/theme";
+import Category from "../Category";
 
 const Container = styled.div`
   width: 100%;
@@ -133,13 +134,11 @@ const Slider = (props: any) => {
       >
         {data.map((data: any, i: number) => (
           <Item>
-            <Link href={`campaigns/${data.name}/${data.id}`} key={data.id}>
+            <Link href={`campaigns/${data.name}${data.id}`} key={data.id}>
               <a>
                 <이미지 />
                 <Caption>
-                  <카테고리 bgcolor={data.category}>
-                    {data.category ? data.category : "일반"}
-                  </카테고리>
+                  <Category type={data.category ? data.category : "일반"} />
                   <span>{data.name}</span>
                 </Caption>
               </a>

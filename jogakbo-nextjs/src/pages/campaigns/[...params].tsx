@@ -7,6 +7,7 @@ import styled from "styled-components";
 import {media} from "../../../styles/theme";
 import Seo from "../../components/Seo";
 import {카테고리} from "../../../styles/theme";
+import Category from "../../components/Category";
 
 const 이미지 = styled.div`
   background-image: url(/멸종위기.jpg);
@@ -306,9 +307,8 @@ export default function Detail({
       <Container>
         <Seo title={title} />
         <타이틀>
-          <카테고리 bgcolor={data.category}>
-            {data.category ? data.category : "일반"}
-          </카테고리>
+          <Category type={data.category ? data.category : "일반"} />
+
           <캠페인이름>{title}</캠페인이름>
         </타이틀>
         <Bars>

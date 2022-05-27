@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
 import {카테고리} from "../../../styles/theme";
+import Category from "../Category";
 
 const Container = styled.div`
   width: 100%;
@@ -49,7 +50,7 @@ const SlideBanner = () => {
     <Container>
       <Banner>
         <Banner_태그모음>
-          <카테고리 bgcolor="환경">환경</카테고리>
+          <Category type="환경" />
         </Banner_태그모음>
         <Banner_이름>멸종위기 동물들의 이야기</Banner_이름>
         <Banner_설명>멸종위기 동물들의 이야기에 귀 기울여주세요.</Banner_설명>
