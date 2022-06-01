@@ -42,11 +42,32 @@ const Google = () => {
   const [isLogined, setIsLogined] = useRecoilState(isLoginedState);
   const [loginPlatform, setLoginPlatform] = useRecoilState(loginPlatformState);
 
-  async function findEmail(email) {
+  async function findEmail(email, nickName, platformName) {
     console.log(email);
     try {
       const response = await axios.get(
         `http://localhost:3000/account/user/${email}`,
+      );
+      console.log(response);
+      if (response.data === "") {
+        createAccount(email, nickName, platformName);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function createAccount(_email, _nickName, _platformName) {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/account/create_user`,
+        {
+          email: toString(_email),
+          thirdParty: "GOOGLE",
+          walletAddress: "",
+          walletKind: "",
+          nickName: toString(_nickName),
+        },
       );
       console.log(response);
     } catch (err) {
@@ -64,7 +85,7 @@ const Google = () => {
     console.log("email");
     console.log(res.profileObj.email);
 
-    findEmail(res.profileObj.email);
+    findEmail(res.profileObj.email, res.profileObj.name, PLATFORM_NAME);
 
     setIsLogined(true);
     setLoginPlatform(PLATFORM_NAME);
