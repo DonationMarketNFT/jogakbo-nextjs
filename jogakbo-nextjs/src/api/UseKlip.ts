@@ -13,6 +13,28 @@ const getKlipAccessUrl = (method: string, request_key: string) => {
   return `kakaotalk://klipwallet/open?url=https://klipwallet.com/?target=/a2a?request_key=${request_key}`;
 };
 
+// 캠페인 등록
+// 캠페인 생성 시 모금될 주소와 IPFS_uri와 목표 금액을 인자로 받음
+export const createCampaign = async (
+  _campaign_address: string, // 캠페인 제출자 주소
+  _IPFS_url: string,
+  _target_amount: number,
+  _campaign_ID: number,
+  setQrvalue: Function,
+  callback: Function,
+) => {
+  const functionJson =
+    '{"constant":false,"inputs":[{"name":"_campaign_address","type":"address"},{"name":"_IPFS_url","type":"string"},{"name":"_target_amount","type":"uint256"},{"name":"_campaign_ID","type":"uint256"}],"name":"createCampaign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
+  executeContract(
+    JOGAKBO_CONTRACT_ADDRESS,
+    functionJson,
+    "0",
+    `[\"${_campaign_address}\",\"${_IPFS_url}\",\"${_target_amount}\",\"${_campaign_ID}\"]`,
+    setQrvalue,
+    callback,
+  );
+};
+
 export const refund = async (
   _campaignId: number,
   _userAddr: string,
@@ -61,25 +83,6 @@ export const setStateToRefund = async (
     functionJson,
     "0",
     `[\"${_campaignId}\"]`,
-    setQrvalue,
-    callback,
-  );
-};
-
-export const createCampaign = async (
-  _campaign_name: string,
-  _campaign_description: string,
-  _target_amount: number,
-  setQrvalue: Function,
-  callback: Function,
-) => {
-  const functionJson =
-    ' { "constant": false, "inputs": [ { "name": "_campaign_name", "type": "string" }, { "name": "_campaign_description", "type": "string" }, { "name": "_target_amount", "type": "uint256" } ], "name": "createCampaign", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }';
-  executeContract(
-    JOGAKBO_CONTRACT_ADDRESS,
-    functionJson,
-    "0",
-    `[\"${_campaign_name}\",\"${_campaign_description}\",\"${_target_amount}\"]`,
     setQrvalue,
     callback,
   );

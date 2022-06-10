@@ -14,6 +14,7 @@ export const fetchWrap = async ({
   try {
     const config = {
       baseURL: process.env.API_URL,
+      withCredential: true,
       params,
     };
     const response =

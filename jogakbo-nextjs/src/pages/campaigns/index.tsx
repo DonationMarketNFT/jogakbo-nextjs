@@ -142,7 +142,10 @@ export default function Campaigns({
             {category === "all" ? (
               <>
                 {allData.map((data: any) => (
-                  <Link href={`campaigns/${data.name}${data.id}`} key={data.id}>
+                  <Link
+                    href={`campaigns/${data.name}/${data.id}`}
+                    key={data.id}
+                  >
                     <a>
                       <Box>{data.name}</Box>
                     </a>
@@ -155,7 +158,7 @@ export default function Campaigns({
                   .filter((o: any) => o.category === category)
                   .map((data: any) => (
                     <Link
-                      href={`campaigns/${data.name}${data.id}`}
+                      href={`campaigns/${data.name}/${data.id}`}
                       key={data.id}
                     >
                       <a>

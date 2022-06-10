@@ -156,6 +156,10 @@ const CopyBox = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  svg {
+    width: 20px;
+    color: black;
+  }
 `;
 
 const boxVariants = {hover: {scale: 1.05}};
@@ -268,6 +272,7 @@ function Mypage() {
                       <FontAwesomeIcon icon={faClone} />
                     </CopyBox>
                   </ProfileInfo>
+
                   <ProfileInfo>
                     <label htmlFor="balance">Wallet Balance</label>
                     <input

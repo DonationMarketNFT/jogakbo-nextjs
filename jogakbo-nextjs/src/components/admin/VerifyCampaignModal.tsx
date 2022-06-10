@@ -87,6 +87,7 @@ interface IDate {
   refundState: boolean;
   category: string;
   creatorAddress: string;
+  minFundingAmount: string;
 }
 
 const VerifyCampaignModal = (props: {id: number; name: string}) => {
@@ -124,6 +125,7 @@ const VerifyCampaignModal = (props: {id: number; name: string}) => {
           <div>제출자 주소: {data?.creatorAddress}</div>
           <div>카테고리: {data?.category}</div>
           <div>target amount: {data?.targetAmount} Klay</div>
+          <div>target amount: {data?.minFundingAmount} Klay</div>
           <div>description</div>
           <div>{data?.description}</div>
         </Contents>

@@ -1,6 +1,10 @@
 import {useRecoilState} from "recoil";
 import styled from "styled-components";
-import {myAddressState, showCategoryModalState} from "../../atom";
+import {
+  myAddressState,
+  showCategoryModalState,
+  showConnectWalletModalState,
+} from "../../atom";
 import React, {useState} from "react";
 import {flexColumnSet, media} from "../../styles/theme";
 import Seo from "../components/Seo";
@@ -127,28 +131,44 @@ function CreateCampaign() {
   const [category, setCategory] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState<number>(0);
+  const [minAmount, setMinAmount] = useState<number>(0);
   const [myAddress] = useRecoilState(myAddressState);
+  const [modal, setModal] = useRecoilState(showConnectWalletModalState);
   const [showCategoryModal, setShowCategoryModal] = useRecoilState(
     showCategoryModalState,
   );
 
-  const testPost2 = async (
+  const testPost2 = (
+    // const testPost2 = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     _name: string,
     _description: string,
     _targetAmount: number,
     _category: string,
+    _minFundingAmount: number,
   ) => {
     e.preventDefault();
-    await postPreCampaign({
-      name: _name as string,
-      description: _description as string,
-      targetAmount: _targetAmount as number,
-      category: _category as "공익" | "사회" | "환경",
-      creatorAddress: myAddress as string,
-    }).then(res => {
-      alert("성공");
-    });
+    if (myAddress !== "0x00") {
+      // await postPreCampaign({
+      //   name: _name as string,
+      //   description: _description as string,
+      //   targetAmount: _targetAmount as number,
+      //   category: _category as "공익" | "사회" | "환경",
+      //   creatorAddress: myAddress as string,
+      // }).then(res => {
+      //   alert("성공");
+      // });
+      postPreCampaign(
+        _name,
+        _description,
+        _targetAmount,
+        _category,
+        myAddress,
+        _minFundingAmount,
+      );
+    } else {
+      setModal(true);
+    }
   };
 
   return (
@@ -226,8 +246,23 @@ function CreateCampaign() {
               placeholder="목표 모금 금액을 입력해주세요"
               required
             />
-            <버튼 onClick={e => testPost2(e, name, desc, amount, category)}>
-              제출하기
+            <label htmlFor="min">최소 모금 단위</label>
+            <인풋
+              value={minAmount}
+              onChange={(e: any) => {
+                setMinAmount(e.target.value);
+              }}
+              id="min"
+              type="number"
+              placeholder="최소 모금 단위를 입력해주세요"
+              required
+            />
+            <버튼
+              onClick={e =>
+                testPost2(e, name, desc, amount, category, minAmount)
+              }
+            >
+              {myAddress !== "0x00" ? "제출하기" : "지갑 연동이 필요합니다"}
             </버튼>
           </폼>
         </컨테이너>

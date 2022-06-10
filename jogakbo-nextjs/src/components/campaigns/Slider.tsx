@@ -134,7 +134,7 @@ const Slider = (props: any) => {
       >
         {data.map((data: any, i: number) => (
           <Item>
-            <Link href={`campaigns/${data.name}${data.id}`} key={data.id}>
+            <Link href={`campaigns/${data.name}/${data.id}`} key={data.id}>
               <a>
                 <이미지 />
                 <Caption>
