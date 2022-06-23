@@ -1,4 +1,41 @@
+import Caver from "caver-js";
 import {atom} from "recoil";
+
+// interface Klaytn {
+//   on: (eventName: string, callback: () => void) => void;
+//   enable: () => Promise<Array<string>>;
+//   selectedAddress: string;
+//   networkVersion: number;
+//   publicConfigStore: Store;
+// }
+
+// interface State {
+//   isEnabled: boolean;
+//   isUnlocked: boolean;
+//   networkVersion: number;
+//   onboardingcomplete: boolean;
+// }
+
+// interface Store {
+//   subscribe: (callback: () => void) => void;
+//   getState: () => State;
+// }
+
+// declare global {
+//   interface Window {
+//     klaytn: any;
+//   }
+// }
+
+// let kly;
+// if (typeof window !== "undefined") {
+//   kly = window.klaytn;
+// }
+
+// const caverState = atom<any>({
+//   key: "caver",
+//   default: kly,
+// });
 
 const showSignInModalState = atom<boolean>({
   key: "signInKey",

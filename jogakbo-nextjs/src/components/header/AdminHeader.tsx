@@ -1,5 +1,9 @@
+import {getDataFromCookie} from "api/Login";
 import Link from "next/link";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
 import styled from "styled-components";
+import {myAddressState} from "../../../atom";
 import {flexColumnSet} from "../../../styles/theme";
 
 const Menu = styled.header`
@@ -41,6 +45,15 @@ const Title = styled.p`
 `;
 
 const AdminHeader = () => {
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
+  const handleGetUser = () => {
+    getDataFromCookie(setMyAddress);
+  };
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
   return (
     <Menu>
       <Col>
@@ -51,7 +64,7 @@ const AdminHeader = () => {
         <ul>
           <Link href="/admin">
             <a>
-              <li>Home</li>
+              <li>nft</li>
             </a>
           </Link>
           <Link href="/admin/1">

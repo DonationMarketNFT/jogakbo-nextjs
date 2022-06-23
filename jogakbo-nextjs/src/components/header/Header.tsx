@@ -181,17 +181,17 @@ const BrowserHeader = () => {
           const _balance = await getBalance(address);
           setMyBalance(_balance);
           postAccount(address, "klip", setMyAddress);
+          setShowConnectWallet(false);
         });
       },
     });
     setShowConnectWallet(true);
   };
 
-  const handleGetUser = async () => {
-    await getDataFromCookie(setMyAddress).then(() => {
-      console.log("address", myAddress);
-    });
+  const handleGetUser = () => {
+    getDataFromCookie(setMyAddress);
   };
+  console.log("address", myAddress);
 
   const handleLogOut = async () => {
     const user = await axios.get("/api/auth/logout");

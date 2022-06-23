@@ -248,6 +248,28 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_campaign_address",
+        "type": "address"
+      },
+      {
+        "name": "_target_amount",
+        "type": "uint256"
+      },
+      {
+        "name": "_campaign_ID",
+        "type": "uint256"
+      }
+    ],
+    "name": "createCampaign",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [
       {
@@ -283,10 +305,6 @@
       {
         "name": "campaign_ID",
         "type": "uint256"
-      },
-      {
-        "name": "IPFS_url",
-        "type": "string"
       },
       {
         "name": "target_amount",
@@ -448,32 +466,6 @@
     "constant": false,
     "inputs": [],
     "name": "pause",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_campaign_address",
-        "type": "address"
-      },
-      {
-        "name": "_IPFS_url",
-        "type": "string"
-      },
-      {
-        "name": "_target_amount",
-        "type": "uint256"
-      },
-      {
-        "name": "_campaign_ID",
-        "type": "uint256"
-      }
-    ],
-    "name": "createCampaign",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

@@ -45,6 +45,7 @@ const Posts = ({posts, loading}) => {
   const [showModal, setShowModal] = useRecoilState(VerifyModalState);
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
+
   return (
     <>
       <PostContainer>

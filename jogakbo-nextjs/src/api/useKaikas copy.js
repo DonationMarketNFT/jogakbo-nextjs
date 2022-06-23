@@ -9,6 +9,27 @@ import {postAccount} from "./accountWc";
 import {login, logout} from "./Login";
 import JOGAKBOABI from "../abi/JogakboABI.json";
 
+let kly;
+if (typeof window !== "undefined") {
+  kly = window.klaytn;
+}
+const caver = new Caver(kly);
+
+export const rs = () => {
+  caver.klay
+    .sendTransaction({
+      type: "VALUE_TRANSFER",
+      from: "0xA52c3f53F087B3445190ADc0B038Bd78D8110eDa",
+      to: "0xc72af0d3c40d5E95e3424b251ceA0cD81e230Dc1",
+      gas: "300000",
+      value: caver.utils.toPeb("1", "KLAY"),
+    })
+    .then(res => console.log(res));
+};
+
+const jogakbo = new caver.klay.Contract(JOGAKBOABI, JOGAKBO_CONTRACT_ADDRESS);
+console.log(jogakbo);
+
 export const kaikas = async (myAddress, setMyAddress) => {
   if (typeof window.klaytn !== "undefined") {
     const provider = window["klaytn"];
@@ -23,7 +44,7 @@ export const kaikas = async (myAddress, setMyAddress) => {
 };
 
 export const testKaikas = async callback => {
-  await window.klaytn.on("accountsChanged", function (accounts) {
+  await klaytn.on("accountsChanged", function (accounts) {
     console.log("계정바뀜", accounts[0]);
     login(accounts[0], callback);
   });

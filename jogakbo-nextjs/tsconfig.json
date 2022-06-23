@@ -25,7 +25,11 @@
     "src/components/Admin/Posts.js",
     "styles/GlobalStyle.js",
     "src/api/useKaikas.js",
-    "src/components/utils/refreshTokenSetup.js"
+    "src/components/utils/refreshTokenSetup.js",
+    "src/api/UseCaver.js",
+    "src/pages/image.js",
+    "src/components/admin/VerifyCampaignModal.js",
+    "src/api/UseKlip.js"
   ],
   "exclude": ["node_modules"]
 }
