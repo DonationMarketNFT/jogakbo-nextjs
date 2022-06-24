@@ -33,58 +33,52 @@ export const createCampaign = async (
   );
 };
 
-// export const refund = async (
-//   _campaignId,
-//   _userAddrm
-//   setQrvalue: Function,
-//   callback: Function,
-// ) => {
-//   const functionJson =
-//     '{ "constant": false, "inputs": [ { "name": "_campaignId", "type": "uint256" }, { "name": "_userAddr", "type": "address" } ], "name": "refund", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }';
-//   executeContract(
-//     JOGAKBO_CONTRACT_ADDRESS,
-//     functionJson,
-//     "0",
-//     `[\"${_campaignId}\",\"${_userAddr}\"]`,
-//     setQrvalue,
-//     callback,
-//   );
-// };
+// 환불
+export const refund = async (_campaignId, _userAddr, setQrvalue, callback) => {
+  const functionJson =
+    '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"},{"name":"_userAddr","type":"address"}],"name":"refund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
+  executeContract(
+    JOGAKBO_CONTRACT_ADDRESS,
+    functionJson,
+    "0",
+    `[\"${_campaignId}\",\"${_userAddr}\"]`,
+    setQrvalue,
+    callback,
+  );
+};
 
-// export const donateTocampaign = async (
-//   _campaignId: number,
-//   _amount: number,
-//   setQrvalue: Function,
-//   callback: Function,
-// ) => {
-//   const functionJson =
-//     '{ "constant": false, "inputs": [ { "name": "_campaignId", "type": "uint256" }, { "name": "_amount", "type": "uint256" } ], "name": "donateTocampaign", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }';
-//   executeContract(
-//     JOGAKBO_CONTRACT_ADDRESS,
-//     functionJson,
-//     (_amount * 10 ** 18).toString(),
-//     `[\"${_campaignId}\",\"${_amount}\"]`,
-//     setQrvalue,
-//     callback,
-//   );
-// };
+// 기부
+export const donateTocampaign = async (
+  _campaignId,
+  _amount,
+  setQrvalue,
+  callback,
+) => {
+  const functionJson =
+    '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"},{"name":"_amount","type":"uint256"}],"name":"donateTocampaign","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}';
+  executeContract(
+    JOGAKBO_CONTRACT_ADDRESS,
+    functionJson,
+    (_amount * 10 ** 18).toString(),
+    `[\"${_campaignId}\",\"${_amount}\"]`,
+    setQrvalue,
+    callback,
+  );
+};
 
-// export const setStateToRefund = async (
-//   _campaignId: number,
-//   setQrvalue: Function,
-//   callback: Function,
-// ) => {
-//   const functionJson =
-//     ' { "constant": false, "inputs": [ { "name": "_campaignId", "type": "uint256" } ], "name": "setStateToRefund", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }';
-//   executeContract(
-//     JOGAKBO_CONTRACT_ADDRESS,
-//     functionJson,
-//     "0",
-//     `[\"${_campaignId}\"]`,
-//     setQrvalue,
-//     callback,
-//   );
-// };
+// 환불 상태 변경
+export const setStateToRefund = async (_campaignId, setQrvalue, callback) => {
+  const functionJson =
+    '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"}],"name":"setStateToRefund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
+  executeContract(
+    JOGAKBO_CONTRACT_ADDRESS,
+    functionJson,
+    "0",
+    `[\"${_campaignId}\"]`,
+    setQrvalue,
+    callback,
+  );
+};
 
 export const executeContract = (
   txTo,
@@ -131,6 +125,7 @@ export const executeContract = (
     });
 };
 
+// 클립 주소얻기
 export const getAddress = (setQrvalue, callback) => {
   axios
     .post(A2P_API_PREPARE_URL, {

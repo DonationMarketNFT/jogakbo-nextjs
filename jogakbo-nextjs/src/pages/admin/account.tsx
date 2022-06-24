@@ -1,3 +1,5 @@
+import {getAccounts} from "api/accountWc";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import AdminHeader from "../../components/header/AdminHeader";
 
@@ -18,6 +20,11 @@ const 타이틀 = styled.h4`
 `;
 
 const AccountPage = () => {
+  const [accounts, setAccounts] = useState();
+  useEffect(() => {
+    getAccounts(setAccounts);
+    console.log(accounts);
+  }, []);
   return (
     <>
       <AdminHeader />

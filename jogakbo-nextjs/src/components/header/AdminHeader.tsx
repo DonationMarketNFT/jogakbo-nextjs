@@ -72,14 +72,17 @@ const AdminHeader = () => {
               <li>검토 캠페인 리스트</li>
             </a>
           </Link>
-
-          <li
-            style={{
-              cursor: "url(/construct.png), auto",
-            }}
-          >
-            유저 관리 (개발중)
-          </li>
+          <Link href="/admin/account">
+            <a>
+              <li
+                style={{
+                  cursor: "url(/construct.png), auto",
+                }}
+              >
+                유저 관리 (개발중)
+              </li>
+            </a>
+          </Link>
         </ul>
       </Col>
       <Col>

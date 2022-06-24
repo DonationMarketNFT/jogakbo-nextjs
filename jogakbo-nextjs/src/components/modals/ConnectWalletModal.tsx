@@ -144,10 +144,10 @@ function ConnectWalletModal() {
     setShowModal(false);
   };
 
-  function getUser() {
-    const result = getAccounts();
-    console.log(result);
-  }
+  // function getUser() {
+  //   const result = getAccounts();
+  //   console.log(result);
+  // }
 
   return (
     <>
