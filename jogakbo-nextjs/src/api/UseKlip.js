@@ -1,5 +1,6 @@
 import axios from "axios";
 import {JOGAKBO_CONTRACT_ADDRESS} from "../constants/constants.cypress";
+import {fromKlaytoPeb} from "./UseCaver";
 
 const A2P_API_PREPARE_URL = "https://a2a-api.klipwallet.com/v2/a2a/prepare";
 const APP_NAME = "JOGAKBO";
@@ -59,7 +60,7 @@ export const donateTocampaign = async (
   executeContract(
     JOGAKBO_CONTRACT_ADDRESS,
     functionJson,
-    (_amount * 10 ** 18).toString(),
+    fromKlaytoPeb(_amount).toString(),
     `[\"${_campaignId}\",\"${_amount}\"]`,
     setQrvalue,
     callback,

@@ -17,6 +17,7 @@ import {
 } from "../../../atom";
 import JOGAKBOABI from "../../abi/JogakboABI.json";
 import ConnectWalletModal from "components/modals/ConnectWalletModal";
+import {postCampaign} from "api/campaigns";
 
 const Container = styled.div`
   position: fixed;
@@ -171,6 +172,14 @@ const VerifyCampaignModal = props => {
       },
     );
     setShowConnectWalletModal(true);
+    postCampaign(
+      props.name,
+      data.description,
+      data.targetAmount,
+      data.category,
+      data.minFundingAmount,
+      data.creatorAddress,
+    );
   };
 
   // const create = async () => {

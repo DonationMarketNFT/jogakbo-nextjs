@@ -1,18 +1,31 @@
 import axios from "axios";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
-import {useRouter} from "next/dist/client/router";
 import {useEffect} from "react";
 import {useState} from "react";
 import styled from "styled-components";
 import {media} from "../../../styles/theme";
 import Seo from "../../components/Seo";
-import {카테고리} from "../../../styles/theme";
 import Category from "../../components/Category";
+import {donateTocampaign, refund} from "api/UseKlip";
+import {useRecoilState} from "recoil";
+import {
+  myAddressState,
+  qrValueState,
+  showConnectWalletModalState,
+} from "../../../atom";
+import ConnectWalletModal from "components/modals/ConnectWalletModal";
+import {fromKlaytoPeb} from "api/UseCaver";
 
 const 이미지 = styled.div`
   background-image: url(/멸종위기.jpg);
   width: 100%;
   height: 500px;
+`;
+
+const Wrapper = styled.div`
+  background: ${props => props.theme.bgColor};
+  box-sizing: border-box;
+  padding-bottom: 50px;
 `;
 
 const Container = styled.div`
@@ -35,6 +48,7 @@ const Container = styled.div`
 const 타이틀 = styled.div`
   display: flex;
   align-items: center;
+  color: ${props => props.theme.textColor};
 `;
 
 const 캠페인이름 = styled.div`
@@ -48,6 +62,7 @@ const Bars = styled.div`
   height: 30px;
   box-sizing: border-box;
   margin-bottom: 100px;
+  color: ${props => props.theme.textColor};
 `;
 
 const PercentBar = styled.div`
@@ -80,6 +95,16 @@ const Klay = styled.div`
   text-align: right;
 `;
 
+const Min = styled.div`
+  margin-top: 10px;
+  text-align: right;
+  color: ${props => props.theme.gray.gray6};
+`;
+
+const RefundState = styled.div`
+  color: ${props => props.theme.textColor};
+`;
+
 const RefundButton = styled.div`
   background: red;
   color: white;
@@ -95,6 +120,8 @@ const CampaignBox = styled.div`
   padding: 0 30px;
   border: 1px solid lightgray;
   border-radius: 10px;
+  color: ${props => props.theme.textColor};
+
   ${media.tablet} {
     margin: 0 30px;
     padding: 0 30px;
@@ -147,7 +174,7 @@ const Participant = styled.div`
   margin-right: 10px;
   width: 70px;
   height: 70px;
-  background: black;
+  background: ${props => props.theme.textColor};
   border-radius: 50%;
   ${media.tablet} {
     width: 50px;
@@ -170,9 +197,10 @@ const DonationBox = styled.div`
   position: sticky;
   top: 70px;
   padding: 50px 20px 30px 20px;
-  background: white;
   border-radius: 15px;
-  box-shadow: 4px 12px 20px 6px rgb(0 0 0 / 18%);
+  /* box-shadow: 4px 12px 20px 6px rgb(0 0 0 / 18%); */
+  box-shadow: ${props => props.theme.boxShadow2};
+  background: ${props => props.theme.bgColor};
   ${media.tablet} {
     all: unset;
     background: white;
@@ -248,11 +276,11 @@ const DonationButton = styled.button`
   border: 0;
   border-radius: 15px;
   text-align: center;
-  background: lightgray;
+  background: ${props => props.theme.gray.gray5};
   color: white;
   transition: all 0.3s ease-in-out;
   &:hover {
-    background: gray;
+    background: ${props => props.theme.gray.gray3};
   }
   ${media.tablet} {
     padding: 25px 0;
@@ -271,6 +299,10 @@ export default function Detail({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [data, setData] = useState<any>(DEFAULT_DATA);
   const [title, id] = params || [];
+  const [donateAmount, setDonateAmount] = useState<string>();
+  const [qrValue, setQrValue] = useRecoilState(qrValueState);
+  const [showModal, setShowModal] = useRecoilState(showConnectWalletModalState);
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
 
   const changeState = () => {
     axios
@@ -296,6 +328,23 @@ export default function Detail({
       );
   };
 
+  const donate = (e: any) => {
+    e.preventDefault();
+    donateTocampaign(id, Number(donateAmount), setQrValue, (result: any) => {
+      alert(result);
+      setShowModal(false);
+    });
+    setShowModal(true);
+  };
+
+  const onClickRefund = () => {
+    refund(id, myAddress, setQrValue, () => {
+      alert("success");
+      setShowModal(false);
+    });
+    setShowModal(true);
+  };
+
   useEffect(() => {
     axios(
       `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns/campaign/${id}`,
@@ -307,7 +356,7 @@ export default function Detail({
   console.log(data);
 
   return (
-    <>
+    <Wrapper>
       <이미지>hello</이미지>
       <Container>
         <Seo title={title} />
@@ -328,8 +377,11 @@ export default function Detail({
             <span>{data.targetAmount}</span>
             Klay)
           </Klay>
+          <Min>기부 단위 클레이 : {data.minFundingAmount} Klay</Min>
         </Bars>
-        <div>현재상태:{data.refundStatus ? "refund" : "funding"}</div>
+        <RefundState>
+          현재상태:{data.refundStatus ? "refund" : "funding"}
+        </RefundState>
         <RefundButton onClick={changeState}>change status</RefundButton>
         <CampaignBox>
           <CampaignRow>
@@ -353,25 +405,35 @@ export default function Detail({
             <DonationBox>
               <CampaignName>{title}</CampaignName>
               <CampaignDesc>{data.description}</CampaignDesc>
-              <DonationForm>
+              <DonationForm onSubmit={e => donate(e)}>
                 <DonationInput
                   type="number"
                   name="klay"
                   id="klay"
                   autoComplete="off"
                   required
-                  step={0.0000001}
+                  min="0"
+                  step={data.minFundingAmount}
+                  value={donateAmount}
+                  onChange={e => setDonateAmount(e.target.value)}
                 />
                 <label id="klay_label" htmlFor="klay">
                   Klay
                 </label>
-                <DonationButton id="donate_btn">Donate</DonationButton>
+                {data.fundingStatus ? (
+                  <DonationButton type="submit" id="donate_btn">
+                    Donate
+                  </DonationButton>
+                ) : (
+                  <RefundButton onClick={onClickRefund}>Refund</RefundButton>
+                )}
               </DonationForm>
             </DonationBox>
           </CampaignRow>
         </CampaignBox>
       </Container>
-    </>
+      {qrValue !== "DEFAULT" && <ConnectWalletModal />}
+    </Wrapper>
   );
 }
 

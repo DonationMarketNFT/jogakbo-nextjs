@@ -6,11 +6,13 @@ const BASE_PATH =
 interface ICampaigns {
   name: string;
   description: string;
-  targetAmount: number;
   currentAmount: number;
+  targetAmount: number;
   fundingStatus: boolean;
   refundStatus: boolean;
   category: string;
+  creatorAddress: string;
+  minFundingAmount: number;
 }
 
 // 모든 데이터 조회
@@ -25,6 +27,8 @@ export const postCampaign = (
   _description: string,
   _targetAmount: number,
   _category: string,
+  _minFundingAmount: number,
+  _creatorAddress: string,
 ) => {
   const data: ICampaigns = {
     name: _name,
@@ -34,6 +38,8 @@ export const postCampaign = (
     fundingStatus: true,
     refundStatus: false,
     category: _category,
+    minFundingAmount: _minFundingAmount,
+    creatorAddress: _creatorAddress,
   };
   axios
     .post(`${BASE_PATH}/create_campaign`, data)

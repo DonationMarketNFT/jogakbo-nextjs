@@ -23,8 +23,8 @@ const AccountPage = () => {
   const [accounts, setAccounts] = useState();
   useEffect(() => {
     getAccounts(setAccounts);
-    console.log(accounts);
   }, []);
+  console.log(accounts);
   return (
     <>
       <AdminHeader />

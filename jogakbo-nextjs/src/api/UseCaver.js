@@ -5,7 +5,7 @@ import {
   JOGAKBO_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
   SECRET_ACCRESS_KEY,
-} from "../constants/constants.baobab";
+} from "../constants/constants.cypress";
 import JOGAKBOABI from "../abi/JogakboABI.json";
 import NFTABI from "../abi/NftABI.json";
 
@@ -28,8 +28,8 @@ const option = {
 
 const caver = new Caver(
   new Caver.providers.HttpProvider(
-    // "https://node-api.klaytnapi.com/v1/klaytn",
-    "https://api.baobab.klaytn.net:8651/",
+    "https://node-api.klaytnapi.com/v1/klaytn",
+    // "https://api.baobab.klaytn.net:8651/",
     option,
   ),
 );
@@ -49,6 +49,12 @@ export const JogakboContract = new caver.contract(
   JOGAKBO_CONTRACT_ADDRESS,
 );
 
+export const getRefundState = async () => {
+  const state = await JogakboContract.methods.refundState().call();
+  console.log(state);
+  return state;
+};
+
 // 테스트 완료
 export const getCampaignNumber = async () => {
   const number = await JogakboContract.methods.CampaignNumber().call();
@@ -56,30 +62,15 @@ export const getCampaignNumber = async () => {
   return number;
 };
 
-export const createCampaign = async (
-  _campaign_address,
-  _target_amount,
-  _campaign_ID,
-) => {
-  const options = {
-    from: _campaign_address,
-  };
-  const create = await JogakboContract.methods
-    .createCampaign(_campaign_address, _target_amount, _campaign_ID)
-    .sign(options)
-    .then(console.log);
-  return create;
+export const campaignList = async () => {
+  const number = await JogakboContract.methods.campaignNumber().call();
+  const lists = [];
+  for (let i = 0; i < number; i++) {
+    const list = await JogakboContract.methods.campaignList([i]).call();
+    lists.push(list);
+  }
+  return lists;
 };
-
-// export const campaignList = async () => {
-//   const number = await JogakboContract.methods.campaignNumber().call();
-//   const lists = [];
-//   for (let i = 0; i < number; i++) {
-//     const list = await JogakboContract.methods.campaignList([i]).call();
-//     lists.push(list);
-//   }
-//   return lists;
-// };
 
 // export const testOwnTokenId = async address => {
 //   const ids = await JogakboContract.methods.tokenIds(address).call();
@@ -122,4 +113,8 @@ export const getBalance = address => {
     );
     return balance;
   });
+};
+
+export const fromKlaytoPeb = n => {
+  return caver.utils.convertToPeb(n);
 };
