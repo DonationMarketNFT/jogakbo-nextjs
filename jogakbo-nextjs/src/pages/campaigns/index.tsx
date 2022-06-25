@@ -179,7 +179,9 @@ export default function Campaigns({
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const data = await (
-    await fetch(`http://localhost:3000/campaigns/campaign_all`)
+    await fetch(
+      `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns/campaign_all`,
+    )
   ).json();
 
   return {

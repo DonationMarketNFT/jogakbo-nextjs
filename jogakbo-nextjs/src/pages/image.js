@@ -19,7 +19,7 @@ const ImagePage = () => {
       formData.append("CampaignName", name);
       await axios({
         method: "post",
-        url: "http://localhost:3000/image",
+        url: "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/image",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",

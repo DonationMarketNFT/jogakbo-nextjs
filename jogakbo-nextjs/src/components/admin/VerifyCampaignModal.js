@@ -140,7 +140,9 @@ const VerifyCampaignModal = props => {
   const [qrValue, setQrValue] = useRecoilState(qrValueState);
 
   useEffect(() => {
-    axios(`http://localhost:3000/pre-campaigns/campaign/${props.id}`)
+    axios(
+      `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/pre-campaigns/campaign/${props.id}`,
+    )
       .then(res => setData(res.data))
       .catch(e => console.log(e));
     console.log(myAddress);
@@ -148,7 +150,9 @@ const VerifyCampaignModal = props => {
 
   const deleteData = () => {
     axios
-      .delete(`http://localhost:3000/pre-campaigns/campaign/delete/${props.id}`)
+      .delete(
+        `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/pre-campaigns/campaign/delete/${props.id}`,
+      )
       .then(res => console.log(res))
       .catch(e => console.log(e));
     setShowModal(false);
@@ -223,7 +227,7 @@ const VerifyCampaignModal = props => {
       formData.append("CampaignName", data?.name);
       await axios({
         method: "post",
-        url: "http://localhost:3000/image",
+        url: "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/image",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",

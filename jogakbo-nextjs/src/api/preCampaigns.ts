@@ -1,7 +1,8 @@
 import {fetchWrap} from "../components/utils/axios";
 import axios from "axios";
 
-const BASE_PATH = "http://localhost:3000/pre-campaigns";
+const BASE_PATH =
+  "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/pre-campaigns";
 
 interface IPreCampaigns {
   name: string;

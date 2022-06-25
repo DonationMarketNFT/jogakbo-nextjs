@@ -22,7 +22,9 @@ const AdminHome = () => {
   }, []);
 
   useEffect(() => {
-    axios(`http://localhost:3000/nfts/nft_all`)
+    axios(
+      `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/nfts/nft_all`,
+    )
       .then(res => setData(res.data))
       .catch(e => console.log(e));
   }, []);

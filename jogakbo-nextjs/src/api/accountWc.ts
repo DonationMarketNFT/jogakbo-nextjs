@@ -2,7 +2,8 @@ import axios from "axios";
 import {fetchWrap} from "../components/utils/axios";
 import {login} from "./Login";
 
-const BASE_PATH = "http://localhost:3000/account-wc";
+const BASE_PATH =
+  "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/account-wc";
 
 interface IAccountWc {
   walletAddress: string;

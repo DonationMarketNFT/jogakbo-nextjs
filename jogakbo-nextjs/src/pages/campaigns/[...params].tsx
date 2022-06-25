@@ -274,13 +274,16 @@ export default function Detail({
 
   const changeState = () => {
     axios
-      .patch(`http://localhost:3000/campaigns/campaign/fundingstatus/${id}`, {
-        fundingStatus: !data.fundingSatus,
-      })
+      .patch(
+        `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns/campaign/fundingstatus/${id}`,
+        {
+          fundingStatus: !data.fundingSatus,
+        },
+      )
       .then(() =>
         axios
           .patch(
-            `http://localhost:3000/campaigns/campaign/refundstatus/${id}`,
+            `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns/campaign/refundstatus/${id}`,
             {
               refundStatus: !data.refundStatus,
             },
@@ -294,7 +297,9 @@ export default function Detail({
   };
 
   useEffect(() => {
-    axios(`http://localhost:3000/campaigns/campaign/${id}`)
+    axios(
+      `http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns/campaign/${id}`,
+    )
       .then(res => setData(res.data))
       .catch(e => console.log(e));
   }, []);

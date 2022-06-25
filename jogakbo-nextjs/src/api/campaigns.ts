@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_PATH = "http://localhost:3000/campaigns";
+const BASE_PATH =
+  "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns";
 
 interface ICampaigns {
   name: string;
