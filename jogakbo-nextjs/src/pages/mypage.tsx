@@ -5,9 +5,9 @@ import {useRecoilState, useResetRecoilState} from "recoil";
 import {color, media} from "../../styles/theme";
 import {
   getBalance,
-  testOwnTokenId,
-  testTokenId2Description,
-  testTokenId2Name,
+  // testOwnTokenId,
+  // testTokenId2Description,
+  // testTokenId2Name,
 } from "../api/UseCaver";
 import {myAddressState, myBalanceState} from "../../atom";
 import {faClone} from "@fortawesome/free-solid-svg-icons";
