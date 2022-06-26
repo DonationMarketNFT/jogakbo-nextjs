@@ -2,8 +2,8 @@ import Seo from "components/Seo";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
 import {getPreCampaigns} from "../../api/preCampaigns";
-import Pagination from "../../components/Admin/Pagination";
-import Posts from "../../components/Admin/Posts";
+import Pagination from "../../components/admin/Pagination";
+import Posts from "../../components/admin/Posts";
 import AdminHeader from "../../components/header/AdminHeader";
 
 const Container = styled.div`
