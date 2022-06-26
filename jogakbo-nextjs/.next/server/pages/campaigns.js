@@ -525,41 +525,9 @@ var external_styled_components_default = /*#__PURE__*/__webpack_require__.n(exte
 // EXTERNAL MODULE: ./styles/theme.ts
 var theme = __webpack_require__("iaY6");
 
-// EXTERNAL MODULE: external "axios"
-var external_axios_ = __webpack_require__("zr5I");
-var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_);
+// EXTERNAL MODULE: ./src/api/campaigns.ts
+var campaigns = __webpack_require__("xXFf");
 
-// CONCATENATED MODULE: ./src/api/campaigns.ts
-
-const BASE_PATH = "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns";
-// 모든 데이터 조회
-const getCampaigns = async setPosts => {
-  const results = await external_axios_default.a.get(`${BASE_PATH}/campaign_all`);
-  setPosts(results.data);
-}; // 캠페인 생성하기를 통한 데이터 추가
-
-const postCampaign = (_name, _description, _targetAmount, _category) => {
-  const data = {
-    name: _name,
-    description: _description,
-    targetAmount: Number(_targetAmount),
-    currentAmount: 0,
-    fundingStatus: true,
-    refundStatus: false,
-    category: _category
-  };
-  external_axios_default.a.post(`${BASE_PATH}/create_campaign`, data).then(res => alert("정상적으로 제출되었습니다 :)")).catch(e => console.log(e));
-}; // funding 중인 캠페인만 출력
-
-const getFunding = async setAllData => {
-  const results = await external_axios_default.a.get(`${BASE_PATH}/campaign/Onfunding`);
-  setAllData(results.data);
-}; // refunding 중인 캠페인만 출력
-
-const getRefunding = async setAllData => {
-  const results = await external_axios_default.a.get(`${BASE_PATH}/campaign/OnRefund`);
-  setAllData(results.data);
-};
 // EXTERNAL MODULE: ./src/components/Category.tsx
 var Category = __webpack_require__("vZBi");
 
@@ -773,16 +741,16 @@ function Campaigns({
   } = Object(external_react_["useState"])([]);
 
   function setFunding() {
-    getFunding(setAllData);
+    Object(campaigns["b" /* getFunding */])(setAllData);
     console.log(allData);
   }
 
   function setRefunding() {
-    getRefunding(setAllData);
+    Object(campaigns["c" /* getRefunding */])(setAllData);
   }
 
   Object(external_react_["useEffect"])(() => {
-    getCampaigns(setAllData);
+    Object(campaigns["a" /* getCampaigns */])(setAllData);
   }, []);
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])(jsx_runtime_["Fragment"], {
     children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(Seo["a" /* default */], {
@@ -3325,6 +3293,51 @@ const Category = ({
 "use strict";
 exports.__esModule=true;exports.normalizePathSep=normalizePathSep;exports.denormalizePagePath=denormalizePagePath;function normalizePathSep(path){return path.replace(/\\/g,'/');}function denormalizePagePath(page){page=normalizePathSep(page);if(page.startsWith('/index/')){page=page.slice(6);}else if(page==='/index'){page='/';}return page;}
 //# sourceMappingURL=denormalize-page-path.js.map
+
+/***/ }),
+
+/***/ "xXFf":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getCampaigns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return postCampaign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getFunding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getRefunding; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("zr5I");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+const BASE_PATH = "http://ec2-52-78-57-218.ap-northeast-2.compute.amazonaws.com:3000/campaigns";
+// 모든 데이터 조회
+const getCampaigns = async setPosts => {
+  const results = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`${BASE_PATH}/campaign_all`);
+  setPosts(results.data);
+}; // 캠페인 생성하기를 통한 데이터 추가
+
+const postCampaign = (_name, _description, _targetAmount, _category, _minFundingAmount, _creatorAddress) => {
+  const data = {
+    name: _name,
+    description: _description,
+    targetAmount: Number(_targetAmount),
+    currentAmount: 0,
+    fundingStatus: true,
+    refundStatus: false,
+    category: _category,
+    minFundingAmount: _minFundingAmount,
+    creatorAddress: _creatorAddress
+  };
+  axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(`${BASE_PATH}/create_campaign`, data).then(res => alert("정상적으로 제출되었습니다 :)")).catch(e => console.log(e));
+}; // funding 중인 캠페인만 출력
+
+const getFunding = async setAllData => {
+  const results = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`${BASE_PATH}/campaign/Onfunding`);
+  setAllData(results.data);
+}; // refunding 중인 캠페인만 출력
+
+const getRefunding = async setAllData => {
+  const results = await axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`${BASE_PATH}/campaign/OnRefund`);
+  setAllData(results.data);
+};
 
 /***/ }),
 

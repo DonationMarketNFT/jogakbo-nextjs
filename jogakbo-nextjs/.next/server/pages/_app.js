@@ -188,12 +188,14 @@ exports.cancelIdleCallback = cancelIdleCallback;
 "use strict";
 /* unused harmony export rs */
 /* unused harmony export JogakboContract */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getCampaignNumber; });
-/* unused harmony export createCampaign */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getBalance; });
+/* unused harmony export getRefundState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getCampaignNumber; });
+/* unused harmony export campaignList */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getBalance; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fromKlaytoPeb; });
 /* harmony import */ var caver_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("Uqmb");
 /* harmony import */ var caver_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(caver_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants_constants_baobab__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("HXs4");
+/* harmony import */ var _constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("I5Yw");
 /* harmony import */ var _abi_JogakboABI_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("mKgc");
 var _abi_JogakboABI_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t("mKgc", 1);
 /* harmony import */ var _abi_NftABI_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("UeP9");
@@ -205,14 +207,14 @@ var _abi_NftABI_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__web
 const option = {
   headers: [{
     name: "Authorization",
-    value: "Basic " + Buffer.from(_constants_constants_baobab__WEBPACK_IMPORTED_MODULE_1__[/* ACCESS_KEY_ID */ "a"] + ":" + _constants_constants_baobab__WEBPACK_IMPORTED_MODULE_1__[/* SECRET_ACCRESS_KEY */ "d"]).toString("base64")
+    value: "Basic " + Buffer.from(_constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* ACCESS_KEY_ID */ "a"] + ":" + _constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* SECRET_ACCRESS_KEY */ "d"]).toString("base64")
   }, {
     name: "x-chain-id",
-    value: _constants_constants_baobab__WEBPACK_IMPORTED_MODULE_1__[/* CHAIN_ID */ "b"]
+    value: _constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* CHAIN_ID */ "b"]
   }]
 };
-const caver = new caver_js__WEBPACK_IMPORTED_MODULE_0___default.a(new caver_js__WEBPACK_IMPORTED_MODULE_0___default.a.providers.HttpProvider( // "https://node-api.klaytnapi.com/v1/klaytn",
-"https://api.baobab.klaytn.net:8651/", option));
+const caver = new caver_js__WEBPACK_IMPORTED_MODULE_0___default.a(new caver_js__WEBPACK_IMPORTED_MODULE_0___default.a.providers.HttpProvider("https://node-api.klaytnapi.com/v1/klaytn", // "https://api.baobab.klaytn.net:8651/",
+option));
 const rs = async () => {
   await caver.klay.sendTransaction({
     type: "VALUE_TRANSFER",
@@ -222,29 +224,29 @@ const rs = async () => {
     value: caver.utils.toPeb("1", "KLAY")
   });
 };
-const JogakboContract = new caver.contract(_abi_JogakboABI_json__WEBPACK_IMPORTED_MODULE_2__, _constants_constants_baobab__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"]); // 테스트 완료
+const JogakboContract = new caver.contract(_abi_JogakboABI_json__WEBPACK_IMPORTED_MODULE_2__, _constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"]);
+const getRefundState = async () => {
+  const state = await JogakboContract.methods.refundState().call();
+  console.log(state);
+  return state;
+}; // 테스트 완료
 
 const getCampaignNumber = async () => {
   const number = await JogakboContract.methods.CampaignNumber().call();
   console.log(number);
   return number;
 };
-const createCampaign = async (_campaign_address, _target_amount, _campaign_ID) => {
-  const options = {
-    from: _campaign_address
-  };
-  const create = await JogakboContract.methods.createCampaign(_campaign_address, _target_amount, _campaign_ID).sign(options).then(console.log);
-  return create;
-}; // export const campaignList = async () => {
-//   const number = await JogakboContract.methods.campaignNumber().call();
-//   const lists = [];
-//   for (let i = 0; i < number; i++) {
-//     const list = await JogakboContract.methods.campaignList([i]).call();
-//     lists.push(list);
-//   }
-//   return lists;
-// };
-// export const testOwnTokenId = async address => {
+const campaignList = async () => {
+  const number = await JogakboContract.methods.campaignNumber().call();
+  const lists = [];
+
+  for (let i = 0; i < number; i++) {
+    const list = await JogakboContract.methods.campaignList([i]).call();
+    lists.push(list);
+  }
+
+  return lists;
+}; // export const testOwnTokenId = async address => {
 //   const ids = await JogakboContract.methods.tokenIds(address).call();
 //   return ids;
 // };
@@ -277,6 +279,9 @@ const getBalance = address => {
     const balance = caver.utils.convertFromPeb(caver.utils.hexToNumberString(response), "KLAY");
     return balance;
   });
+};
+const fromKlaytoPeb = n => {
+  return caver.utils.convertToPeb(n);
 };
 
 /***/ }),
@@ -797,16 +802,33 @@ function resolveRewrites() {}
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return JOGAKBO_CONTRACT_ADDRESS; });
+/* unused harmony export JOGAKBO_CONTRACT_ADDRESS */
 /* unused harmony export NFT_CONTRACT_ADDRESS */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ACCESS_KEY_ID; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return SECRET_ACCRESS_KEY; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHAIN_ID; });
+/* unused harmony export ACCESS_KEY_ID */
+/* unused harmony export SECRET_ACCRESS_KEY */
+/* unused harmony export CHAIN_ID */
 const JOGAKBO_CONTRACT_ADDRESS = "0xEFde18b341D06A6eb1D1aED331e69C0ba3f52561";
 const NFT_CONTRACT_ADDRESS = "0xC4771924F1f88D4908f0676aeB771A532275798e";
 const ACCESS_KEY_ID = "KASKAWX9OCIAR71UM6Q3VF6T";
 const SECRET_ACCRESS_KEY = "Jm7DGEKbCVl3yWtK-iHJwKWfcFBTfDHn5a1bFkO6";
 const CHAIN_ID = "1001"; // Mainnet 8217, Testnet 1001
+
+/***/ }),
+
+/***/ "I5Yw":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return JOGAKBO_CONTRACT_ADDRESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ACCESS_KEY_ID; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return SECRET_ACCRESS_KEY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHAIN_ID; });
+const JOGAKBO_CONTRACT_ADDRESS = "0xe7bbC0ec719f1836AA89724bF0010A6268D11B92"; // export const NFT_CONTRACT_ADDRESS =
+// "0xC4771924F1f88D4908f0676aeB771A532275798e";
+
+const ACCESS_KEY_ID = "KASKAWX9OCIAR71UM6Q3VF6T";
+const SECRET_ACCRESS_KEY = "Jm7DGEKbCVl3yWtK-iHJwKWfcFBTfDHn5a1bFkO6";
+const CHAIN_ID = "8217"; // Mainnet 8217, Testnet 1001
 
 /***/ }),
 
@@ -1127,25 +1149,17 @@ module.exports = require("qrcode.react");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createCampaign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return refund; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return donateTocampaign; });
+/* unused harmony export setStateToRefund */
+/* unused harmony export executeContract */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getAddress; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("zr5I");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("I5Yw");
+/* harmony import */ var _UseCaver__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("1UBF");
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ createCampaign; });
-__webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ getAddress; });
-
-// UNUSED EXPORTS: refund, donateTocampaign, setStateToRefund, executeContract
-
-// EXTERNAL MODULE: external "axios"
-var external_axios_ = __webpack_require__("zr5I");
-var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_);
-
-// CONCATENATED MODULE: ./src/constants/constants.cypress.ts
-const JOGAKBO_CONTRACT_ADDRESS = "0xe7bbC0ec719f1836AA89724bF0010A6268D11B92"; // export const NFT_CONTRACT_ADDRESS =
-// "0xC4771924F1f88D4908f0676aeB771A532275798e";
-
-const ACCESS_KEY_ID = "KASKAWX9OCIAR71UM6Q3VF6T";
-const SECRET_ACCRESS_KEY = "Jm7DGEKbCVl3yWtK-iHJwKWfcFBTfDHn5a1bFkO6";
-const CHAIN_ID = "8217"; // Mainnet 8217, Testnet 1001
-// CONCATENATED MODULE: ./src/api/UseKlip.js
 
 
 const A2P_API_PREPARE_URL = "https://a2a-api.klipwallet.com/v2/a2a/prepare";
@@ -1165,25 +1179,25 @@ const getKlipAccessUrl = (method, request_key) => {
 const createCampaign = async (_campaign_address, // 캠페인 제출자 주소
 _target_amount, _campaign_ID, setQrvalue, callback) => {
   const functionJson = '{"constant":false,"inputs":[{"name":"_campaign_address","type":"address"},{"name":"_target_amount","type":"uint256"},{"name":"_campaign_ID","type":"uint256"}],"name":"createCampaign","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
-  executeContract(JOGAKBO_CONTRACT_ADDRESS, functionJson, "0", `[\"${_campaign_address}\",\"${_target_amount}\",\"${_campaign_ID}\"]`, setQrvalue, callback);
+  executeContract(_constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"], functionJson, "0", `[\"${_campaign_address}\",\"${_target_amount}\",\"${_campaign_ID}\"]`, setQrvalue, callback);
 }; // 환불
 
 const refund = async (_campaignId, _userAddr, setQrvalue, callback) => {
   const functionJson = '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"},{"name":"_userAddr","type":"address"}],"name":"refund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
-  executeContract(JOGAKBO_CONTRACT_ADDRESS, functionJson, "0", `[\"${_campaignId}\",\"${_userAddr}\"]`, setQrvalue, callback);
+  executeContract(_constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"], functionJson, "0", `[\"${_campaignId}\",\"${_userAddr}\"]`, setQrvalue, callback);
 }; // 기부
 
 const donateTocampaign = async (_campaignId, _amount, setQrvalue, callback) => {
   const functionJson = '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"},{"name":"_amount","type":"uint256"}],"name":"donateTocampaign","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}';
-  executeContract(JOGAKBO_CONTRACT_ADDRESS, functionJson, (_amount * 10 ** 18).toString(), `[\"${_campaignId}\",\"${_amount}\"]`, setQrvalue, callback);
+  executeContract(_constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"], functionJson, Object(_UseCaver__WEBPACK_IMPORTED_MODULE_2__[/* fromKlaytoPeb */ "a"])(_amount).toString(), `[\"${_campaignId}\",\"${_amount}\"]`, setQrvalue, callback);
 }; // 환불 상태 변경
 
 const setStateToRefund = async (_campaignId, setQrvalue, callback) => {
   const functionJson = '{"constant":false,"inputs":[{"name":"_campaignId","type":"uint256"}],"name":"setStateToRefund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}';
-  executeContract(JOGAKBO_CONTRACT_ADDRESS, functionJson, "0", `[\"${_campaignId}\"]`, setQrvalue, callback);
+  executeContract(_constants_constants_cypress__WEBPACK_IMPORTED_MODULE_1__[/* JOGAKBO_CONTRACT_ADDRESS */ "c"], functionJson, "0", `[\"${_campaignId}\"]`, setQrvalue, callback);
 };
 const executeContract = (txTo, functionJSON, value, params, setQrvalue, callback) => {
-  external_axios_default.a.post(A2P_API_PREPARE_URL, {
+  axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(A2P_API_PREPARE_URL, {
     bapp: {
       name: APP_NAME
     },
@@ -1210,7 +1224,7 @@ const executeContract = (txTo, functionJSON, value, params, setQrvalue, callback
     }
 
     let timerId = setInterval(() => {
-      external_axios_default.a.get(`https://a2a-api.klipwallet.com/v2/a2a/result?request_key=${request_key}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`https://a2a-api.klipwallet.com/v2/a2a/result?request_key=${request_key}`).then(res => {
         if (res.data.result) {
           console.log(`[result] ${JSON.stringify(res.data.result)}`);
           callback(res.data.result);
@@ -1223,7 +1237,7 @@ const executeContract = (txTo, functionJSON, value, params, setQrvalue, callback
 }; // 클립 주소얻기
 
 const getAddress = (setQrvalue, callback) => {
-  external_axios_default.a.post(A2P_API_PREPARE_URL, {
+  axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(A2P_API_PREPARE_URL, {
     bapp: {
       name: APP_NAME
     },
@@ -1241,7 +1255,7 @@ const getAddress = (setQrvalue, callback) => {
 
     console.log(`response:${response}`);
     let timerId = setInterval(() => {
-      external_axios_default.a.get(`https://a2a-api.klipwallet.com/v2/a2a/result?request_key=${request_key}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(`https://a2a-api.klipwallet.com/v2/a2a/result?request_key=${request_key}`).then(res => {
         if (res.data.result) {
           console.log(`[Result] ${JSON.stringify(res.data.result)}`);
           callback(res.data.result.klaytn_address);
@@ -3521,7 +3535,7 @@ var external_use_dark_mode_default = /*#__PURE__*/__webpack_require__.n(external
 // EXTERNAL MODULE: ./src/components/modals/ConnectWalletModal.tsx
 var ConnectWalletModal = __webpack_require__("t8rn");
 
-// EXTERNAL MODULE: ./src/api/UseKlip.js + 1 modules
+// EXTERNAL MODULE: ./src/api/UseKlip.js
 var UseKlip = __webpack_require__("PVQ3");
 
 // EXTERNAL MODULE: ./src/api/UseCaver.js
@@ -3638,10 +3652,10 @@ const BrowserHeader = () => {
     setModalProps({
       title: "Connect Wallet",
       onConfirm: () => {
-        UseKlip["b" /* getAddress */](setQrvalue, async address => {
+        UseKlip["c" /* getAddress */](setQrvalue, async address => {
           setMyAddress(address);
 
-          const _balance = await Object(UseCaver["a" /* getBalance */])(address);
+          const _balance = await Object(UseCaver["b" /* getBalance */])(address);
 
           setMyBalance(_balance);
           Object(accountWc["d" /* postAccount */])(address, "klip", setMyAddress);
